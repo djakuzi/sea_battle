@@ -1,0 +1,21 @@
+.visual-interface {
+    max-height: 0;
+    max-width: 0;
+}
+
+/* 16/9 */
+[data-aspect-ratio="16:9"] {
+    .status-connect-server {
+        font-size: 1em;
+    }
+}
+
+/* /16/9 */
+
+/* /16/10 */
+[data-aspect-ratio="16:10"] {
+    .status-connect-server {
+        font-size: 1em;
+    }
+}
+/* /16/10 */

@@ -1,0 +1,1 @@
+export type TypeAuth = 'registration' | 'sign-in';

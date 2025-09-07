@@ -1,0 +1,102 @@
+@keyframes showWinner {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes winSparkle {
+    0% {
+        background-position: 0 0, 0 0;
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 0.9;
+    }
+
+    100% {
+        opacity: 0.7;
+        background-position: 100% 100%, 200% 200%;
+    }
+}
+
+@keyframes showMain {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    animation: showWinner 1s ease-in-out;
+}
+
+.modal::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px),radial-gradient(circle, rgba(255, 215, 0, 0.2) 1px, transparent 1px);
+    background-size: 30px 30px, 50px 50px;
+    background-color: #0a2e52;
+    animation: winSparkle 50s linear infinite;
+    pointer-events: none;
+    z-index: 555;
+}
+
+.modal::before {
+    content: '';
+    position: absolute;
+    width: 20vw;
+    height: 50vw;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top;
+    background-image: url('../../../assets/image/battle/wreath.png');
+    z-index: 599;
+    opacity: 0.95;
+    animation: showMain 1.3s ease-in-out;
+}
+
+.modal-wrapper {
+    position: relative;
+    z-index: 700;
+    animation: showMain 1.7s ease-in-out;
+}
+
+.modal-title div {
+    margin-top: 5em;
+    text-align: center;
+    letter-spacing: 0.1em;
+}
+
+.modal-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.action__btn {
+    margin-top: 1em;
+}
+
+.action__btn:not(last-child) {
+    margin-right: 1em;
+}

@@ -1,0 +1,72 @@
+.button-friend {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .3em .5em;
+    font-size: 1em;
+    color: #ffffff;
+    border-radius: .5em;
+    transition: opacity .2s ease;
+    overflow: hidden;
+}
+
+.button-friend:has(.button-friend__img) {
+    padding-right: 1.2em;
+}
+
+@media (hover: hover) {
+    .button-friend:hover,
+    .button-friend__img:hover {
+        opacity: 0.75;
+    }
+}
+
+.button-friend__text {
+    font-size: 1em;
+}
+
+.button-friend--add {
+    color: #55C1FA;
+    background-color: #ffffff;
+}
+
+.button-friend--accept {
+    background-color: #55C1FA;
+}
+
+.button-friend--close {
+    background-color: #e9e9e9;
+}
+
+.button-friend--delete {
+    background-color: #d81515;
+}
+
+.button-friend__img {
+    position: absolute;
+    display: flex;
+    right: 0;
+    top: 0;
+    height: 100%;
+    background-color: #d81515;
+    transition: opacity .2s ease;
+}
+
+.button-friend__img svg {
+    fill: #ffffff;
+    margin: auto;
+}
+
+/* 16/9 */
+[data-aspect-ratio="16:9"] {
+
+}
+
+/* /16/9 */
+
+/* 16/10 */
+[data-aspect-ratio="16:10"] {
+
+}
+/* /16/10 */

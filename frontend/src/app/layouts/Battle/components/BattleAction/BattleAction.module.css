@@ -1,0 +1,29 @@
+.action {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    width: 100%;
+}
+
+.action__exit {
+    font-family: 'opsilon', sans-serif;
+    background-color: transparent;
+}
+
+[data-aspect-ratio="16:9"] {
+    & .action__exit {
+        width: fit-content;
+        margin: 1% 0 0 1%;
+        backdrop-filter: blur(.08vw);
+        -webkit-backdrop-filter: blur(.08vw);
+    }
+}
+
+[data-aspect-ratio="16:10"] {
+    & .action__exit {
+        width: fit-content;
+        margin: 1% 0 0 1%;
+        backdrop-filter: blur(.08vw);
+        -webkit-backdrop-filter: blur(.08vw);
+    }
+}

@@ -1,0 +1,1 @@
+export type SizeChoise = 'big' | 'small' | "middle";

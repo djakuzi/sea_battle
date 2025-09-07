@@ -1,0 +1,9 @@
+html {
+    --color-text: #ffffff;
+    --color-text-prime: #55C1FA;
+    --color-text-title: #55C1FA;
+    --color-text-shadow: #000000;
+    --color-block-shadow: #000000;
+    --color-block-bg: #55C1FA;
+    --color-block-border: #ffffff;
+}

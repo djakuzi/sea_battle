@@ -1,0 +1,47 @@
+.friend {
+    width: 100%;
+    font-size: 1em;
+    border: .1em solid #ffffff;
+    border-radius: .6em;
+    padding: .4em .5em .4em .2em;
+    cursor: pointer;
+    backdrop-filter: blur(.25em);
+    -webkit-backdrop-filter: blur(.25em);
+    transition: background-color .2s ease;
+}
+
+.friend-status {
+    margin-bottom: .5em;
+}
+
+.friend .friend-info {
+    font-size: 1em;
+}
+
+.friend .friend-status {
+    align-self: end;
+    font-size: .5em;
+}
+
+.friend .friend-action {
+    font-size: .7em;
+}
+
+@media (hover: hover) {
+    .friend:hover {
+        background-color: rgba(255, 255, 255, 0.137);
+    }
+}
+
+/* 16/9 */
+[data-aspect-ratio="16:9"] {
+
+}
+
+/* /16/9 */
+
+/* 16/10 */
+[data-aspect-ratio="16:10"] {
+
+}
+/* /16/10 */

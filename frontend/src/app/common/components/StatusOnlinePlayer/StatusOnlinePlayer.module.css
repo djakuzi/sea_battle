@@ -1,0 +1,32 @@
+.status-network {
+    font-size: 1em;
+    color: #db0000;
+}
+
+.status-network--online {
+    position: relative;
+    color: #03ff5b;
+    padding-left: 1em;
+}
+
+.status-network--online::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    translate: 0 -50%;
+    width: .5em;
+    aspect-ratio: 1;
+    background-color: #03ff5b;
+    border-radius: 50%;
+}
+
+/* 16/9 */
+[data-aspect-ratio="16:9"] {}
+
+/* /16/9 */
+
+/* 16/10 */
+[data-aspect-ratio="16:10"] {}
+
+/* /16/10 */

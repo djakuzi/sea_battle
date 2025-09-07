@@ -1,0 +1,14 @@
+@keyframes showElementOpacity {
+    frm {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.animation--show-opacity {
+    opacity: 0;
+    animation: showElementOpacity 1s ease forwards;
+}

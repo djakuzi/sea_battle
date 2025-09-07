@@ -1,0 +1,91 @@
+html .logo {
+    --cs-color-logo: #ffffff;
+    --cs-color-logo-shadow: #000000;
+    --cs-color-logo-author: #d81515;
+    --cs-color-logo-author-shadow: #000000;
+}
+
+html[data-theme="dark"] .logo {
+    --cs-color-logo: #000000;
+    --cs-color-logo-shadow: #ffffff;
+    --cs-color-logo-author: #d81515;
+    --cs-color-logo-author-shadow: #000000;
+}
+
+.logo__title {
+    white-space: nowrap;
+}
+
+.logo__title-txt {
+    font-family: 'a_CampusPrspDnSh';
+    color: var(--cs-color-logo);
+    text-align: center;
+}
+
+.logo__author {
+    width: fit-content;
+    margin-left: auto;
+}
+
+.logo__author-txt {
+    font-family: 'AlbionicTitulInfl';
+    font-weight: 700;
+    text-align: center;
+    color: var(--cs-color-logo-author);
+    letter-spacing: 0.3em;
+}
+
+.--big {
+    font-size: 2em;
+}
+
+.--middle {
+    font-size: 1em;
+}
+
+.--small {
+    font-size: .5em;
+}
+
+/* 16/9 */
+[data-aspect-ratio="16:9"] {
+    & .logo__title {
+        font-size: 2vw;
+        white-space: nowrap;
+    }
+
+    & .logo__title-txt {
+        text-shadow: .1vw .1vw .3vw var(--cs-color-logo-shadow);
+    }
+
+    & .logo__author {
+        font-size: 0.4vw;
+    }
+
+    & .logo__author-txt {
+        text-shadow: .1vw .1vw .2vw var(--cs-color-logo-shadow);
+    }
+}
+/* /16/9 */
+
+/* 16/10 */
+[data-aspect-ratio="16:10"] {
+    & .logo__title {
+        font-size: 2vw;
+        white-space: nowrap;
+    }
+
+    & .logo__title-txt {
+        text-shadow: .1vw .1vw .3vw var(--cs-color-logo-shadow);
+    }
+
+    & .logo__author {
+        font-size: 0.4vw;
+    }
+
+    & .logo__author-txt {
+        text-shadow: .1vw .1vw .2vw var(--cs-color-logo-shadow);
+    }
+}
+
+/* /16/10 */

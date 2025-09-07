@@ -1,0 +1,22 @@
+.statistic {
+    font-size: 1em;
+    gap: 0.5em;
+}
+
+.statistic .statistic-title {
+    width: 100%;
+    font-size: .5em;
+    text-align: center;
+    margin-bottom: .8em;
+}
+
+.statistic-box {
+    gap: 0.2em;
+}
+
+.statistic-row {
+    font-size: 0.85em;
+    gap: .1em;
+    color: white;
+    text-shadow: .1em .1em .2em #000000a1;
+}

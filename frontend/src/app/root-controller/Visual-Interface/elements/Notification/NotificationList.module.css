@@ -1,0 +1,30 @@
+html {
+    --cs-color-coord-border: #ffffff;
+}
+
+html[data-theme="dark"] {
+    --cs-color-coord-border: #000000;
+}
+
+.notification-list {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+    padding-top: 10em;
+    padding-left: 1vw;
+    padding-bottom: 1vw;
+    perspective: 1000px;
+    /* overflow-y: scroll; */
+}
+/* 16/9 */
+[data-aspect-ratio="16:9"] {
+    
+}
+/* /16/9 */
+
+/* /16/10 */
+[data-aspect-ratio="16:10"] {
+
+}
+/* /16/10 */

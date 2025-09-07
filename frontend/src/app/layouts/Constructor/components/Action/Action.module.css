@@ -1,0 +1,51 @@
+html {
+    --cs-color-coord-border: #ffffff;
+}
+
+html[data-theme="dark"] {
+    --cs-color-coord-border: #000000;
+}
+
+.action {
+    will-change: auto;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 5% 0;
+    border-radius: .5em;
+    border-color: var(--cs-color-coord-border);
+    background-color: rgba(172, 172, 172, 0.317);
+    background-color: #55c0fa21;
+    transition: transform .3s linear;
+    box-shadow: .05em 0.07em .1em var(--color-block-shadow);
+    transform: scale(0.98);
+}
+
+html[data-theme="dark"] .action {
+}
+
+@media (hover: hover) {
+    .action:hover {
+        transform: scale(0.97)  translateX(10%);
+    }
+
+    .action:active {
+        transform: scale(0.98) translateX(10%);
+    }
+}
+
+.action:active {
+    transform: scale(0.95);
+}
+
+.action-bg {
+    position: absolute;
+    display: block;
+    margin: 0 auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+}

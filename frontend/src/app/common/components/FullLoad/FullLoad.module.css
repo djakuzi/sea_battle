@@ -1,0 +1,308 @@
+@keyframes ship {
+    from {
+        transform: translate(100%, 0);
+    }
+
+    to {
+        transform: translate(calc(-50vw), 0);
+    }
+}
+
+@keyframes waves {
+    from {
+        background-position: 0;
+    }
+
+    to {
+        background-position: 1000vw;
+    }
+}
+
+@keyframes text-load-full {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0.6;
+    }
+}
+
+
+@keyframes rotate {
+    from {
+        transform: rotateY(-180deg) rotateX(-10deg);
+    }
+
+    25% {
+        transform: rotateY(-255deg) rotateX(-10deg);
+    }
+
+    26% {
+        transform: rotateY(-255deg) rotateX(-10deg);
+    }
+
+    50% {
+        transform: rotateY(-180deg) rotateX(-10deg);
+    }
+
+    75% {
+        transform: rotateY(-105deg) rotateX(-10deg);
+    }
+
+    76% {
+        transform: rotateY(-105deg) rotateX(-10deg);
+    }
+
+    to {
+        transform: rotateY(-180deg) rotateX(-10deg);
+    } 
+
+}
+
+html .load {
+    --cs-color-txt: #ffffff;
+    /* --cs-bg-color: #55c0fa; */
+    --cs-bg-color: #0e517640;
+    /* --cs-bg-color: #55c0fa72; */
+}
+
+html[data-theme="dark"] .load {
+    --cs-color-txt: #000000;
+    --cs-bg-color: #000000;
+}
+
+/* full page */
+.load {
+    & {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    
+    &.--background {
+        background-image: url("../../../../assets/image/game/menu/background-ships.jpeg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        backdrop-filter: blur(0.1vw);
+        -webkit-backdrop-filter: blur(0.1vw);
+        transition: all .6s ease;
+        --webkit-transition: -webkit-backdrop-filter .8s ease;
+    }
+
+    .load__wrapper {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1vw;
+        z-index: 2;
+    }
+
+    .title {
+        width: 100%;
+        font-size: 1.5vw;
+        text-align: center;
+        color: var(--cs-color-txt);
+        animation: text-load-full 1.5s infinite alternate linear;
+        text-shadow: .1vw .1vw .2vw var(--color-text-shadow);
+    }
+
+    .anchor {
+        will-change: auto;
+        position: relative;
+        width: 11vw;
+        aspect-ratio: 1/1;
+        transform-style: preserve-3d;
+        animation: rotate 5s linear infinite;
+        backface-visibility: hidden;
+        perspective: 200px;
+        transform: translateY(180deg);
+    }
+
+    .anchor__front {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-image: url("../../../../assets/icons/game/preload.skeleton/anchor.png");
+        background-position: center center;
+        background-size: 90%;
+        background-repeat: no-repeat;
+    }
+
+    .anchor__front:nth-child(1) {
+        transform: translateZ(.01vw);
+    }
+
+    .anchor__front:nth-child(2) {
+        transform: translateZ(.02vw);
+    }
+
+    .anchor__front:nth-child(3) {
+        transform: translateZ(.03vw);
+    }
+
+    .anchor__front:nth-child(4) {
+        transform: translateZ(.04vw);
+    }
+
+    .anchor__front:nth-child(5) {
+        transform: translateZ(.05vw);
+    }
+
+    .anchor__front:nth-child(6) {
+        transform: translateZ(.06vw);
+    }
+
+    .anchor__front:nth-child(7) {
+        transform: translateZ(.07vw);
+    }
+
+    .anchor__front:nth-child(8) {
+        transform: translateZ(.08vw);
+    }
+
+    .anchor__front:nth-child(9) {
+        transform: translateZ(.09vw);
+    }
+
+    .anchor__front:nth-child(10) {
+        transform: translateZ(.010vw);
+    }
+
+    .anchor__front:nth-child(11) {
+        transform: translateZ(.11vw);
+    }
+
+    .anchor__front:nth-child(12) {
+        transform: translateZ(.12vw);
+    }
+
+    .anchor__front:nth-child(13) {
+        transform: translateZ(.13vw);
+    }
+
+    .anchor__front:nth-child(14) {
+        transform: translateZ(.14vw);
+    }
+
+    .anchor__front:nth-child(15) {
+        transform: translateZ(.15vw);
+    }
+
+    .anchor__front:nth-child(16) {
+        transform: translateZ(.16vw);
+    }
+
+    .anchor__front:nth-child(17) {
+        transform: translateZ(.17vw);
+    }
+
+    .anchor__front:nth-child(18) {
+        transform: translateZ(.18vw);
+    }
+
+    .anchor__front:nth-child(19) {
+        transform: translateZ(.19vw);
+    }
+
+    .anchor__front:nth-child(20) {
+        transform: translateZ(.20vw);
+    }
+
+    .anchor__front:nth-child(21) {
+        transform: translateZ(.21vw);
+    }
+
+    .anchor__front:nth-child(22) {
+        transform: translateZ(.22vw);
+    }
+
+    .anchor__front:nth-child(23) {
+        transform: translateZ(.23vw);
+    }
+
+    .anchor__front:nth-child(24) {
+        transform: translateZ(.24vw);
+    }
+
+    .anchor__front:nth-child(25) {
+        transform: translateZ(.25vw);
+    }
+
+    .anchor__front:nth-child(26) {
+        transform: translateZ(.26vw);
+    }
+
+    .anchor__front:nth-child(27) {
+        transform: translateZ(.27vw);
+    }
+
+    .anchor__front:nth-child(28) {
+        transform: translateZ(.28vw);
+    }
+
+    .anchor__front:nth-child(29) {
+        transform: translateZ(.29vw);
+    }
+
+    .anchor__front:nth-child(30) {
+        transform: translateZ(.30vw);
+    }
+
+    .anchor__front:nth-child(31) {
+        transform: translateZ(.31vw);
+    }
+
+    .anchor__front:nth-child(32) {
+        transform: translateZ(.32vw);
+    }
+
+    .anchor__front:nth-child(33) {
+        transform: translateZ(.33vw);
+    }
+
+    .anchor__front:nth-child(34) {
+        transform: translateZ(.34vw);
+    }
+
+    .anchor__front:nth-child(35) {
+        transform: translateZ(.35vw);
+    }
+
+    .anchor__front:nth-child(36) {
+        transform: translateZ(.36vw);
+    }
+
+    .anchor__front:nth-child(37) {
+        transform: translateZ(.37vw);
+    }
+
+    .anchor__front:nth-child(38) {
+        transform: translateZ(.38vw);
+    }
+
+    .anchor__front:nth-child(39) {
+        transform: translateZ(.39vw);
+    }
+
+    .anchor__front:nth-child(40) {
+        transform: translateZ(.40vw);
+    }
+}

@@ -1,0 +1,44 @@
+.button {
+    display: flex;
+    align-items: center;
+    font-size: 1vw;
+    gap: .5em;
+    cursor: pointer;
+    background-color: #ffffff;
+    padding: .4em .6em;
+    border-radius: 0.7em;
+}
+
+.button-img {
+    font-size: 2em;
+    max-height: 1em;
+    transition: 
+        translate .3s ease,
+        opacity .3s ease;
+}
+
+.button-img svg {
+    fill: #55C1FA;
+}
+
+.button-text {
+    font-size: 1.5em;
+    color: #55C1FA;
+}
+
+@media (hover: hover) {
+    .button:hover .button-img {
+        translate: -10% 0;
+        opacity: 0.6;
+    }
+}
+
+/* 16/9 */
+[data-aspect-ratio="16:9"] {}
+
+/* /16/9 */
+
+/* 16/10 */
+[data-aspect-ratio="16:10"] {}
+
+/* /16/10 */

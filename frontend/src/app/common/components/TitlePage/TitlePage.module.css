@@ -1,0 +1,51 @@
+html .title {
+    --cs-color-title-page: #55C1FA;
+    --cs-color-title-page-shadow: #000000;
+}
+
+html[data-theme="dark"] .title {
+    --cs-color-title-page: #000000;
+    --cs-color-title-page-shadow: #ffffff;
+}
+
+.title {
+    width: fit-content;
+    font-size: 1.3vw;
+    color: var(--color-text-title);
+}
+
+.title-txt {
+    text-align: center;
+    font-family: 'opsilon', sans-serif;
+}
+
+.title-txt--big {
+    font-size: 2em;
+    letter-spacing: 0.2em;
+}
+
+.title-txt--middle {
+    font-size: 1em;
+    letter-spacing: 0.15em;
+}
+
+.title-txt--small {
+    font-size: .5em;
+    letter-spacing: 0.1em;
+}
+
+/* 16/9 */
+[data-aspect-ratio="16:9"] {
+    .title-txt {
+        text-shadow: .05em .05em .2em var(--color-text-shadow);
+    }
+}
+/* /16/9 */
+
+/* 16/10 */
+[data-aspect-ratio="16:10"] {
+    .title-txt {
+        text-shadow: .05em .05em .2em var(--color-text-shadow);
+    }
+}
+/* /16/10 */

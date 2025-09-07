@@ -1,0 +1,39 @@
+.verification-services {
+    display: flex;
+    align-items: center;
+    gap: .05em;
+    border: 0.01em solid #ffffff;
+    border-radius: .1em;
+    padding: .05em;
+}
+
+.verification-services.--column {
+    flex-direction: column;
+}
+
+.verification-services__item {
+    will-change: transform;
+    cursor: pointer;
+    width: .3em;
+    height: auto;
+    transition: transform .5s ease, opacity .5s ease;
+}
+
+.verification-services__item[data-name-service='google'] {
+    width: .25em;
+}
+
+.verification-services__item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 2px rgb(0, 0, 0))
+}
+
+@media(hover: hover) {
+    .verification-services__item:hover {
+        opacity: 0.8;
+        transform: scale(0.9);
+        transition: transform .25s ease, opacity .25s ease;
+    }
+}

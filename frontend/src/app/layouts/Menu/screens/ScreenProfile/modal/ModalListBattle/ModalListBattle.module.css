@@ -1,0 +1,43 @@
+.list-battle {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.list-battle__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    font-size: 2.5vw;
+    border: .05em solid white;
+    border-bottom: .2em solid white;
+    border-radius: 2vw;
+    height: 100vh;
+    max-height: 80%;
+    overflow: hidden;
+}
+
+.list-battle-body {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+    padding: 0 .5em .5em .5em;
+    margin-top: .7em;
+    overflow: scroll;
+}
+
+@media (hover: hover) {}
+
+/* 16/9 */
+[data-aspect-ratio="16:9"] {}
+
+/* /16/9 */
+
+/* 16/10 */
+[data-aspect-ratio="16:10"] {}
+
+/* /16/10 */

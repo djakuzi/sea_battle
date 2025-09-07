@@ -1,0 +1,25 @@
+html .constructor {
+    --cs-color-coord-border: #ffffff;
+}
+
+html[data-theme="dark"] .constructor {
+    --cs-color-coord-border: #000000;
+}
+
+.list-action {
+    display: flex;
+    flex-direction: column;
+    gap: 1%;
+}
+
+/* 16/9 */
+[data-aspect-ratio="16:9"] {
+
+}
+/* /16/9 */
+
+/* /16/10 */
+[data-aspect-ratio="16:10"] {
+
+}
+/* /16/10 */

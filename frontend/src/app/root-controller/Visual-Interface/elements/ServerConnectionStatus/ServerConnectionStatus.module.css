@@ -1,0 +1,127 @@
+html {
+    --cs-color-coord-border: #ffffff;
+}
+
+html[data-theme="dark"] {
+    --cs-color-coord-border: #000000;
+}
+
+@keyframes connectionStatusServer {
+    from {
+        transform: rotateY(0);
+    }
+
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+@keyframes connectStatusServer {
+    from {
+        background-color: #ffffff;
+    }
+
+    100% {
+        background-color: #00ffae;
+    }
+}
+
+@keyframes disconnectStatusServer {
+    from {
+        filter: contrast(1);
+        opacity: .9;
+        scale: 1;
+    }
+
+    100% {
+        filter: contrast(.5);
+        opacity: .08;
+        scale: .9;
+    }
+}
+
+.server-status {
+    position: fixed;
+    right: 1em;
+    top: 1em;
+    z-index: 1000;
+    font-size: 1rem;
+}
+
+@media (hover: hover) {
+    .server-status__item {
+        cursor: pointer;
+        transition: opacity .3s ease;
+    }
+
+    .server-status__item:not(.server-status-disconnect):hover {
+        opacity: .7;
+    }
+}
+
+.server-status-connection {
+    position: relative;
+    font-size: 1em;
+    width: 2em;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    perspective: 200px;
+}
+
+.server-status-connection__img {
+    width: 100%;
+}
+
+.server-status-connection__img img {
+    display: block;
+    width: 100%;
+}
+
+.version-1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.version-2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+[data-animation="true"].server-status-connection {
+    will-change: transform;
+    animation: connectionStatusServer 3s infinite ease alternate;
+}
+
+.server-status-connect {
+    font-size: 1em;
+    width: 1.8em;
+    background-color: #ffffff;
+    border-radius: 50%;
+}
+
+.server-status-connect[data-animation="true"] {
+    animation: connectStatusServer 15s infinite ease forwards;
+}
+
+.server-status-connect__img img {
+    display: block;
+    font-size: 1em;
+    width: 100%;
+}
+
+.server-status-disconnect {
+    font-size: 1em;
+    width: 2em;
+}
+
+.server-status-disconnect[data-animation="true"] {
+    animation: disconnectStatusServer 2s infinite alternate ease;
+}
+
+.server-status-disconnect__img img {
+    display: block;
+    width: 100%;
+}
+

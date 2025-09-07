@@ -1,0 +1,12 @@
+.threeDimensional-element {
+    position: relative;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    perspective: 200px;
+}
+
+.threeDimensional-element__item {
+    position: absolute;
+    left: 0;
+    right: 0;
+}

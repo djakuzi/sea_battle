@@ -1,0 +1,45 @@
+.player {
+    display: flex;
+    align-items: center;
+    gap: .1em;
+    font-size: 1em;
+}
+
+.player.--reverse {
+    flex-direction: row-reverse;
+}
+
+.player__avatar {
+    overflow: hidden;
+}
+
+.player__avatar img {
+    display: block;
+    width: 100%;
+}
+
+.player__info-name {
+    font-size: 1em;
+    color: var(--color-text);
+    text-shadow: .1em .1em .2em var(--color-text-shadow);
+    white-space: nowrap;
+}
+
+.player__info-rank {
+    font-size: 0.8em;
+    color: var(--color-text-prime);
+    text-shadow: .1em .1em .15em var(--color-text-shadow);
+}
+
+
+[data-aspect-ratio="16:9"] {
+    & .player__avatar {
+        width: 2em;
+    }
+}
+
+[data-aspect-ratio="16:10"] {
+    & .player__avatar {
+        width: 2em;
+    }
+}

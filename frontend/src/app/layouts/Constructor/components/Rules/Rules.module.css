@@ -1,0 +1,31 @@
+html .constructor {
+    --cs-color-coord-border: #ffffff;
+}
+
+html[data-theme="dark"] .constructor {
+    --cs-color-coord-border: #000000;
+}
+
+
+
+/* 16/9 */
+[data-aspect-ratio="16:9"] {
+    & .contsturtor-title {
+        top: -1.9vw;
+        padding: 1vw;
+        border-radius: 1vw;
+        font-size: 1.4vw;
+    }
+}
+/* /16/9 */
+
+/* /16/10 */
+[data-aspect-ratio="16:10"] {
+    & .contsturtor-title {
+        top: -1.9vw;
+        padding: 1vw;
+        border-radius: 1vw;
+        font-size: 1.4vw;
+    }
+}
+/* /16/10 */

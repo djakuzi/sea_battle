@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'opsilon';
+    src: url('../../assets/fonts/Opsilon-Regular.woff'),
+        url('../../assets/fonts/Opsilon-Regular.woff2'),
+        url('../../assets/fonts/ofont.ru_Opsilon.ttf');
+    font-display: swap;
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AlbionicTitulInfl';
+    src: url('../../assets/fonts/a_AlbionicTitulInfl-Bold.woff') format(woff),
+        url('../../assets/fonts/a_AlbionicTitulInfl-Bold.woff2') format(woff2);
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'a_CampusPrspDnSh';
+    src: url('../../assets/fonts/ACampusPrspDnSh.woff') format(woff),
+        url('../../assets/fonts/ACampusPrspDnSh.woff2') format(woff2);
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'RedOctober-Fat';
+    src: url('../../assets/fonts/RedOctober-Fat.woff') format(woff),
+        url('../../assets/fonts/RedOctober-Fat.woff2') format(woff2);
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}

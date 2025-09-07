@@ -1,0 +1,150 @@
+html {
+    --cs-color-coord-border: #ffffff;
+}
+
+html[data-theme="dark"] {
+    --cs-color-coord-border: #000000;
+}
+
+@keyframes show {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.notification {
+    position: relative;
+    width: 15em;
+    max-height: 5em;
+    padding: 1em 0.5em 0.5em 0.5em;
+    border-width: .15em;
+    border-color: var(--color-block-border);
+    border-style: solid;
+    border-radius: 0.5em;
+    color: var(--color-text);
+    box-shadow: .1em .5em 2em 0.1em var(--color-block-shadow);
+    background-color: var(--color-block-bg);
+}
+
+.notification {
+    margin-top: -1em;
+    opacity: 0.8;
+}
+
+.notification:last-child {
+    position: relative;
+    margin-top: 1.5em;
+    z-index: 999;
+    opacity: 1;
+    transform: translate(0, 0);
+    animation: show 0.55s linear forwards;
+}
+
+.notification:hover,
+.notification:active {
+    opacity: 1;
+    transform: translateY(-1em);
+    z-index: 999;
+}
+
+.notification::after {
+    content: '';
+    position: absolute;
+}
+
+.notification.--notification::after {
+    right: .1em;
+    top: -.7em;
+    width: 1.5em;
+    aspect-ratio: 1 / 1;
+    /* background-image: url('../../../../../../../assets/icons/game/notification/error1.svg'); */
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.notification.--prime::after {
+    
+}
+
+.notification.--error::after  {
+    right: .1em;
+    top: -.7em;
+    width: 1.5em;
+    aspect-ratio: 1 / 1;
+    background-image: url('../../../../../../../assets/icons/game/notification/error1.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.notification.--warn::after {
+    right: -.3em;
+    top: -1em;
+    width: 1.8em;
+    aspect-ratio: 1 / 1;
+    background-image: url('../../../../../../../assets/icons/game/notification/warn.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.notification-close {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: -.1em;
+    width: 1.1em;
+    aspect-ratio: 1 / 1;
+    border-width: 0.1em;
+    border-color: var(--color-block-border);
+    border-style: solid;
+    border-radius: 50%;
+    background-color: var(--color-block-bg);
+    transform: rotate(45deg) translateY(-50%);
+    transition: transform .3s linear;
+}
+
+.notification-close::after,
+.notification-close::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--color-block-border);
+    width: 100%;
+    height: .1em;
+}
+
+.notification-close::after {
+    rotate: 90deg;
+    transform: translate(-5%, 450%);
+}
+
+.notification-close:hover {
+    transform: rotate(60deg) translateY(-50%);
+}
+
+.notification-close:active {
+    transform: translateY(-50%) rotate(45deg) scale(1.1); 
+}
+
+/* 16/9 */
+[data-aspect-ratio="16:9"] {
+    .notification {
+        font-size: 1.6vw;
+    }
+}
+/* /16/9 */
+
+/* /16/10 */
+[data-aspect-ratio="16:10"] {
+    .notification {
+        font-size: 1.6vw;
+    }
+}
+/* /16/10 */

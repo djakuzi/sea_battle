@@ -1,0 +1,33 @@
+.button {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    gap: .5em;
+    background-color: transparent;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+}
+
+.button-img {
+    font-size: 2em;
+}
+
+.button-img svg {
+    fill: #55C1FA;
+}
+
+.button-text {
+    font-size: 1em;
+    color: #55C1FA;
+}
+
+/* 16/9 */
+[data-aspect-ratio="16:9"] {}
+
+/* /16/9 */
+
+/* 16/10 */
+[data-aspect-ratio="16:10"] {}
+
+/* /16/10 */

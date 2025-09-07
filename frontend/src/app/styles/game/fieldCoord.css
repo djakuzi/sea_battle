@@ -1,0 +1,49 @@
+.--coord-kill {
+    position: relative;
+}
+
+.--coord-kill::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 98%;
+    aspect-ratio: 1 / 1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('/src/assets/icons/game/battle/letter-x.png');
+    z-index: 1;
+}
+
+.--coord-hit {
+    position: relative;
+}
+
+.--coord-hit::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('/src/assets/icons/game/battle/bang-lite.png');
+    transform: rotate(10deg);
+    z-index: 1;
+}
+
+.--coord-miss {
+    background-color: #80470066;
+}
+
+.--coord-perimeter {
+    background-color: #35466d6e;
+}
+
+.--coord-putting {
+    background-color: #35466d91;
+}
+
+.--coord-highlight {
+    background-color: #51336f73;
+}

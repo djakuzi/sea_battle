@@ -1,0 +1,9 @@
+html[data-theme="dark"] {
+    --color-text: #000000;
+    --color-text-prime: #b61010;
+    --color-text-title: #b61010;
+    --color-text-shadow: #ffffff;
+    --color-block-shadow: #ffffff;
+    --color-block-bg: #a40d0d;
+    --color-block-border: #000000;
+}

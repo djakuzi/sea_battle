@@ -1,0 +1,53 @@
+.search {
+    font-size: 1em;
+}
+
+.search-field {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+.search-input {
+    outline: none;
+    width: 100%;
+    font-size: .8em;
+    color: #ffffff;
+    background-color: transparent;
+    border: none;
+    border-bottom: .1em solid white;
+    padding: 0 .2em .2em .2em;
+}
+
+.search-field .search-btn {
+    position: absolute;
+    top: 50%;
+    right: .4em;
+    translate: 0 -50%;
+    font-size: 0.6em;
+}
+
+.search-input::placeholder {
+    color: #f6f6f6;
+}
+
+.search .search-list {
+    font-size: 1em;
+}
+
+@media (hover: hover) {
+
+}
+
+/* 16/9 */
+[data-aspect-ratio="16:9"] {
+
+}
+
+/* /16/9 */
+
+/* 16/10 */
+[data-aspect-ratio="16:10"] {
+
+}
+/* /16/10 */
