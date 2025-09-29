@@ -8,7 +8,7 @@ import { CustomOptionSelect } from "src/common/type/repository/CustomOptionSelec
 import { CustomOptionWhere } from "src/common/type/repository/CustomOptionWhere.type";
 
 @Injectable()
-export class PLayerRepository extends StandartRepository<EntityPlayer> {
+export class PlayerRepository extends StandartRepository<EntityPlayer> {
     constructor(
         private readonly dataSource: DataSource,
         @InjectRepository(EntityPlayer)

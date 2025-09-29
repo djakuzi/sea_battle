@@ -3,19 +3,26 @@ import { EntityVerificationsUsers } from "src/common/entity/public.scheme/verifi
 import { VerificationsUsersRepository } from "src/module.api/auth/repositories/verififcations_users.repository";
 import { buildConditionsFindWhere } from "src/common/util/repository/conditions";
 import { EntityManager } from "typeorm";
+import { IntrVerificationUser } from "../type/VerificationUser.intreface";
 
 @Injectable()
-export class VerififcationUserService {
+export class ServiceVerififcationUser {
     constructor(
         private readonly repoVerificationUser: VerificationsUsersRepository,
     ) { }
 
+    async getListVerificationUser(userId: number): Promise<IntrVerificationUser[] | null> {
+        const res = await this.repoVerificationUser.getUserVerifications(userId);
+
+        return res
+    }
+
     async findVerification(filter: Partial<EntityVerificationsUsers>, manager?: EntityManager): Promise<EntityVerificationsUsers | null> {
         const conditions = buildConditionsFindWhere<EntityVerificationsUsers, typeof filter>(filter, "AND");
         if (!conditions) return null;
-
+        
         const res = await this.repoVerificationUser.findVerificationUser(conditions, manager);
-        return res
+        return res;
     }
 
     async checkVerificationUser(filter: Partial<EntityVerificationsUsers>, manager?: EntityManager): Promise<boolean> {
@@ -27,6 +34,6 @@ export class VerififcationUserService {
         const res = await this.repoVerificationUser.createVerificationUser(data, manager);
 
         if (!res) throw new InternalServerErrorException('Произошла ошибка при создании верификации');
-        return res
+        return res;
     }
 }

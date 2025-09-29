@@ -5,7 +5,7 @@ import type { PropsBattleAction } from "./BattleAction.props";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../../common/components/Button/Button";
 import { useDispatch } from "react-redux";
-import { actionsBattle } from "../../../../redux/slice/battle.slice";
+import { actionsBattle } from "../../../../redux/slice/battle/battle.slice";
 
 
 function BattleAction({ cls = '' }: PropsBattleAction): JSX.Element {

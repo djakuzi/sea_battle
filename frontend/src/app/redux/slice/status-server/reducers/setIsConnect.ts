@@ -1,4 +1,4 @@
-import { initialConnectStatusServer } from "../statusConnectServer.slice";
+import { initialConnectStatusServer } from "../serverStatus.slice";
 
 
 export function setIsConnect(state: initialConnectStatusServer): void {

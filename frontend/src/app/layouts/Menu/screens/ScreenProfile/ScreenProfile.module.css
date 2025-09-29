@@ -46,16 +46,16 @@ html[data-theme="dark"] .profile {
     border-radius: 10em;
     backdrop-filter: blur(.2em);
     -webkit-backdrop-filter: blur(.2em);
-    color: var(--color-text);
+    color: var(--text-color);
     overflow: hidden;
 }
 
 .profile-menu__item {
     padding: .3em;
     font-size: 1.5em;
-    text-shadow: .1em .1em .2em var(--color-text-shadow);
+    text-shadow: .1em .1em .2em var(--text-shadow-color);
     border: .05em solid #ffffff;
-    box-shadow: .1em .1em .2em var(--color-block-shadow);
+    box-shadow: .1em .1em .2em var(--block-shadow-color);
     backdrop-filter: blur(.2em);
     -webkit-backdrop-filter: blur(.2em);
     text-align: center;
@@ -70,7 +70,7 @@ html[data-theme="dark"] .profile {
 }
 
 .profile-menu__item:hover {
-    background-color: var(--color-block-bg);
+    background-color: var(--block-bg-color);
 }
 
 .profile-modal {

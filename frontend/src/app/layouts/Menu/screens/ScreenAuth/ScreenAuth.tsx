@@ -15,11 +15,14 @@ import Input from '../../../../common/components/Input/Input';
 import { IntrRegister } from '../../../../network/api/client.api/services/Auth/types/Register.interface';
 import { IntrSignIn } from '../../../../network/api/client.api/services/Auth/types/SignIn.interface';
 import { Verification } from '../../../../network/api/client.api/services/Auth/types/Verification';
+import { isDisconnectedServer } from '@app-common/script/utils/statusServer/method/isDisconnectedServer';
 
 export default function ScreenAuth({ cls = '', inputRef }: PropsScreenProfile): JSX.Element {
-
+    //redux
     const dispatch = useDispatch<AppDispatch>();
+    //state
     const [typeAuth, setTypeAuth] = useState<TypeAuth>('sign-in');
+    //ref
     const refForm = useRef<HTMLFormElement>(null);
 
     const changeTypeAuth = (type: TypeAuth): void => {
@@ -28,6 +31,8 @@ export default function ScreenAuth({ cls = '', inputRef }: PropsScreenProfile): 
 
     const onSubmit = async (formData: FormData): Promise<void> => {
         try {
+            if (isDisconnectedServer({})) return;
+
             const validation = new ValidationModule().checkValidation();
             const login = formData.get('login');
             const email = formData.get('email');
@@ -108,7 +113,15 @@ export default function ScreenAuth({ cls = '', inputRef }: PropsScreenProfile): 
 
                         <div className={styles['form-entry']}>
                             <VerificationService cls={styles['form-verification-service']} />
-                            <Button cls={cn(styles['submit'], 'button-action')} isBtn={true} onClick={() => { }} type="submit">Войти</Button>
+                            <Button 
+                                cls={cn(styles['submit'], 'button-action')} 
+                                isBtn={true} 
+                                onClick={() => { }} 
+                                type="submit"
+                                versionBtn='button-action'
+                            >
+                                Войти
+                            </Button>
                         </div>
                     </form>
                 </div>

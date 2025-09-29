@@ -3,7 +3,6 @@ import './app/styles/theme/theme.white.css';
 import './app/styles/font.css';
 import './app/styles/main.css';
 import './app/styles/layouts/flex-box.css';
-import './app/styles/ui/button.css';
 import './app/styles/resetStyles.css';
 import './app/styles/animations/show-opacity.css';
 import { createBrowserRouter, RouterProvider } from "react-router";

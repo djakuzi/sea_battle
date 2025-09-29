@@ -1,37 +1,45 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { FullJwtTokens, JwtPayload } from "../interface/jwt-token.interface";
+import { FullJwtTokens, JwtPayload } from "../type/jwt-token.interface";
 import { ConfigService } from "@nestjs/config";
 import { Backend, Frontend } from "src/module.config/config/configuration";
 import { Response } from "express";
 import { isDevMode } from "src/common/util/other/mode";
-import { UserService } from "src/module.api/user/service/user.service";
+import { EnumNameStrategyFindUser, ServiceUserFind } from "src/module.api/user/service/userFind.service";
 import { EntityUser } from "src/common/entity/public.scheme/user.entity";
 
 @Injectable()
 export class TokenService {
-    private readonly FRONTEND_DOMAIN: string | undefined
-    private readonly JWT_ACCESS_TOKEN_TTL: string | undefined
-    private readonly JWT_REFRESH_TOKEN_TTL: string | undefined
+    private readonly FRONTEND_DOMAIN: string | undefined;
+    private readonly JWT_ACCESS_TOKEN_TTL: string | undefined;
+    private readonly JWT_REFRESH_TOKEN_TTL: string | undefined;
+    
     constructor(
         private readonly serviceJwt: JwtService,
         private readonly serviceConfig: ConfigService,
-        private readonly serviceUser: UserService,
-    ) { 
+        private readonly serviceUserFind: ServiceUserFind,
+    ) {
         this.FRONTEND_DOMAIN = this.serviceConfig.get<Frontend>('frontend')?.host;
         this.JWT_ACCESS_TOKEN_TTL = this.serviceConfig.get<Backend>('backend')?.jwt.JWT_ACCESS_TOKEN_TTL;
         this.JWT_REFRESH_TOKEN_TTL = this.serviceConfig.get<Backend>('backend')?.jwt.JWT_REFRESH_TOKEN_TTL;
     }
 
+    auth(res: Response, uuid: string, login: string): string {
+        const { accessToken, refreshToken } = this.generateTokenUser(uuid, login);
+
+        this.setCookie(res, refreshToken, new Date(Date.now() + 604800));
+        return accessToken
+    }
+
     generateTokenUser(uuid: string, login: string): FullJwtTokens {
-        const payload: JwtPayload = { uuid, login};
+        const payload: JwtPayload = { uuid, login };
 
         const accessToken = this.serviceJwt.sign(payload, {
             expiresIn: this.JWT_ACCESS_TOKEN_TTL || '1h',
         })
 
         const refreshToken = this.serviceJwt.sign(payload, {
-            expiresIn: this.JWT_REFRESH_TOKEN_TTL || '7d',
+            expiresIn: '7d' //|| this.JWT_REFRESH_TOKEN_TTL,
         })
 
         return {
@@ -40,7 +48,7 @@ export class TokenService {
         }
     }
 
-    async checkTokenUser(token: string):Promise<EntityUser | null> {
+    async checkTokenUser(token: string): Promise<EntityUser | null> {
         let payload: JwtPayload | null = null;
 
         try {
@@ -49,9 +57,14 @@ export class TokenService {
             console.log(e);
             throw new NotFoundException('Пользователь не найден');
         }
-        
+
         if (payload) {
-            const user = await this.serviceUser.findOneUser({uuid: payload.uuid});
+            const argsFind = {
+                filter: {
+                    uuid: payload.uuid 
+                }
+            }
+            const user = await this.serviceUserFind.find(EnumNameStrategyFindUser.ONE, argsFind);
 
             if (!user) {
                 throw new NotFoundException('Пользователь не найден');

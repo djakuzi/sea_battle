@@ -1,0 +1,9 @@
+.error-message {
+    font-size: 1em;
+    color: black;
+}
+
+.error-message--in-list {
+    width: 100%;
+    text-align: center;
+}

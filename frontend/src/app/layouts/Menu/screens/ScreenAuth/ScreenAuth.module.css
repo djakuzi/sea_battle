@@ -46,8 +46,8 @@
     z-index: 7;
     padding: 0 0 0 0;
     font-size: 1vw;
-    border: .02em solid rgb(255, 255, 255);
-    border-bottom: .05em solid white;
+    border: .02em solid var(--block-border-color);
+    border-bottom: .05em solid var(--block-border-color);
     backdrop-filter: blur(.035em);
     -webkit-backdrop-filter: blur(.035em);
     border-radius: 2em;

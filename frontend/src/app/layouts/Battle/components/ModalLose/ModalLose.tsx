@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import TitlePage from "../../../../common/components/TitlePage/TitlePage";
-import { actionsBattle } from "../../../../redux/slice/battle.slice";
+import { actionsBattle } from "../../../../redux/slice/battle/battle.slice";
 
 export default function ModalLose(): JSX.Element {
     //another

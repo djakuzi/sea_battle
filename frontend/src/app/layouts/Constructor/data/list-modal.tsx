@@ -1,5 +1,5 @@
 
-import { TypeListJsxElement } from "../../../common/script/hooks/useListJSXelement";
+import { TypeListJsxElement } from "../../../common/script/hooks/ui/useListJSXelement";
 import { ModalListSpacedShips } from "../modal/ModalListSpacedShips/ModalListSpacedShips";
 
 export enum EnumConstructorModals {

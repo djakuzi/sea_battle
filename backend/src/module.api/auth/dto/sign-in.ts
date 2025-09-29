@@ -1,4 +1,5 @@
-import { Verification } from "src/module.api/auth/interface/verification";
+import { Verification } from "../type/verification";
+
 
 export interface signInUserDto {
     verification: Verification;

@@ -4,7 +4,7 @@ import cn from 'classnames';
 import { useDispatch } from "react-redux";
 import TitlePage from "../../../../common/components/TitlePage/TitlePage";
 import Button from "../../../../common/components/Button/Button";
-import { actionsBattle } from "../../../../redux/slice/battle.slice";
+import { actionsBattle } from "../../../../redux/slice/battle/battle.slice";
 
 export default function ModalPause(): JSX.Element {
     //redux 

@@ -19,12 +19,11 @@
     cursor: pointer;
     flex: 1;
     aspect-ratio: 1/1;
-    transition: filter .3s ease, transform .3s ease;
+    transition: filter .3s ease, transform .3s ease, opacity .3s ease;
 }
 
 .panel__item.--active {
-    /* filter: hue-rotate(180deg); */
-    filter: sepia(1);
+    opacity: .35;
 }
 
 .panel__item:not(.--active):hover {

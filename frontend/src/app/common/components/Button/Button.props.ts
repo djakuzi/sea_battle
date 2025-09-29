@@ -9,4 +9,5 @@ export interface PropsButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   onClick: (...args: unknown[]) => void;
   cls?: string;
   children: ReactNode;
+  versionBtn?: 'button-action';
 }

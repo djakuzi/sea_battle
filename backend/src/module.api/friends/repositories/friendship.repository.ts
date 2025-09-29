@@ -83,7 +83,7 @@ export class FriendShipRepository extends StandartRepository<EntityFriendship> {
             for (const field of data.fields) {
                 const key = `friend_${field}` as keyof EntityPlayer;
 
-                if (!row[key]) {
+                if (typeof row[key] === 'undefined') {
                     continue
                 }
 

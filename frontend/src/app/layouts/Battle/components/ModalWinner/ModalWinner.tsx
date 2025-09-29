@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../../redux/store";
 import TitlePage from "../../../../common/components/TitlePage/TitlePage";
 import Button from "../../../../common/components/Button/Button";
-import { actionsBattle } from "../../../../redux/slice/battle.slice";
+import { actionsBattle } from "../../../../redux/slice/battle/battle.slice";
 
 export default function ModalWinner(): JSX.Element {
     //another

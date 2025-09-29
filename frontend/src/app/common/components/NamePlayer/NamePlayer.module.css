@@ -20,15 +20,15 @@
 
 .player__info-name {
     font-size: 1em;
-    color: var(--color-text);
-    text-shadow: .1em .1em .2em var(--color-text-shadow);
+    color: var(--text-color);
+    text-shadow: .1em .1em .2em var(--text-shadow-color);
     white-space: nowrap;
 }
 
 .player__info-rank {
     font-size: 0.8em;
-    color: var(--color-text-prime);
-    text-shadow: .1em .1em .15em var(--color-text-shadow);
+    color: var(--text-prime-color);
+    text-shadow: .1em .1em .15em var(--text-shadow-color);
 }
 
 

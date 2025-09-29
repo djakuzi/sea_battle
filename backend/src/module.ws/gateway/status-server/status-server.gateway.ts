@@ -1,7 +1,8 @@
-import { WebSocketGateway } from '@nestjs/websockets';
+import { ConnectedSocket, SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
 import { DefaultGateway } from 'src/common/gateway /default.gateway';
 import { ServiceStorageSocket } from 'src/common/service/StorageSocketService';
+import { PingService } from './service/ping.service';
 
 @WebSocketGateway({
     namespace: 'status-server',
@@ -12,7 +13,8 @@ import { ServiceStorageSocket } from 'src/common/service/StorageSocketService';
 })
 export class StatusServerGateway extends DefaultGateway  {
     constructor(
-        private readonly serviceStorageSocket: ServiceStorageSocket
+        private readonly serviceStorageSocket: ServiceStorageSocket,
+        private readonly servicePing: PingService
     ) {
         super('status-server');
     }
@@ -35,5 +37,10 @@ export class StatusServerGateway extends DefaultGateway  {
         }
 
         console.log(`Client disconnected: ${client.id}`);
+    }
+
+    @SubscribeMessage('ping')
+    handlePing(@ConnectedSocket() client: Socket): void {
+        this.servicePing.sendPing(client);
     }
 }

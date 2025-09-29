@@ -3,9 +3,9 @@
     align-items: center;
     gap: 0.1em;
     width: 2.5em;
-    color: var(--color-text-prime);
+    color: var(--text-prime-color);
     border-radius: 0.1em;
-    text-shadow: 0 0 .1em var(--color-text-shadow);
+    text-shadow: 0 0 .1em var(--text-shadow-color);
     box-shadow: 0 0 .2em #000000;
     padding: 0.1em;
 }

@@ -4,7 +4,7 @@ import { JSX, useEffect } from "react";
 import { PropsNotification } from './Notification.props';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { actionsNotification } from '@app-redux/slice/notification.slice';
+import { actionsNotification } from '../../../../../../redux/slice/notification/notification.slice';
 import { standartSetTimeout } from '@app-common/script/modules/TimeOut/methods/standartSetTimeout';
 
 function Notification(props: PropsNotification): JSX.Element {

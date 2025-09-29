@@ -5,6 +5,7 @@ import { PropsSearchPlayer } from "./SearchPlayer.props";
 import ListPlayer from "../ListPlayer/ListPlayer";
 import ButtonSearch from "../../../../../../common/components/ButtonSearch/ButtonSearch";
 import { useFindPlayers } from "@app-common/script/hooks/api-hooks/useFIndPlayers.hook";
+import ErrorMessage from "@app-common/components/ErrorMessage/ErrorMessage";
 
 export default function SearchPlayer({
     cls = '',
@@ -43,7 +44,7 @@ export default function SearchPlayer({
                     type="submit"
                 />
             </form>
-            {error && <div>{error}</div>}
+            {error && <ErrorMessage>{error}</ErrorMessage>}
             {listPlayers && <ListPlayer cls={styles['search-list']} listPlayers={listPlayers}/>}
         </div>
     );

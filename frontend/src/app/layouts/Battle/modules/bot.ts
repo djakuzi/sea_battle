@@ -1,5 +1,5 @@
 import { IntrCoord, IntrCoordPuttingShip } from '../../../common/types/Ship.interface';
-import { actionsBattle } from '../../../redux/slice/battle.slice';
+import { actionsBattle } from '../../../redux/slice/battle/battle.slice';
 import { TypePlaneShip, TypeSizeShip } from '../../../common/types/Ship.type';
 import { IntrInfoEnemy } from '../type/Battle.interface';
 import store from '../../../redux/store';

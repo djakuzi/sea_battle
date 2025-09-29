@@ -14,7 +14,7 @@ import { DtoActionList } from './dto/actionList.dto';
 import { DtoRemoveFriend } from './dto/removeFriend.dto';
 
 @Controller('friends')
-export class FrinedController {
+export class FriendController {
   constructor(
     private readonly commonFriendService: CommonFriendService,
     private readonly friendRequestService: FriendRequestService,

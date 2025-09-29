@@ -1,4 +1,4 @@
-import { Verification, VerificationId } from "src/module.api/auth/interface/verification";
+import { Verification, VerificationId } from "src/module.api/auth/type/verification";
 
 
 export function getVerificationId(verification: Verification): number | null {

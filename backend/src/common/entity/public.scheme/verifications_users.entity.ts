@@ -11,13 +11,13 @@ export class EntityVerificationsUsers {
     user_id: number;
 
     @Column({ type: "text", nullable: true })
-    service_data: string | null
+    service_data: string | null;
 
     @Column({ type: "varchar", length: 255, nullable: true })
-    password: string | null
+    password: string | null;
 
     @Column({ type: 'text', unique: true, nullable: true })
-    email: string | null
+    email: string | null;
 
     @ManyToOne(() => EntityUser, user => user.verifications, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
     @JoinColumn({ name: 'user_id' })

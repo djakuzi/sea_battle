@@ -1,5 +1,5 @@
 // common/common.module.ts
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { getJwtConfig } from 'src/core/config/jwt.config';
 import { ConfigService } from '@nestjs/config';
@@ -13,7 +13,7 @@ import { AuthGuard } from './auth.guard';
             useFactory: getJwtConfig,
             inject: [ConfigService],
         }),
-        UserModule,
+        forwardRef(() => UserModule),
     ],
     providers: [AuthGuard, TokenService],
     exports: [AuthGuard, TokenService],

@@ -14,8 +14,8 @@ export default function ListFriends({
 
     if (listFriend?.length === 0 || !listFriend) {
         return (
-            <div className={cn(styles['list'], cls)}>
-                <div>ДРУЗЬЯ НЕ НАЙДЕНЫ</div>
+            <div className={cn(styles['list'], cls)} style={{margin: 'auto 0'}}>
+                <div>Список друзей пуст</div>
             </div>
         );
     }

@@ -1,8 +1,9 @@
 import { IntrStatusConnectionServer, IntrGameSettings, IntrAnimationUi } from "./types/gameSettings.interface";
 
-
 export const statusConnectionServer: IntrStatusConnectionServer = {
     isShow: true,
+    isPing: true,
+    pingTimeMS: 5000,
 };
 
 export const animationUi: IntrAnimationUi = {

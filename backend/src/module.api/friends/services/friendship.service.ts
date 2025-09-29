@@ -97,8 +97,6 @@ export class FriendshipService {
             ]
         });
 
-        console.log(res)
-
         return {
             friends: res ? res : [],
         }

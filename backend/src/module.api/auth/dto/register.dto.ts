@@ -1,4 +1,4 @@
-import { Verification } from "src/module.api/auth/interface/verification";
+import { Verification } from "src/module.api/auth/type/verification";
 
 export class RegisterUserDto {
     login: string;

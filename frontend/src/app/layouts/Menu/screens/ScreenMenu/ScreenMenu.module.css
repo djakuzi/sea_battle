@@ -54,17 +54,17 @@
     margin-bottom: 1em;
     backdrop-filter: blur(.2em);
     -webkit-backdrop-filter: blur(.2em);
-    border: .1em solid rgb(255, 255, 255);
-    border-bottom: .5em solid white;
+    border: .1em solid var(--btn-border-color);
+    border-bottom: .5em solid var(--btn-border-color);
     border-radius: 10vw;
     overflow: hidden;
 }
 
 .game__title {
     margin-bottom: .5em;
-    text-shadow: .1em .1em .2em var(--color-text-shadow);
+    text-shadow: .1em .1em .2em var(--text-shadow-color);
     text-align: center;
-    color: var(--color-text);
+    color: var(--text-color);
 }
 
 .game__types {
@@ -76,13 +76,13 @@
 .game__types-item {
     position: relative;
     padding: .1em;
-    border: .1vw solid white;
+    border: .1vw solid var(--btn-border-color);
     border-radius: .4vw;
-    text-shadow: .1em .1em .2em var(--color-text-shadow);
-    box-shadow: .1em .1em .2em var(--color-block-shadow);
+    text-shadow: .1em .1em .2em var(--text-shadow-color);
+    box-shadow: 0 .1em .2em var(--block-shadow-color);
     backdrop-filter: blur(.2em);
     -webkit-backdrop-filter: blur(.2em);
-    color: var(--color-text);
+    color: var(--text-color);
     perspective: 1000px;
     transition: all 0.6s;
     transform-style: preserve-3d;
@@ -90,7 +90,7 @@
 }
 
 .game__types-item:hover {
-    background-color: var(--color-block-bg);
+    background-color: var(--block-bg-color);
 }
 
 .game__types-item-front,
@@ -124,7 +124,7 @@
 }
 
 .game__leaders {
-    color: var(--color-text);
+    color: var(--text-prime-color);
     text-align: center;
     text-decoration: underline;
     cursor: pointer;
@@ -173,6 +173,7 @@
         font-size: 1em;
     }
 }
+
 /* /16/9 */
 
 /* 16/10 */
@@ -212,4 +213,5 @@
         font-size: 1em;
     }
 }
+
 /* /16/10 */

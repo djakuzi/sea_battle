@@ -1,5 +1,5 @@
 import { IntrCoord, IntrCoordPuttingShip, IntrFullCoordPuttingShip, IntrFullDataShipBattle } from '../../../common/types/Ship.interface';
-import { actionsBattle } from '../../../redux/slice/battle.slice';
+import { actionsBattle } from '../../../redux/slice/battle/battle.slice';
 import store, { RootState } from '../../../redux/store';
 import { TypeParticipant, TypeStatusBattle } from '../types/battle';
 import { createMessageError, StandartError } from '../../../common/script/modules/error';

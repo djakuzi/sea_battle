@@ -1,12 +1,25 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './service/auth.service';
 import { RegisterUserDto } from './dto/register.dto';
 import { signInUserDto } from './dto/sign-in';
 import { Request, Response } from 'express';
+import { ServiceVerififcationUser } from './service/verification-user.service';
+import { EntityUser } from 'src/common/entity/public.scheme/user.entity';
+import { AuthGuard } from 'src/common/guard/auth/auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(
+    private readonly authService: AuthService,
+    private readonly serviceVerificationUser: ServiceVerififcationUser
+  ) { }
+
+  @Get('me-verification')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
+  async getMeVerification(@Req() req: Request) {
+    return await this.serviceVerificationUser.getListVerificationUser((req.user as EntityUser).id);
+  }
 
   @Post('sign-in')
   @HttpCode(HttpStatus.OK)

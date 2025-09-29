@@ -1,9 +1,16 @@
 html {
-    --color-text: #ffffff;
-    --color-text-prime: #55C1FA;
-    --color-text-title: #55C1FA;
-    --color-text-shadow: #000000;
-    --color-block-shadow: #000000;
-    --color-block-bg: #55C1FA;
-    --color-block-border: #ffffff;
+    --text-color: #ffffff;
+    --text-shadow-color: #000000;
+    --text-prime-color: #ffffff;
+    --text-prime-shadow-color: transparent;
+    --title-color: #55C1FA;
+    --block-shadow-color: #000000;
+    --block-bg-color: #55C1FA;
+    --block-border-color: #ffffff;
+    --btn-shadow-color: #000000;
+    --btn-bg-color: #55C1FA;
+    --btn-border-color: #ffffff;
+    --btn-close-border-color: #ffffff;
+    --btn-close-bg-color: #55C1FA;
+    --btn-close-border-color: #ffffff;
 }

@@ -5,7 +5,7 @@ import { PropsListAction } from './ListAction.props';
 import Action from '../Action/Action';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
-import { actionsConstructor } from '../../../../redux/slice/constructor.slice';
+import { actionsConstructor } from '../../../../redux/slice/constructor/constructor.slice';
 import { LIST_ACTION_CONSTRUCTOR_FIELD } from '../../../../core/data/list-component/actionConstructorField';
 import { CONFIG_SHIPS } from '../../../../core/settings/ships.settings';
 import { inDevelopment } from '../../../../common/script/modules/Developer/methods/inDevelopment';
@@ -17,7 +17,7 @@ export default function ListAction({ cls = '', actions }: PropsListAction): JSX.
     const dispatch = useDispatch();
 
     const handlerAction = (name: string): void => {
-        const { random, reset, openModalListSaveCoord} = actions.current;
+        const { random, reset, openModalListSaveCoord } = actions.current;
         const { quantityShips } = CONFIG_SHIPS;
         const isSave = name == 'save';
         const isList = name == 'listSave';

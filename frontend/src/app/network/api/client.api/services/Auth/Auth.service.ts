@@ -2,8 +2,9 @@
 import { IntrRegister } from "./types/Register.interface";
 import axios from 'axios';
 import { IntrSignIn } from "./types/SignIn.interface";
-import { ResponseAuth, ResponseSignOut } from "./types/Response.interface";
+import { ResponseAuth, ResponseSignOut, ResponseVerificationUser } from "./types/Response.interface";
 import ApiClientService from "../../ApiClient.service";
+import { isAxiosError } from "@app-common/script/utils/error/method/isAxiosError";
 
 class AuthCore extends ApiClientService {
 
@@ -11,6 +12,7 @@ class AuthCore extends ApiClientService {
         super(nameController);
 
         this.endPoints = {
+            meVerification : `/${nameController}/me-verification`,
             signIn: `/${nameController}/sign-in`,
             signOut: `/${nameController}/sign-out`,
             register: `/${nameController}/register`,
@@ -18,16 +20,27 @@ class AuthCore extends ApiClientService {
         };
     }
 
+    async getMeVerification(): Promise<ResponseVerificationUser[]> {
+        try {
+            const response = await this.apiClient.get<ResponseVerificationUser[]>(this.endPoints.meVerification,
+                {
+                    headers: {
+                        Authorization: true
+                    },
+                }
+            );
+            return response.data;
+        } catch (error) {
+            throw new Error(isAxiosError(error, 'Неизвестная ошибка'));
+        }
+    }
+
     async signIn(data: IntrSignIn): Promise<ResponseAuth> {
         try {
             const response = await this.apiClient.post<ResponseAuth>(this.endPoints.signIn, data);
             return response.data;
-        } catch (e) {
-            let errorMessage = 'Неизвестная ошибка входа';
-            if (axios.isAxiosError(e)) {
-                errorMessage = e.response?.data?.message || 'Неизвестная ошибка входа';
-            }
-            throw new Error(errorMessage);
+        } catch (error) {
+            throw new Error(isAxiosError(error, 'Неизвестная ошибка входа'));
         }
     }
 
@@ -36,12 +49,8 @@ class AuthCore extends ApiClientService {
             const response = await this.apiClient.post<ResponseAuth>(this.endPoints.register, data);
 
             return response.data;
-        } catch (e) {
-            let errorMessage = 'Неизвестная ошибка регистрации';
-            if (axios.isAxiosError(e)) {
-                errorMessage = e.response?.data?.message || 'Неизвестная ошибка регистрации';
-            }
-            throw new Error(errorMessage);
+        } catch (error) {
+            throw new Error(isAxiosError(error, 'Неизвестная ошибка регистрации'));
         }
     }
 
@@ -50,12 +59,8 @@ class AuthCore extends ApiClientService {
             const response = await this.apiClient.post<ResponseAuth>(this.endPoints.refresh);
 
             return response.data;
-        } catch (e) {
-            if (axios.isAxiosError(e)) {
-                const errorMessage = e.response?.data?.message || 'Вы не авторизованы';
-                throw new Error(errorMessage);
-            }
-            throw new Error('Неизвестная ошибка');
+        } catch (error) {
+            throw new Error(isAxiosError(error, 'Неизвестная ошибка'));
         }
     }
 
@@ -63,12 +68,8 @@ class AuthCore extends ApiClientService {
         try {
             const response = await this.apiClient.post<ResponseSignOut>(this.endPoints.signOut);
             return response.data;
-        } catch (e) {
-            let errorMessage = 'Неизвестная ошибка входа';
-            if (axios.isAxiosError(e)) {
-                errorMessage = e.response?.data?.message || 'Неизвестная ошибка входа';
-            }
-            throw new Error(errorMessage);
+        } catch (error) {
+            throw new Error(isAxiosError(error, 'Неизвестная ошибка выхода'));
         }
     }
 }

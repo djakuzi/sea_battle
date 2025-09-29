@@ -1,7 +1,7 @@
 import { CONFIG_NOTIFICATION } from '@app-core/settings/notification.settings';
 import { IntrNotification } from '../interfaces/Notification';
 import { TypeNotification } from '../types/notification';
-import { actionsNotification } from '@app-redux/slice/notification.slice';
+import { actionsNotification } from '../../../../../redux/slice/notification/notification.slice';
 import store from '@app-redux/store';
 import { showStandartApiCreatedInNotification } from './scripts/standartApiCreated';
 import { showStandartApiResponseInNotification } from './scripts/standartApiResponse';

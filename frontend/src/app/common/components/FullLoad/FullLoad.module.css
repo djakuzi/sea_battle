@@ -56,7 +56,7 @@
 
     to {
         transform: rotateY(-180deg) rotateX(-10deg);
-    } 
+    }
 
 }
 
@@ -79,7 +79,7 @@ html[data-theme="dark"] .load {
         width: 100%;
         height: 100%;
     }
-    
+
     &.--background {
         background-image: url("../../../../assets/image/game/menu/background-ships.jpeg");
         background-repeat: no-repeat;
@@ -118,7 +118,7 @@ html[data-theme="dark"] .load {
         text-align: center;
         color: var(--cs-color-txt);
         animation: text-load-full 1.5s infinite alternate linear;
-        text-shadow: .1vw .1vw .2vw var(--color-text-shadow);
+        text-shadow: .1vw .1vw .2vw var(--text-shadow-color);
     }
 
     .anchor {

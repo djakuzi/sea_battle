@@ -1,0 +1,28 @@
+.reconnect {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .4em;
+    font-size: 1rem;
+    box-shadow: 0 0.1em 0.5em var(--block-shadow-color);
+    border: .15em solid var(--block-border-color);
+    border-radius: .5em;
+    padding: .3em 1em;
+}
+
+.reconnect__title {
+    font-size: 1em;
+    color: var(--text-prime-color);
+    white-space: nowrap;
+}
+
+.reconnect__action {
+    display: flex;
+    gap: .4em;
+}
+
+.reconnect__btn {
+    width: 2.5em;
+    font-size: 1.2em;
+}
+

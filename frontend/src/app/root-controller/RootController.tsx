@@ -3,28 +3,20 @@ import { JSX, useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import NonVisualnterface from "./NonVisualnterface/NonVisualnterface";
 import VusualInterface from "./Visual-Interface/VusualInterface";
-import { useAspectRatio } from "../common/script/hooks/ui/getAspectRatioScreen";
+import { useAuthCheck } from "./script/hook/useAuthCheck.hook";
+import { useRoute } from "./script/hook/useRoute.hook";
+import { useAspectRatio } from "./script/hook/useAspectRatio.hook";
 
 export default function RootController(): JSX.Element {
-    //hook
-    const location = useLocation();
-    const navigate = useNavigate();
     //custom hook
-    const aspectRatio = useAspectRatio();
-
-    const route = (path: string | null = null): void => {
-        if (path) {
-            navigate(path);
-            return;
-        } else if (location.pathname == '/') {
-            navigate('/menu');
-        }
-    };
+    const { route } = useRoute();
+    const { aspectRatio } = useAspectRatio();
+    const { checkAuth } = useAuthCheck()
 
     useEffect(() => {
         route();
+        checkAuth();
     }, []);
-
 
     return (
         <div className="root-controller" data-aspect-ratio={aspectRatio}>

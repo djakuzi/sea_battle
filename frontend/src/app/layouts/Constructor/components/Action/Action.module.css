@@ -18,16 +18,15 @@ html[data-theme="dark"] {
     background-color: rgba(172, 172, 172, 0.317);
     background-color: #55c0fa21;
     transition: transform .3s linear;
-    box-shadow: .05em 0.07em .1em var(--color-block-shadow);
+    box-shadow: .05em 0.07em .1em var(--block-shadow-color);
     transform: scale(0.98);
 }
 
-html[data-theme="dark"] .action {
-}
+html[data-theme="dark"] .action {}
 
 @media (hover: hover) {
     .action:hover {
-        transform: scale(0.97)  translateX(10%);
+        transform: scale(0.97) translateX(10%);
     }
 
     .action:active {

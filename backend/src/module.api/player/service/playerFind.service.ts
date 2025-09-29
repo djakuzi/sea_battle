@@ -1,34 +1,40 @@
-import { ConflictException, Injectable } from "@nestjs/common";
-import { EntityPlayer } from "src/common/entity/game.scheme/player.entity";
-import { EntityManager} from "typeorm";
-import { buildConditionsFindWhere } from "src/common/util/repository/conditions";
-import { ResultFindPlayer } from "../interface/ResultFindPlayer.interface";
-import { CustomOptionSelect } from "src/common/type/repository/CustomOptionSelect.type";
-import { PLayerRepository } from "../repositories/player.repository";
+import { Injectable, NotImplementedException } from "@nestjs/common";
+import { IntrSchemaStrategyFindOne, StrategyFindOne } from "../strategies/find/onePlayer.strategy";
+import { IntrSchemaStrategyFindMore, StrategyFindMore } from "../strategies/find/morePlayer.strategy";
+import { IntrStandartStrategy } from "src/common/type/strategy/standartStrategy.interface";
+
+export enum EnumNameStrategyFindPlayer {
+    ONE = 'one',
+    MORE = 'more',
+}
+
+export interface IntrMapStrategyFindPlayer {
+    [EnumNameStrategyFindPlayer.MORE]: IntrSchemaStrategyFindMore,
+    [EnumNameStrategyFindPlayer.ONE]: IntrSchemaStrategyFindOne,
+}
 
 @Injectable()
 export class PlayerFindService {
+    private mapFindPlayers = new Map<EnumNameStrategyFindPlayer, IntrStandartStrategy<EnumNameStrategyFindPlayer>>();
+    
     constructor(
-        private readonly repoPlayer: PLayerRepository,
-    ){}
-
-    async findPlayers(filter: Partial<EntityPlayer>): Promise<ResultFindPlayer | null>  {
-        const players = await this.repoPlayer.findPlayers(filter);
-        
-        if (!players || players?.length == 0) {
-            throw new ConflictException('Игроки не найдены');
-        }
-
-        return {
-            players: players
-        }
+        private readonly strategyOne: StrategyFindOne,
+        private readonly strategyMore: StrategyFindMore
+    ) {
+        this.mapFindPlayers.set(this.strategyOne.name, this.strategyOne);
+        this.mapFindPlayers.set(this.strategyMore.name, this.strategyMore);
     }
 
-    async findOne(filter: Partial<EntityPlayer>, manager?: EntityManager, select?: CustomOptionSelect<EntityPlayer>): Promise<EntityPlayer | null> {
-        const conditions = buildConditionsFindWhere<EntityPlayer, Partial<EntityPlayer>>(filter, 'OR');
-        if (!conditions) return null;
+    async find<M extends EnumNameStrategyFindPlayer>(
+        method: M,
+        args: IntrMapStrategyFindPlayer[M]['args']
+    ): Promise<IntrMapStrategyFindPlayer[M]['return']> {
+        const strategy = this.mapFindPlayers.get(method);
 
-        const player = await this.repoPlayer.findOne(conditions, manager, select);
-        return player 
+        if (!strategy) {
+            throw new NotImplementedException(`Стратегия поиска игрока не найдена: ${method}`);
+        }
+
+        return await strategy.execute(args) as IntrMapStrategyFindPlayer[M]['return'];
     }
 }

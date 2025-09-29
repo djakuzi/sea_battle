@@ -8,7 +8,7 @@
     display: flex;
     align-items: center;
     gap: 2vw;
-    border-color: var(--color-block-border);
+    border-color: var(--block-border-color);
     border-style: solid;
     background-color: #00000045;
     backdrop-filter: blur(.08vw);
@@ -27,7 +27,7 @@
         backdrop-filter: blur(.08vw);
         -webkit-backdrop-filter: blur(.08vw);
     }
-    
+
     & .status__user-info {
         font-size: 2vw;
     }
@@ -62,4 +62,3 @@
         font-size: 2vw;
     }
 }
-

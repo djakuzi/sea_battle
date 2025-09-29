@@ -13,13 +13,13 @@ import PortShip from "./components/PortShip/PortShip";
 import FullLoad from "../../common/components/FullLoad/FullLoad";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store";
-import { actionsBattle } from "../../redux/slice/battle.slice";
+import { actionsBattle } from "../../redux/slice/battle/battle.slice";
 import { TypeBattle } from "../Battle/types/battle";
 import ListAction from "./components/ListAction/ListAction";
-import { actionsConstructor } from "../../redux/slice/constructor.slice";
+import { actionsConstructor } from "../../redux/slice/constructor/constructor.slice";
 import { createOneNotificftion } from "../../root-controller/Visual-Interface/elements/Notification/modules/notification";
 import { useGetWidthRect } from "../../common/script/hooks/getWidthRect";
-import { useListJSXElement } from "@app-common/script/hooks/useListJSXelement";
+import { useListJSXElement } from "../../common/script/hooks/ui/useListJSXelement";
 import { EnumConstructorModals, LIST_CONSTRUCTOR_MODALS } from "./data/list-modal";
 import { ModalCloseContext } from "@app-common/context/ModalCloseContext";
 import ModalWindow from "@app-common/components/ModalWindow/ModalWindow";
@@ -47,7 +47,7 @@ export default function Constructor(): JSX.Element {
     const refConstructor = useRef<HTMLDivElement>(null);
     const refManagerConstructor = useRef<ManagerConstructor>(null);
     const refActions = useRef({
-        openModalListSaveCoord: ():void => {},
+        openModalListSaveCoord: (): void => { },
         reset: refManagerConstructor.current?.resetPositionShips,
         random: refManagerConstructor.current?.randomPositionShips,
     });
@@ -59,7 +59,7 @@ export default function Constructor(): JSX.Element {
     //custom hook
     const widthRect = useGetWidthRect(refCoordRect);
     const { jsxElement, setJSXByName, resetJSX } = useListJSXElement<EnumConstructorModals>(LIST_CONSTRUCTOR_MODALS);
-    
+
     const typeGame = searchParams.get('typegame') as TypeBattle;
     const testGame = typeGame == "invite" || typeGame == "bot";
 
@@ -96,7 +96,7 @@ export default function Constructor(): JSX.Element {
 
     const initManagerConstructor = (): void => {
         if (!refCoordRect.current || isMounted.current) return;
-        
+
         refManagerConstructor.current = new ManagerConstructor(refCoordRect.current!, refConstructor.current!);
         refManagerConstructor.current.init();
 
@@ -125,13 +125,31 @@ export default function Constructor(): JSX.Element {
     return (
         <div ref={refConstructor} className={cn(styles['constructor'], { [styles['--loading']]: isload })} style={{ backgroundImage: `url(${IMGbg})` }}>
             <div className={styles['load']}>
-                <FullLoad isBackground={false} text={textBattle[typeGame + '']} cls={styles['load__anchor']}></FullLoad>
-                <Button cls={cn(styles['load__close'], 'button-action')} onClick={loadClose} isBtn={true}>Отменить</Button>
+                <FullLoad
+                    isBackground={false}
+                    text={textBattle[typeGame + '']}
+                    cls={styles['load__anchor']}
+                />
+                <Button
+                    cls={cn(styles['load__close'], 'button-action')}
+                    onClick={loadClose}
+                    isBtn={true}
+                    versionBtn="button-action"
+                >
+                    Отменить
+                </Button>
             </div>
 
             <div className={cn(styles['constructor__box'])}>
                 <div className={styles['constructor__action']}>
-                    <Button cls={cn(styles['constructor-action__exit'], 'button-action')} isBtn={true} onClick={exit}>Назад</Button>
+                    <Button
+                        cls={cn(styles['constructor-action__exit'], 'button-action')}
+                        isBtn={true}
+                        onClick={exit}
+                        versionBtn="button-action"
+                    >
+                        Назад
+                    </Button>
                 </div>
 
                 <div className={styles['constructor__positon']}>
@@ -144,9 +162,18 @@ export default function Constructor(): JSX.Element {
                 </div>
 
                 <div className={styles['constructor__action']}>
-                    <Button cls={cn(styles['constructor-action__play'], 'button-action', {
-                        [styles['red']]: testGame
-                    })} isBtn={true} onClick={play}>
+                    <Button
+                        cls={cn(
+                            styles['constructor-action__play'],
+                            'button-action',
+                            {
+                                [styles['red']]: testGame
+                            }
+                        )}
+                        isBtn={true}
+                        onClick={play}
+                        versionBtn="button-action"
+                    >
                         <div className={styles['constructor-action-play__text']}>{textbtn[typeGame + '']}</div>
                         <div className={styles['constructor-action-play__bang']}>
                             <img src={testGame ? IMGBang + '' : IMGSearchShip + ''} alt="" />

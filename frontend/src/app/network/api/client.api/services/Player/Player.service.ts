@@ -10,7 +10,7 @@ class PlayerCore extends ApiClientService {
 
         this.endPoints = {
             findPlayers: `/${nameController}/find-players`,
-            stausOnlinePlayers: `/${nameController}/status-online`,
+            stausOnlinePlayers: `/${nameController}/status-network`,
         };
     }
 

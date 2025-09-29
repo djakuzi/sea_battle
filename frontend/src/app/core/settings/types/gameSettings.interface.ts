@@ -2,6 +2,8 @@
 
 export interface IntrStatusConnectionServer {
     isShow: boolean;
+    isPing: boolean;
+    pingTimeMS: number;
 }
 
 export interface IntrAnimationUi {

@@ -18,6 +18,7 @@ export default defineConfig({
       '@app-network': '/src/app/network',
       '@app-layouts': '/src/app/layouts',
       '@app-core': '/src/app/core',
+      '@app-event': '/src/app/event',
       '@app-common': '/src/app/common',
       '@app-redux': '/src/app/redux',
       '@app-rootController': '/src/app/root-controller',

@@ -11,7 +11,7 @@ import { AppDispatch } from '../../../../redux/store';
 import { signOutThunk } from '../../../../redux/slice/auth/asyncThunk/signOut';
 import { EnumProfileList } from '../../../../core/data/list-component/interfaces/profileMenu.interface';
 import { ModalCloseContext } from '../../../../common/context/ModalCloseContext';
-import { useListJSXElement } from '../../../../common/script/hooks/useListJSXelement';
+import { useListJSXElement } from '../../../../common/script/hooks/ui/useListJSXelement';
 
 export default function ScreenProfile({ cls = '', inputRef }: PropsScreenProfile): JSX.Element {
     //redux

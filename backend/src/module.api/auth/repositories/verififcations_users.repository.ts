@@ -4,6 +4,7 @@ import { EntityVerificationsUsers } from "../../../common/entity/public.scheme/v
 import { DataSource, EntityManager, Repository } from "typeorm";
 import { getRepo } from "../../../common/util/repository/other";
 import { CustomOptionWhere } from "../../../common/type/repository/CustomOptionWhere.type";
+import { IntrVerificationUser } from "../type/VerificationUser.intreface";
 
 @Injectable()
 export class VerificationsUsersRepository {
@@ -28,5 +29,23 @@ export class VerificationsUsersRepository {
     })
 
     return res;
+  }
+
+  async getUserVerifications(userId: number): Promise<IntrVerificationUser[]> {
+    const repo = getRepo(EntityVerificationsUsers, this.dataSource);
+
+    const result = await repo
+      .createQueryBuilder('vu')
+      .leftJoin('vu.user', 'user')
+      .leftJoin('vu.verification', 'verification')
+      .select([
+        'user.login AS login',
+        'vu.email AS email',
+        'verification.name AS verification_name',
+      ])
+      .where('user.id = :userId', { userId })
+      .getRawMany();
+
+    return result as IntrVerificationUser[];
   }
 }
