@@ -21,35 +21,33 @@ import { StrategyEmailSignIn } from './strategies/signIn/email.strategies';
 import { PlayerModule } from '../player/player.module';
 import { RoleModule } from '../role/role.module';
 
-
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([
-      EntityUser,
-      EntityVerificationsUsers,
-      EntityVerifications,
-      EntityRolesUsers,
-      EntityPlayer
-    ]),
-    JwtModule.registerAsync({
-      useFactory: getJwtConfig,
-      inject: [ConfigService],
-    }),
-    AuthGuardModule,
-    UserModule,
-    StatisticPlayersModule,
-    PlayerModule,
-    RoleModule
-  ],
-  controllers: [AuthController],
-  providers: [
-    AuthService,
-    TokenService,
-    VerificationsUsersRepository,
-    ServiceVerififcationUser,
-    StrategyRegisterEmail,
-    StrategyEmailSignIn,
-  ],
+	imports: [
+		TypeOrmModule.forFeature([
+			EntityUser,
+			EntityVerificationsUsers,
+			EntityVerifications,
+			EntityRolesUsers,
+			EntityPlayer,
+		]),
+		JwtModule.registerAsync({
+			useFactory: getJwtConfig,
+			inject: [ConfigService],
+		}),
+		AuthGuardModule,
+		UserModule,
+		StatisticPlayersModule,
+		PlayerModule,
+		RoleModule,
+	],
+	controllers: [AuthController],
+	providers: [
+		AuthService,
+		TokenService,
+		VerificationsUsersRepository,
+		ServiceVerififcationUser,
+		StrategyRegisterEmail,
+		StrategyEmailSignIn,
+	],
 })
-
-export class AuthModule { }
+export class AuthModule {}

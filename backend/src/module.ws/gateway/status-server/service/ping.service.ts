@@ -3,10 +3,9 @@ import { Socket } from 'socket.io';
 
 @Injectable()
 export class PingService {
-  constructor() { }
+	constructor() {}
 
-  sendPing(client: Socket): void {
-
-    client.emit('ping');
-  }
+	async sendPing(client: Socket): Promise<void> {
+		client.emit('ping');
+	}
 }

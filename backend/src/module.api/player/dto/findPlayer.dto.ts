@@ -1,3 +1,3 @@
 export class FindPlayerDto {
-    nickname: string;
+	nickname: string;
 }

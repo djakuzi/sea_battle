@@ -1,39 +1,38 @@
-import { Injectable, NotImplementedException } from "@nestjs/common";
-import { IntrSchemaStrategyOne, StrategyOne } from "../strategies/find/one.strategy";
-import { IntrStandartStrategy } from "src/common/type/strategy/standartStrategy.interface";
+import { Injectable, NotImplementedException } from '@nestjs/common';
+import { IntrSchemaStrategyOne, StrategyOne } from '../strategies/find/one.strategy';
+import { IntrStandartStrategy } from 'src/common/types/strategy/standartStrategy.interface';
 
-export enum EnumNameStrategyFindStatisticPlayer {
-    ONE = 'one',
+export enum EnumNameStrategy {
+	ONE = 'one',
 }
 
 export interface IntrMapStrategyFindStatisticPlayer {
-    [EnumNameStrategyFindStatisticPlayer.ONE]: IntrSchemaStrategyOne
+	[EnumNameStrategy.ONE]: IntrSchemaStrategyOne;
 }
 
-export const LIST_FIND_STRATEGIES = [
-    StrategyOne,
-]
+export const LIST_FIND_STRATEGIES = [StrategyOne];
 
 @Injectable()
 export class ServiceFindStatisticPlayer {
-    private mapFind = new Map<EnumNameStrategyFindStatisticPlayer, IntrStandartStrategy<EnumNameStrategyFindStatisticPlayer>>();
+	static strategyName = EnumNameStrategy;
+	private mapStrategies = new Map<EnumNameStrategy, IntrStandartStrategy<EnumNameStrategy>>();
 
-    constructor(
-        private readonly strategyOne: StrategyOne,
-    ) { 
-        this.mapFind.set(this.strategyOne.name, this.strategyOne);
-    }
+	constructor(private readonly strategyOne: StrategyOne) {
+		this.mapStrategies.set(this.strategyOne.name, this.strategyOne);
+	}
 
-    async find<M extends EnumNameStrategyFindStatisticPlayer>(
-        method: M,
-        args: IntrMapStrategyFindStatisticPlayer[M]['args']
-    ): Promise<IntrMapStrategyFindStatisticPlayer[M]['return']> {
-        const strategy = this.mapFind.get(method);
+	async find<M extends EnumNameStrategy>(
+		method: M,
+		args: IntrMapStrategyFindStatisticPlayer[M]['args']
+	): Promise<IntrMapStrategyFindStatisticPlayer[M]['return']> {
+		const strategy = this.mapStrategies.get(method);
 
-        if (!strategy) {
-            throw new NotImplementedException(`Стратегия поиска статистики пользователя не найдена: ${method}`);
-        }
+		if (!strategy) {
+			throw new NotImplementedException(
+				`Стратегия поиска статистики пользователя не найдена: ${method}`
+			);
+		}
 
-        return await strategy.execute(args) as IntrMapStrategyFindStatisticPlayer[M]['return'];
-    }
+		return (await strategy.execute(args)) as IntrMapStrategyFindStatisticPlayer[M]['return'];
+	}
 }

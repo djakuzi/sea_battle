@@ -1,3 +1,3 @@
 export class DtoRemoveFriend {
-    idFriend: number;
+	idFriend: number;
 }

@@ -1,39 +1,44 @@
-import { Injectable, ConflictException } from "@nestjs/common";
-import { EntityPlayer } from "src/common/entity/game.scheme/player.entity";
-import { PlayerRepository } from "../../repositories/player.repository";
-import { EnumNameStrategyFindPlayer } from "../../service/playerFind.service";
-import { IntrStandartSchemaStrategy, IntrStandartStrategy } from "src/common/type/strategy/standartStrategy.interface";
+import { Injectable, ConflictException } from '@nestjs/common';
+import { EntityPlayer } from 'src/common/entity/game.scheme/player.entity';
+import { PlayerRepository } from '../../repositories/player.repository';
+import {
+	IntrStandartSchemaStrategy,
+	IntrStandartStrategy,
+} from 'src/common/types/strategy/standartStrategy.interface';
+import { ServicePlayerFind } from '../../service/playerFind.service';
 
 export interface IntrArgsStrategyFindMore {
-    filter: Partial<EntityPlayer>,
+	filter: Partial<EntityPlayer>;
 }
 
 export interface TypeReturnStrategyFindMore {
-    players: EntityPlayer[]
+	players: EntityPlayer[];
 }
 
-export interface IntrSchemaStrategyFindMore extends IntrStandartSchemaStrategy<IntrArgsStrategyFindMore, TypeReturnStrategyFindMore> {
-    args: IntrArgsStrategyFindMore
-    return: TypeReturnStrategyFindMore;
+export interface IntrSchemaStrategyFindMore
+	extends IntrStandartSchemaStrategy<IntrArgsStrategyFindMore, TypeReturnStrategyFindMore> {
+	args: IntrArgsStrategyFindMore;
+	return: TypeReturnStrategyFindMore;
 }
 
 @Injectable()
-export class StrategyFindMore implements IntrStandartStrategy<EnumNameStrategyFindPlayer> {
-    readonly name = EnumNameStrategyFindPlayer.MORE;
+export class StrategyFindMore
+	implements IntrStandartStrategy<typeof ServicePlayerFind.strategyName.MORE> {
+	readonly name = ServicePlayerFind.strategyName.MORE;
 
-    constructor(
-        private readonly repoPlayer: PlayerRepository,
-    ) { }
+	constructor(private readonly repoPlayer: PlayerRepository) { }
 
-    async execute(data: IntrSchemaStrategyFindMore['args']): Promise<IntrSchemaStrategyFindMore['return'] | null> {
-        const players = await this.repoPlayer.findPlayers(data.filter);
+	async execute(
+		data: IntrSchemaStrategyFindMore['args']
+	): Promise<IntrSchemaStrategyFindMore['return'] | null> {
+		const players = await this.repoPlayer.findPlayers(data.filter);
 
-        if (!players || players?.length == 0) {
-            throw new ConflictException('Игроки не найдены');
-        }
+		if (!players || players?.length == 0) {
+			throw new ConflictException('Игроки не найдены');
+		}
 
-        return {
-            players: players
-        }
-    }
+		return {
+			players: players,
+		};
+	}
 }

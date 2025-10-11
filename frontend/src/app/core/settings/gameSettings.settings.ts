@@ -10,7 +10,10 @@ export const animationUi: IntrAnimationUi = {
     isInterface: true,
 }
 
+export const isOnlinePlayer = true;
+
 export const STANDART_SETTINGS: IntrGameSettings = {
     statusConnectionServer,
-    animationUi
+    animationUi,
+	isOnlinePlayer
 };

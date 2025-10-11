@@ -1,3 +1,3 @@
 export interface DtoPlayerOnlineStatus {
-    id: number,
+	id: number;
 }

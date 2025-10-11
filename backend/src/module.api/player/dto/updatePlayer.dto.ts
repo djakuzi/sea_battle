@@ -1,4 +1,4 @@
 export interface DtoUpdatedPlayer {
-    avatar: string;
-    nickname: string;
+	avatar: string;
+	nickname: string;
 }

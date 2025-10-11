@@ -8,27 +8,14 @@ import { RoleRepository } from './repositories/roles.repository';
 import { RolesUsersRepository } from './repositories/roles_users.reposotory';
 import { RoleUserService } from './services/role_user.service';
 
-const listRepo = [
-  RolesUsersRepository,
-  RoleRepository,
-]
+const listRepo = [RolesUsersRepository, RoleRepository];
 
-const listService = [
-  RoleUserService,
-  RoleService,
-]
+const listService = [RoleUserService, RoleService];
 
 @Module({
-  imports: [TypeOrmModule.forFeature([EntityRole, EntityRolesUsers])],
-  controllers: [RoleController],
-  providers: [
-    ...listRepo, 
-    ...listService,
-  ],
-  exports: [
-    ...listRepo,
-    ...listService,
-  ]
+	imports: [TypeOrmModule.forFeature([EntityRole, EntityRolesUsers])],
+	controllers: [RoleController],
+	providers: [...listRepo, ...listService],
+	exports: [...listRepo, ...listService],
 })
-
-export class RoleModule { }
+export class RoleModule {}

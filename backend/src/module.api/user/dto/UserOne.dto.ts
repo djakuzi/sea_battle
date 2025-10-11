@@ -1,4 +1,4 @@
 export class DtoOneUser {
-  id?: number;
-  login?: string;
+	id?: number;
+	login?: string;
 }

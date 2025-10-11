@@ -23,6 +23,8 @@ import { useListJSXElement } from "../../common/script/hooks/ui/useListJSXelemen
 import { EnumConstructorModals, LIST_CONSTRUCTOR_MODALS } from "./data/list-modal";
 import { ModalCloseContext } from "@app-common/context/ModalCloseContext";
 import ModalWindow from "@app-common/components/ModalWindow/ModalWindow";
+import { IntrCoordPuttingShip } from "@app-common/types/Ship.interface";
+import { useStartGame } from "./scripts/hook/startGame.hook";
 
 const textbtn = {
     'bot': 'Порвать ботяру',
@@ -59,6 +61,7 @@ export default function Constructor(): JSX.Element {
     //custom hook
     const widthRect = useGetWidthRect(refCoordRect);
     const { jsxElement, setJSXByName, resetJSX } = useListJSXElement<EnumConstructorModals>(LIST_CONSTRUCTOR_MODALS);
+	const { startGame } = useStartGame();
 
     const typeGame = searchParams.get('typegame') as TypeBattle;
     const testGame = typeGame == "invite" || typeGame == "bot";
@@ -80,14 +83,10 @@ export default function Constructor(): JSX.Element {
 
         setIsLoad(true);
 
-        dispatch(actionsBattle.setCoordPuttingShips({
-            typePlayers: 'player',
-            coordPuttingShips: refManagerConstructor.current.arrCoordPuttingShip,
-        }));
-
-        dispatch(actionsBattle.setTypeBattle(typeGame));
-        dispatch(actionsConstructor.resetLastCoordsShips());
-        navigate('/battle');
+		startGame(
+			refManagerConstructor.current.arrCoordPuttingShip,
+			typeGame
+		);
     };
 
     const loadClose = (): void => {

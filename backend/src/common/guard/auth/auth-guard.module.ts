@@ -8,15 +8,14 @@ import { TokenService } from 'src/module.api/auth/service/token.service';
 import { AuthGuard } from './auth.guard';
 
 @Module({
-    imports: [
-        JwtModule.registerAsync({
-            useFactory: getJwtConfig,
-            inject: [ConfigService],
-        }),
-        forwardRef(() => UserModule),
-    ],
-    providers: [AuthGuard, TokenService],
-    exports: [AuthGuard, TokenService],
+	imports: [
+		JwtModule.registerAsync({
+			useFactory: getJwtConfig,
+			inject: [ConfigService],
+		}),
+		forwardRef(() => UserModule),
+	],
+	providers: [AuthGuard, TokenService],
+	exports: [AuthGuard, TokenService],
 })
-
 export class AuthGuardModule {}

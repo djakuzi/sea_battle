@@ -4,20 +4,14 @@ import { RoleRepository } from '../repositories/roles.repository';
 
 @Injectable()
 export class RoleService {
-  constructor(
-    private readonly roleRepo: RoleRepository
-  ) { }
+	constructor(private readonly roleRepo: RoleRepository) {}
 
-  async getAllRoles(): Promise<EntityRole[]> {
-    const result = await this.roleRepo.findAll();
-    return result;
-  }
+	async getAllRoles(): Promise<EntityRole[]> {
+		const result = await this.roleRepo.findAll();
+		return result;
+	}
 
-  async findRoleByUser() {
+	async findRoleByUser() {}
 
-  }
-
-  async addNewRoleByUser() {
-
-  }
+	async addNewRoleByUser() {}
 }

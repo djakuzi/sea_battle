@@ -1,3 +1,3 @@
 export class DtoActionList {
-    listIdPlayers: number[];
+	listIdPlayers: number[];
 }

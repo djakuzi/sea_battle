@@ -5,7 +5,7 @@ import IMGbg from '../../../../../assets/image/game/constructor/ship.jpg';
 import BattleField from "../../components/BattleField/BattleField";
 import BattleAction from "../../components/BattleAction/BattleAction";
 import { BotBattle } from "../../modules/bot";
-import { BattleBot as logicsBattleBot } from "../../modules/battle";
+import { BattleBot as logicsBattleBot } from "../../modules/battleBot";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import ModalWindow from "../../../../common/components/ModalWindow/ModalWindow";

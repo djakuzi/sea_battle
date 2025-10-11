@@ -1,34 +1,46 @@
-import { Injectable, NotImplementedException } from "@nestjs/common";
-import { IntrStandartStrategy } from "src/common/type/strategy/standartStrategy.interface";
-import { IntrSchemaStrategyStatusNetwork, StrategyStatusNetwork } from "../strategies/get/statusNetwork.strategy";
+import { Injectable, NotImplementedException } from '@nestjs/common';
+import { IntrStandartStrategy } from 'src/common/types/strategy/standartStrategy.interface';
+import {
+	IntrSchemaStrategyStatusNetwork,
+	StrategyStatusNetwork,
+} from '../strategies/get/statusNetwork.strategy';
+import { IntrSchemaStrategyGuestOrPlayer, StrategyGuestOrPlayer } from '../strategies/get/guestOrPlayer';
 
-export enum EnumNameStrategyGetPlayer {
-    STATUS_NETWORK = 'status-network',
+export enum EnumNameStrategy {
+	STATUS_NETWORK = 'status-network',
+	GUEST_OR_PLAYER = 'guest-or-player'
 }
 
 export interface IntrMapStrategyGetPlayer {
-    [EnumNameStrategyGetPlayer.STATUS_NETWORK]: IntrSchemaStrategyStatusNetwork,
+	[EnumNameStrategy.STATUS_NETWORK]: IntrSchemaStrategyStatusNetwork;
+	[EnumNameStrategy.GUEST_OR_PLAYER]: IntrSchemaStrategyGuestOrPlayer;
 }
 
 @Injectable()
-export class PlayerGetService {
-    private mapGetPlayers = new Map<EnumNameStrategyGetPlayer, IntrStandartStrategy<EnumNameStrategyGetPlayer>>();
-    constructor(
-        // private readonly strategyStatusNetwork: StrategyGetStatusNetwork
-    ) {
-        // this.mapGetPlayers.set(this.strategyStatusNetwork.name, this.strategyStatusNetwork);
-    }
+export class ServicePlayerGet {
+	static strategyName = EnumNameStrategy;
+	private mapStrategies = new Map<EnumNameStrategy, IntrStandartStrategy<EnumNameStrategy>>();
 
-    async get<M extends EnumNameStrategyGetPlayer>(
-        method: M,
-        args: IntrMapStrategyGetPlayer[M]['args']
-    ): Promise<IntrMapStrategyGetPlayer[M]['return']> {
-        const strategy = this.mapGetPlayers.get(method);
+	constructor(
+		private readonly strategyStatusNetwork: StrategyStatusNetwork,
+		private readonly strategyGuestOrPlayer: StrategyGuestOrPlayer,
+	) {
+		this.mapStrategies.set(this.strategyStatusNetwork.name, this.strategyStatusNetwork);
+		this.mapStrategies.set(this.strategyGuestOrPlayer.name, this.strategyGuestOrPlayer);
+	}
 
-        if (!strategy) {
-            throw new NotImplementedException(`Стратегия получения данных игрока не найдена: ${method}`);
-        }
+	async get<M extends EnumNameStrategy>(
+		method: M,
+		args: IntrMapStrategyGetPlayer[M]['args']
+	): Promise<IntrMapStrategyGetPlayer[M]['return']> {
+		const strategy = this.mapStrategies.get(method);
 
-        return await strategy.execute(args) as IntrMapStrategyGetPlayer[M]['return'];
-    }
+		if (!strategy) {
+			throw new NotImplementedException(
+				`Стратегия получения данных игрока не найдена: ${method}`
+			);
+		}
+
+		return (await strategy.execute(args)) as IntrMapStrategyGetPlayer[M]['return'];
+	}
 }

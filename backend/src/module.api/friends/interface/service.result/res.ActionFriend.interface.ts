@@ -1,5 +1,5 @@
-import { IntrActionFriend } from "../actionFriend.interface";
+import { IntrActionFriend } from '../actionFriend.interface';
 
 export interface IntrResActionFriend {
-    listActions: IntrActionFriend[]
+	listActions: IntrActionFriend[];
 }

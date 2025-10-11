@@ -1,88 +1,93 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import { FullJwtTokens, JwtPayload } from "../type/jwt-token.interface";
-import { ConfigService } from "@nestjs/config";
-import { Backend, Frontend } from "src/module.config/config/configuration";
-import { Response } from "express";
-import { isDevMode } from "src/common/util/other/mode";
-import { EnumNameStrategyFindUser, ServiceUserFind } from "src/module.api/user/service/userFind.service";
-import { EntityUser } from "src/common/entity/public.scheme/user.entity";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { FullJwtTokens, JwtPayload } from '../type/jwt-token.interface';
+import { ConfigService } from '@nestjs/config';
+import { Backend, Frontend } from 'src/module.config/config/configuration';
+import { Response } from 'express';
+import { ServiceUserFind } from 'src/module.api/user/service/userFind.service';
+import { EntityUser } from 'src/common/entity/public.scheme/user.entity';
+import { isDevMode } from 'src/common/util/development/methods/isDevMode';
 
 @Injectable()
 export class TokenService {
-    private readonly FRONTEND_DOMAIN: string | undefined;
-    private readonly JWT_ACCESS_TOKEN_TTL: string | undefined;
-    private readonly JWT_REFRESH_TOKEN_TTL: string | undefined;
-    
-    constructor(
-        private readonly serviceJwt: JwtService,
-        private readonly serviceConfig: ConfigService,
-        private readonly serviceUserFind: ServiceUserFind,
-    ) {
-        this.FRONTEND_DOMAIN = this.serviceConfig.get<Frontend>('frontend')?.host;
-        this.JWT_ACCESS_TOKEN_TTL = this.serviceConfig.get<Backend>('backend')?.jwt.JWT_ACCESS_TOKEN_TTL;
-        this.JWT_REFRESH_TOKEN_TTL = this.serviceConfig.get<Backend>('backend')?.jwt.JWT_REFRESH_TOKEN_TTL;
-    }
+	private readonly FRONTEND_DOMAIN: string | undefined;
+	private readonly JWT_ACCESS_TOKEN_TTL: string | undefined;
+	private readonly JWT_REFRESH_TOKEN_TTL: string | undefined;
 
-    auth(res: Response, uuid: string, login: string): string {
-        const { accessToken, refreshToken } = this.generateTokenUser(uuid, login);
+	constructor(
+		private readonly serviceJwt: JwtService,
+		private readonly serviceConfig: ConfigService,
+		private readonly serviceUserFind: ServiceUserFind
+	) {
+		this.FRONTEND_DOMAIN = this.serviceConfig.get<Frontend>('frontend')?.host;
+		this.JWT_ACCESS_TOKEN_TTL =
+			this.serviceConfig.get<Backend>('backend')?.jwt.JWT_ACCESS_TOKEN_TTL;
+		this.JWT_REFRESH_TOKEN_TTL =
+			this.serviceConfig.get<Backend>('backend')?.jwt.JWT_REFRESH_TOKEN_TTL;
+	}
 
-        this.setCookie(res, refreshToken, new Date(Date.now() + 604800));
-        return accessToken
-    }
+	auth(res: Response, uuid: string, login: string): string {
+		const { accessToken, refreshToken } = this.generateTokenUser(uuid, login);
 
-    generateTokenUser(uuid: string, login: string): FullJwtTokens {
-        const payload: JwtPayload = { uuid, login };
+		this.setCookie(res, refreshToken, new Date(Date.now() + 604800));
+		return accessToken;
+	}
 
-        const accessToken = this.serviceJwt.sign(payload, {
-            expiresIn: this.JWT_ACCESS_TOKEN_TTL || '1h',
-        })
+	generateTokenUser(uuid: string, login: string): FullJwtTokens {
+		const payload: JwtPayload = { uuid, login };
 
-        const refreshToken = this.serviceJwt.sign(payload, {
-            expiresIn: '7d' //|| this.JWT_REFRESH_TOKEN_TTL,
-        })
+		const accessToken = this.serviceJwt.sign(payload, {
+			expiresIn: this.JWT_ACCESS_TOKEN_TTL || '1h',
+		});
 
-        return {
-            accessToken,
-            refreshToken
-        }
-    }
+		const refreshToken = this.serviceJwt.sign(payload, {
+			expiresIn: '7d', //|| this.JWT_REFRESH_TOKEN_TTL,
+		});
 
-    async checkTokenUser(token: string): Promise<EntityUser | null> {
-        let payload: JwtPayload | null = null;
+		return {
+			accessToken,
+			refreshToken,
+		};
+	}
 
-        try {
-            payload = await this.serviceJwt.verifyAsync<JwtPayload>(token);
-        } catch (e) {
-            console.log(e);
-            throw new NotFoundException('Пользователь не найден');
-        }
+	async checkTokenUser(token: string): Promise<EntityUser | null> {
+		let payload: JwtPayload | null = null;
 
-        if (payload) {
-            const argsFind = {
-                filter: {
-                    uuid: payload.uuid 
-                }
-            }
-            const user = await this.serviceUserFind.find(EnumNameStrategyFindUser.ONE, argsFind);
+		try {
+			payload = await this.serviceJwt.verifyAsync<JwtPayload>(token);
+		} catch (e) {
+			console.log(e);
+			throw new NotFoundException('Пользователь не найден');
+		}
 
-            if (!user) {
-                throw new NotFoundException('Пользователь не найден');
-            }
+		if (payload) {
+			const argsFind = {
+				filter: {
+					uuid: payload.uuid,
+				},
+			};
+			const user = await this.serviceUserFind.find(
+				ServiceUserFind.strategyName.ONE,
+				argsFind
+			);
 
-            return user
-        }
+			if (!user) {
+				throw new NotFoundException('Пользователь не найден');
+			}
 
-        return null
-    }
+			return user;
+		}
 
-    setCookie(res: Response, value: string, expires: Date) {
-        res.cookie('refreshToken', value, {
-            httpOnly: true,
-            domain: this.FRONTEND_DOMAIN,
-            expires: expires,
-            secure: !isDevMode(this.serviceConfig),
-            sameSite: !isDevMode(this.serviceConfig) ? 'none' : 'lax',
-        })
-    }
+		return null;
+	}
+
+	setCookie(res: Response, value: string, expires: Date) {
+		res.cookie('refreshToken', value, {
+			httpOnly: true,
+			domain: this.FRONTEND_DOMAIN,
+			expires: expires,
+			secure: !isDevMode(this.serviceConfig),
+			sameSite: !isDevMode(this.serviceConfig) ? 'none' : 'lax',
+		});
+	}
 }

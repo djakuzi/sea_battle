@@ -3,7 +3,6 @@ import { TypeCallback } from "@app-common/types/typeCallback.type";
 
 export function isErrorWithConsole<R, Args extends any[] = []>(error: any, callback?: TypeCallback<R, Args>, args?: Args): R | void {
     if (error instanceof Error) {
-        console.error(error.message);
         devModeConsole('error', error.message);
     }
 }

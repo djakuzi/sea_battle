@@ -5,13 +5,8 @@ import { DatabaseModule } from './module.database/database.module';
 import { WsModule } from './module.ws/ws.module';
 
 @Module({
-  imports: [
-    ConfigAppModule,
-    DatabaseModule,
-    ApiModule,
-    WsModule
-  ]
+	imports: [ConfigAppModule, DatabaseModule, ApiModule, WsModule],
 })
 export class AppModule implements NestModule {
-  configure() { }
+	configure() {}
 }

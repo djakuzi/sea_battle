@@ -1,39 +1,40 @@
-import { Injectable, NotImplementedException } from "@nestjs/common";
-import { IntrSchemaStrategyDefault, StrategyDefault } from "../strategies/creative/default.strategy";
-import { IntrStandartStrategy } from "src/common/type/strategy/standartStrategy.interface";
+import { Injectable, NotImplementedException } from '@nestjs/common';
+import { IntrSchemaStrategyDefault, StrategyDefault } from '../strategies/create/default.strategy';
+import { IntrStandartStrategy } from 'src/common/types/strategy/standartStrategy.interface';
 
-export enum EnumNameStrategyCreativeStatisticPlayer {
-    DEFAULT = 'default',
+export enum EnumNameStrategy {
+	DEFAULT = 'default',
 }
 
 export interface IntrMapStrategyCreativeStatisticPlayer {
-    [EnumNameStrategyCreativeStatisticPlayer.DEFAULT]: IntrSchemaStrategyDefault
+	[EnumNameStrategy.DEFAULT]: IntrSchemaStrategyDefault;
 }
 
-export const LIST_СREATIVE_STRATEGIES = [
-    StrategyDefault,
-]
+export const LIST_СREATIVE_STRATEGIES = [StrategyDefault];
 
 @Injectable()
 export class ServiceCreativeStatisticPlayer {
-    private mapCreative = new Map<EnumNameStrategyCreativeStatisticPlayer, IntrStandartStrategy<EnumNameStrategyCreativeStatisticPlayer>>();
+	static strategyName = EnumNameStrategy;
+	private mapStrategies = new Map<EnumNameStrategy, IntrStandartStrategy<EnumNameStrategy>>();
 
-    constructor(
-        private readonly strategyDefault: StrategyDefault,
-    ) { 
-        this.mapCreative.set(this.strategyDefault.name, this.strategyDefault);
-    }
+	constructor(private readonly strategyDefault: StrategyDefault) {
+		this.mapStrategies.set(this.strategyDefault.name, this.strategyDefault);
+	}
 
-    async create<M extends EnumNameStrategyCreativeStatisticPlayer>(
-        method: M,
-        args: IntrMapStrategyCreativeStatisticPlayer[M]['args']
-    ): Promise<IntrMapStrategyCreativeStatisticPlayer[M]['return']> {
-        const strategy = this.mapCreative.get(method);
+	async create<M extends EnumNameStrategy>(
+		method: M,
+		args: IntrMapStrategyCreativeStatisticPlayer[M]['args']
+	): Promise<IntrMapStrategyCreativeStatisticPlayer[M]['return']> {
+		const strategy = this.mapStrategies.get(method);
 
-        if (!strategy) {
-            throw new NotImplementedException(`Стратегия создания статистики пользователя не найдена: ${method}`);
-        }
+		if (!strategy) {
+			throw new NotImplementedException(
+				`Стратегия создания статистики пользователя не найдена: ${method}`
+			);
+		}
 
-        return await strategy.execute(args) as IntrMapStrategyCreativeStatisticPlayer[M]['return'];
-    }
+		return (await strategy.execute(
+			args
+		)) as IntrMapStrategyCreativeStatisticPlayer[M]['return'];
+	}
 }

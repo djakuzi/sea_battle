@@ -1,3 +1,3 @@
 export class DtoCloseRequest {
-    idRequest: number;
+	idRequest: number;
 }

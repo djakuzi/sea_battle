@@ -1,4 +1,4 @@
 export interface IntrResAcceptRequest {
-    isSucces: boolean,
-    message: string,
+	isSucces: boolean;
+	message: string;
 }

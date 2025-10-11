@@ -1,40 +1,44 @@
-import { Injectable, NotImplementedException } from "@nestjs/common";
-import { IntrSchemaStrategyFindOne, StrategyFindOne } from "../strategies/find/onePlayer.strategy";
-import { IntrSchemaStrategyFindMore, StrategyFindMore } from "../strategies/find/morePlayer.strategy";
-import { IntrStandartStrategy } from "src/common/type/strategy/standartStrategy.interface";
+import { Injectable, NotImplementedException } from '@nestjs/common';
+import { IntrSchemaStrategyFindOne, StrategyFindOne } from '../strategies/find/onePlayer.strategy';
+import {
+	IntrSchemaStrategyFindMore,
+	StrategyFindMore,
+} from '../strategies/find/morePlayer.strategy';
+import { IntrStandartStrategy } from 'src/common/types/strategy/standartStrategy.interface';
 
-export enum EnumNameStrategyFindPlayer {
-    ONE = 'one',
-    MORE = 'more',
+export enum EnumNameStrategy {
+	ONE = 'one',
+	MORE = 'more',
 }
 
 export interface IntrMapStrategyFindPlayer {
-    [EnumNameStrategyFindPlayer.MORE]: IntrSchemaStrategyFindMore,
-    [EnumNameStrategyFindPlayer.ONE]: IntrSchemaStrategyFindOne,
+	[EnumNameStrategy.MORE]: IntrSchemaStrategyFindMore;
+	[EnumNameStrategy.ONE]: IntrSchemaStrategyFindOne;
 }
 
 @Injectable()
-export class PlayerFindService {
-    private mapFindPlayers = new Map<EnumNameStrategyFindPlayer, IntrStandartStrategy<EnumNameStrategyFindPlayer>>();
-    
-    constructor(
-        private readonly strategyOne: StrategyFindOne,
-        private readonly strategyMore: StrategyFindMore
-    ) {
-        this.mapFindPlayers.set(this.strategyOne.name, this.strategyOne);
-        this.mapFindPlayers.set(this.strategyMore.name, this.strategyMore);
-    }
+export class ServicePlayerFind {
+	static strategyName = EnumNameStrategy;
+	private mapStrategies = new Map<EnumNameStrategy, IntrStandartStrategy<EnumNameStrategy>>();
 
-    async find<M extends EnumNameStrategyFindPlayer>(
-        method: M,
-        args: IntrMapStrategyFindPlayer[M]['args']
-    ): Promise<IntrMapStrategyFindPlayer[M]['return']> {
-        const strategy = this.mapFindPlayers.get(method);
+	constructor(
+		private readonly strategyOne: StrategyFindOne,
+		private readonly strategyMore: StrategyFindMore
+	) {
+		this.mapStrategies.set(this.strategyOne.name, this.strategyOne);
+		this.mapStrategies.set(this.strategyMore.name, this.strategyMore);
+	}
 
-        if (!strategy) {
-            throw new NotImplementedException(`Стратегия поиска игрока не найдена: ${method}`);
-        }
+	async find<M extends EnumNameStrategy>(
+		method: M,
+		args: IntrMapStrategyFindPlayer[M]['args']
+	): Promise<IntrMapStrategyFindPlayer[M]['return']> {
+		const strategy = this.mapStrategies.get(method);
 
-        return await strategy.execute(args) as IntrMapStrategyFindPlayer[M]['return'];
-    }
+		if (!strategy) {
+			throw new NotImplementedException(`Стратегия поиска игрока не найдена: ${method}`);
+		}
+
+		return (await strategy.execute(args)) as IntrMapStrategyFindPlayer[M]['return'];
+	}
 }

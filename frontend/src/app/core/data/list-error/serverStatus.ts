@@ -1,4 +1,6 @@
-export const SERVER_STATUS = {
+import { IntrServerStatus } from "./interfaces/serverStatus.interface";
+
+export const SERVER_STATUS: Record<string, IntrServerStatus> = {
     noConnected: {
         notification: "Нет соединения с сервером",
         log: "Server is not connected",

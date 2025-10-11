@@ -1,39 +1,34 @@
-import { IntrStandartStrategy } from "src/common/type/strategy/standartStrategy.interface";
-import { IntrSchemaStrategyDefault, StrategyDefault } from "../strategies/creative/default.strategy";
-import { Injectable, NotImplementedException } from "@nestjs/common";
+import { IntrStandartStrategy } from 'src/common/types/strategy/standartStrategy.interface';
+import { IntrSchemaStrategyDefault, StrategyDefault } from '../strategies/create/default.strategy';
+import { Injectable, NotImplementedException } from '@nestjs/common';
 
-export enum EnumNameStrategyCreateUser {
-    DEFAULT = 'default',
+export enum EnumNameStrategy {
+	DEFAULT = 'default',
 }
 
 export interface IntrMapStrategyCreateUser {
-    [EnumNameStrategyCreateUser.DEFAULT]: IntrSchemaStrategyDefault
+	[EnumNameStrategy.DEFAULT]: IntrSchemaStrategyDefault;
 }
-
-export const LIST_СREATIVE_STRATEGIES = [
-    StrategyDefault,
-]
 
 @Injectable()
 export class ServiceCreateUser {
-    private mapCreative = new Map<EnumNameStrategyCreateUser, IntrStandartStrategy<EnumNameStrategyCreateUser>>();
+	static strategyName = EnumNameStrategy;
+	private mapStrategies = new Map<EnumNameStrategy, IntrStandartStrategy<EnumNameStrategy>>();
 
-    constructor(
-        private readonly strategyDefault: StrategyDefault,
-    ) { 
-        this.mapCreative.set(this.strategyDefault.name, this.strategyDefault);
-    }
+	constructor(private readonly strategyDefault: StrategyDefault) {
+		this.mapStrategies.set(this.strategyDefault.name, this.strategyDefault);
+	}
 
-    async create<M extends EnumNameStrategyCreateUser>(
-        method: M,
-        args: IntrMapStrategyCreateUser[M]['args']
-    ): Promise<IntrMapStrategyCreateUser[M]['return']> {
-        const strategy = this.mapCreative.get(method);
+	async create<M extends EnumNameStrategy>(
+		method: M,
+		args: IntrMapStrategyCreateUser[M]['args']
+	): Promise<IntrMapStrategyCreateUser[M]['return']> {
+		const strategy = this.mapStrategies.get(method);
 
-        if (!strategy) {
-            throw new NotImplementedException(`Стратегия создания игрока не найдена: ${method}`);
-        }
+		if (!strategy) {
+			throw new NotImplementedException(`Стратегия создания игрока не найдена: ${method}`);
+		}
 
-        return await strategy.execute(args) as IntrMapStrategyCreateUser[M]['return'];
-    }
+		return (await strategy.execute(args)) as IntrMapStrategyCreateUser[M]['return'];
+	}
 }

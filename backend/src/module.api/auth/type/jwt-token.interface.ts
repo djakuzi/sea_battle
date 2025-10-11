@@ -1,9 +1,9 @@
 export interface JwtPayload {
-    uuid: string,
-    login: string
+	uuid: string;
+	login: string;
 }
 
 export interface FullJwtTokens {
-    accessToken: string,
-    refreshToken: string,
+	accessToken: string;
+	refreshToken: string;
 }

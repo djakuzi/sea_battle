@@ -1,40 +1,41 @@
-import { WsServerStatus } from "@app-network/ws/modules/ServerConnectionStatus/ServerStatus.module";
+import { WsOneVsOne } from "@app-network/ws/modules/BattleOneVsOne/OneVsOne.module";
+import { WsServerStatus } from "../../../../network/ws/modules/ServerConnectionStatus/ServerStatus.module";
 import { ServiceStatusConnection } from "@app-network/ws/modules/ServerConnectionStatus/services/statusConnection.service";
 import { RootState } from "@app-redux/store";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 interface IntrHookStatusServer {
-    isConnection: boolean;
-    isConnect: boolean;
-    isDisconnect: boolean | null;
+	isConnection: boolean;
+	isConnect: boolean;
+	isDisconnect: boolean | null;
 }
 
 export function useStatusServer(): IntrHookStatusServer {
-    //redux
-    const { isConnection, isConnect, isDisconnect } = useSelector((s: RootState) => s.statusServer);
+	//redux
+	const { isConnection, isConnect, isDisconnect } = useSelector((s: RootState) => s.statusServer);
 
-    useEffect(() => {
-        WsServerStatus.connect();
+	useEffect(() => {
+		WsServerStatus.connect();
 
-        ServiceStatusConnection.onConnect()
+		ServiceStatusConnection.onConnect()
 
-        ServiceStatusConnection.onConnectTimeout(() => {});
+		ServiceStatusConnection.onConnectTimeout(() => { });
 
-        ServiceStatusConnection.onConnectError(() => {});
+		ServiceStatusConnection.onConnectError(() => { });
 
-        ServiceStatusConnection.onReconnectFailed(() => {});
+		ServiceStatusConnection.onReconnectFailed(() => { });
 
-        ServiceStatusConnection.onReconnectAttempt(() => {});
+		ServiceStatusConnection.onReconnectAttempt(() => { });
 
-        return (): void => {
-            WsServerStatus.disconnect();
-        };
-    }, []);
+		return (): void => {
+			WsServerStatus.disconnect();
+		};
+	}, []);
 
-    return {
-        isConnection,
-        isConnect,
-        isDisconnect,
-    }
+	return {
+		isConnection,
+		isConnect,
+		isDisconnect,
+	}
 }

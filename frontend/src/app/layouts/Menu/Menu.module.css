@@ -44,6 +44,12 @@
     width: fit-content;
 }
 
+.menu-online-players {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+}
+
 /* 16/9 */
 [data-aspect-ratio="16:9"] {
     &.menu::after {

@@ -1,3 +1,3 @@
 export class DtoSendRequest {
-    receiverId: number;
+	receiverId: number;
 }

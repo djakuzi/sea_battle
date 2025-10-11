@@ -1,5 +1,5 @@
-import { IntrResCreated } from "src/common/type/result-res-api/resultCreated.interface";
+import { IntrResCreated } from 'src/common/types/result-res-api/resultCreated.interface';
 
-export interface IntrResCreatedRequest extends IntrResCreated  {
-    idRequest: number;
+export interface IntrResCreatedRequest extends IntrResCreated {
+	idRequest: number;
 }

@@ -23,7 +23,7 @@ class ManagerCore {
         this.manager = new Manager('', {
             ...CONFIG_WEBSOCKET_MANAGER,
             query: {
-                userId: getPlayerId(),
+                playerId: getPlayerId(),
                 accessToken: getAccessToken(),
             }
         });
@@ -67,7 +67,7 @@ class ManagerCore {
             this.manager = new Manager('', {
                 ...CONFIG_WEBSOCKET_MANAGER,
                 query: {
-                    userId: getPlayerId(),
+					playerId: getPlayerId(),
                     accessToken: getAccessToken(),
                 }
             });

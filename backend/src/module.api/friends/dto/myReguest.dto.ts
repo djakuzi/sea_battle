@@ -1,3 +1,3 @@
 export class DtoMyRequest {
-    action: 'incoming-request' | 'outgoing-request';
+	action: 'incoming-request' | 'outgoing-request';
 }
