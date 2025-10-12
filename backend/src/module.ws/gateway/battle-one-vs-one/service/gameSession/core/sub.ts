@@ -33,6 +33,7 @@ export class Sub {
 			};
 		}
 
+
 		core.dataShipCoord.set(idSession, mapDataShips);
 
 		if (checkedShipForStartGame) {

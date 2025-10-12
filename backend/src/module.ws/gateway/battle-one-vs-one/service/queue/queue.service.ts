@@ -62,8 +62,8 @@ export class ServiceQueue {
 		const session = await this.serviceGameSession.createSession(participant1, participant2);
 
 		if (session) {
-			this.waitingParticipants.delete(String(participant1.data.id));
-			this.waitingParticipants.delete(String(participant2.data.id));
+			this.removePlayerFromQueue(String(participant1.data.id));
+			this.removePlayerFromQueue(String(participant2.data.id));
 		}
 	}
 

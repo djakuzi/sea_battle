@@ -23,7 +23,14 @@ function BattleAction({ cls = '' }: PropsBattleAction): JSX.Element {
 
     return (
         <div className={cn(styles['action'], cls)}>
-            <Button cls={cn(styles['action__exit'], 'button-action')} isBtn={true} onClick={handlerClickExit}>Сдаться</Button>
+            <Button 
+				cls={cn(styles['action__exit'], 'button-action')} 
+				isBtn={true} 
+				onClick={handlerClickExit}
+				versionBtn="button-action"
+			>
+				Сдаться
+			</Button>
         </div>
     );
 }

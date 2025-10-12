@@ -6,6 +6,7 @@ import { GameOneVsOne } from 'src/game/typeGame/OneVsOne';
 import { IntrInfoParticipants } from 'src/game/core/types/gameParticipants.interface';
 import { IntrFullInfoShip } from 'src/common/types/ship/ship.interface';
 import { getSession } from '../../../../../common/util/session/methods/getSession';
+import { getEnemyParticipant } from '../../script/util/session/methods/getEnemyParticipant';
 
 @Injectable()
 export class ServiceGame {
@@ -27,24 +28,26 @@ export class ServiceGame {
 	async startGame(
 		idSession: string,
 	): Promise<void> {
-		const gameSession = getSession(this.serviceGameSessions.gameSessions, idSession);
+		const session = getSession(this.serviceGameSessions.gameSessions, idSession);
 
-		const game = gameSession.game;
+		const game = session.game;
 		let firstMove = game?.Move.getInfo('firstMoveParticipantId');
 
 		if (!firstMove) {
 			firstMove = game?.Move.determineFirstMove();
 		}
 
-		for (const key in gameSession.session.participants) {
-			const participant = gameSession.session.participants[key];
+		for (const key in session.session.participants) {
+			const enemy = getEnemyParticipant(session.session, key);
 
 			this.emit.gameStart(
-				participant.client,
-				participant.data,
+				session.session.participants[key].client,
+				enemy.data,
 				firstMove as string,
 			)
 		}
+
+		console.log(`Игра началась в сессии с id: ${idSession}}. Первый ходит ${firstMove}.`);
 	}
 
 	async finishGame(

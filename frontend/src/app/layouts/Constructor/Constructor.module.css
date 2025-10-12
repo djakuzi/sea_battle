@@ -52,13 +52,6 @@ html[data-theme="dark"] .constructor::after {
     left: 0;
 }
 
-.load__close {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0);
-    z-index: 2;
-}
-
 .constructor::after {
     content: '';
     position: absolute;
@@ -153,11 +146,6 @@ html[data-theme="dark"] .constructor::after {
         background-size: 15%;
     }
 
-    & .load__close {
-        position: absolute;
-        bottom: 10vw;
-    }
-
     & .constructor__box {
         font-size: 1rem;
         border-width: .1em;
@@ -209,11 +197,6 @@ html[data-theme="dark"] .constructor::after {
     & .constructor {
         padding: 1%;
         background-size: 15%;
-    }
-
-    & .load__close {
-        position: absolute;
-        bottom: 10vw;
     }
 
     & .constructor__box {

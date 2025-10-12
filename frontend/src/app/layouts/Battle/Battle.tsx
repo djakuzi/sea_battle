@@ -18,8 +18,7 @@ export default function Battle(): JSX.Element {
             setIsError(true);
         }
 
-        const path = typeBattle == 'bot' ? 'bot' : 'online';
-        navigate('/battle/' + path);
+		navigate('/battle/' + typeBattle);
     }, []);
 
     return (

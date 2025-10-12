@@ -1,7 +1,7 @@
 /** Enum для типов битвы */
 export enum EnumGame {
 	BOT = 'bot',         // с ботом
-	ONLINE = 'online',   // обычная онлайн битва
+	ONE_VS_ONE = 'one-vs-one',   // обычная онлайн битва
 	TOURNAMENT = 'tournament', // турнир
 	INVITE = 'invite',   // битва по приглашению
 }

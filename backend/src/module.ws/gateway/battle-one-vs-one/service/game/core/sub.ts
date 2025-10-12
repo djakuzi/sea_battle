@@ -1,7 +1,7 @@
 import { IntrShipCoord } from "src/common/types/ship/ship.interface";
 import { getSession } from "../../../../../../common/util/session/methods/getSession";
 import { ServiceGame } from "../game.service";
-import { EnumStatusGame } from "src/game/core/types/game.enum";
+import { EnumStatusGame, EnumStatusShot } from "src/game/core/types/game.enum";
 import { getEnemyParticipant } from "../../../script/util/session/methods/getEnemyParticipant";
 
 export class Sub {
@@ -31,11 +31,13 @@ export class Sub {
 		this.core.emit.myShot(
 			session.session.participants[playerId].client,
 			resultShot,
+			resultShot.status !== EnumStatusShot.MISS ? playerId : enemy.data.id,
 		)
 
 		this.core.emit.shotAtMe(
 			enemy.client,
 			resultShot,
+			resultShot.status !== EnumStatusShot.MISS ? playerId : enemy.data.id,
 		)
 
 		if (session.game.Status.isStatus(EnumStatusGame.FINISHED)) {

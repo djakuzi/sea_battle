@@ -103,7 +103,10 @@ class Websocket {
         });
     }
 
-    _onceSubscribe<Args extends any[] = []>(event: string, callback: TypeCallback<void, Args>): void {
+    _onceSubscribe<Args extends any[] = []>(
+		event: string, 
+		callback: TypeCallback<void, Args>
+	): void {
         this.socket.once(event, callback);
         this.mapEventListenersOnce.set(event, callback);
     }
@@ -132,7 +135,6 @@ class Websocket {
         if (callback) {
             callbacks.delete(callback);
             this.socket.off(event, callback);
-
             if (callbacks.size === 0) {
                 this.mapEventListeners.delete(event);
             }

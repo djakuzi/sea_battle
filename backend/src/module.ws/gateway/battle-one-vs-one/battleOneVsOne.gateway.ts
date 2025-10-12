@@ -1,4 +1,4 @@
-import { MessageBody, SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
+import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
 import { DefaultGateway } from 'src/common/gateway /default.gateway';
 import { ServiceStorageSocket } from 'src/common/service/StorageSocketService';
@@ -44,15 +44,15 @@ export class GatewayBattleOneVsOne extends DefaultGateway {
 
 	@SubscribeMessage('sendShipData')
 	async handleShipData(
-		@MessageBody() payload: { sessionId: string; ships: IntrFullInfoShip[] },
-		client: Socket,
+		@MessageBody() payload: { idSession: string; ships: IntrFullInfoShip[] },
+		@ConnectedSocket() client: Socket,
 	): Promise<void> {
 		const playerId = this.getPlayerId(client);
 
-		const { sessionId, ships } = payload;
+		const { idSession, ships } = payload;
 
 		try {
-			await this.serviceGameSessions.sub.sendShipData(playerId, ships, sessionId);
+			await this.serviceGameSessions.sub.sendShipData(playerId, ships, idSession);
 		} catch {
 			/**
 			 * TODO: add to logger list
@@ -63,17 +63,17 @@ export class GatewayBattleOneVsOne extends DefaultGateway {
 
 	@SubscribeMessage('shotByParticipant')
 	async handleShotByParticipant(
-		@MessageBody() payload: { sessionId: string; coord: IntrShipCoord },
+		@MessageBody() payload: { idSession: string; coord: IntrShipCoord },
 		client: Socket,
 	): Promise<void> {
 		const playerId = this.getPlayerId(client);
 
-		const { sessionId, coord } = payload;
+		const { idSession, coord } = payload;
 
 		try {
 			await this.serviceGame.sub.shotByParticipant(
 				playerId,
-				sessionId,
+				idSession,
 				coord
 			)
 		} catch {

@@ -94,8 +94,9 @@ html[data-theme="dark"] .load {
         height: 100%;
         top: 0;
         left: 0;
-        backdrop-filter: blur(0.1vw);
-        -webkit-backdrop-filter: blur(0.1vw);
+		font-size: 1rem;
+        backdrop-filter: blur(0.1em);
+        -webkit-backdrop-filter: blur(0.1em);
         transition: all .6s ease;
         --webkit-transition: -webkit-backdrop-filter .8s ease;
     }
@@ -108,23 +109,27 @@ html[data-theme="dark"] .load {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1vw;
+        gap: 1rem;
         z-index: 2;
     }
 
     .title {
         width: 100%;
-        font-size: 1.5vw;
+        font-size: 1.5rem;
         text-align: center;
         color: var(--cs-color-txt);
         animation: text-load-full 1.5s infinite alternate linear;
-        text-shadow: .1vw .1vw .2vw var(--text-shadow-color);
+        text-shadow: .1em .1em .2em var(--text-shadow-color);
     }
+
+	.btn {
+		font-size: 1.5rem;
+	}
 
     .anchor {
         will-change: auto;
         position: relative;
-        width: 11vw;
+        width: 11rem;
         aspect-ratio: 1/1;
         transform-style: preserve-3d;
         animation: rotate 5s linear infinite;

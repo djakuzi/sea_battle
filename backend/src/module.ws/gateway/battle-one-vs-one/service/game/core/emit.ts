@@ -1,7 +1,7 @@
 import { Socket } from "socket.io"
 import { ServiceGame } from "../game.service";
-import { TypePlayerType } from "src/common/types/player/typePlayer.type";
 import { IntrDataShot } from "src/game/core/types/gameShot.interface";
+import { TypePlayerType } from "src/common/types/player/typePlayer.type";
 
 export class Emit {
 	private core: ServiceGame;
@@ -16,7 +16,7 @@ export class Emit {
 			id: string;
 			nickname: string;
 			experience: number;
-			type: TypePlayerType;
+			type: TypePlayerType,
 		}, 
 		firstMove: string,
 	): Promise<void> {
@@ -29,18 +29,22 @@ export class Emit {
 	async myShot(
 		client: Socket, 
 		resultShot: IntrDataShot,
+		moveParticipant: string,
 	): Promise<void> {
 		client.emit('myShot', {
-			resultShot: resultShot
+			resultShot: resultShot,
+			moveParticipant: moveParticipant
 		});
 	}
 
 	async shotAtMe(
 		client: Socket,
 		resultShot: IntrDataShot,
+		moveParticipant: string,
 	): Promise<void> {
 		client.emit('shotAtMe', {
-			resultShot: resultShot
+			resultShot: resultShot,
+			moveParticipant: moveParticipant
 		});
 	}
 

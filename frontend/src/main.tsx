@@ -12,9 +12,9 @@ import { Provider } from 'react-redux';
 import store from './app/redux/store';
 import FullLoad from './app/common/components/FullLoad/FullLoad';
 import BattleBot from './app/layouts/Battle/pages/BattleBot/BattleBot';
-import BattleOnline from './app/layouts/Battle/pages/BattleOnline/BattleOnline';
+import OneVsOne from './app/layouts/Battle/pages/OneVsOne/OneVsOne';
 import { CONFIG_APP } from './app/core/config/app.config';
-import { isDevMode } from './app/common/script/modules/Developer/methods/isDevMode';
+import { EnumVariantPlayType } from '@app-core/data/list-component/interfaces/variantsPlay.interface';
 
 const RootController = lazy(() => import('./app/root-controller/RootController'));
 const Menu = lazy(() => import('./app/layouts/Menu/Menu.layouts'));
@@ -39,12 +39,12 @@ const router = [
         element: <Suspense fallback={<FullLoad text='Загрузка..' />}> <Battle /> </Suspense>,
         children: [
           {
-            path: "bot",
+			path: EnumVariantPlayType.BOT,
             element: <BattleBot></BattleBot>,
           },
           {
-            path: "online",
-            element: <BattleOnline></BattleOnline>,
+			path: EnumVariantPlayType.ONE_VS_ONE,
+            element: <OneVsOne></OneVsOne>,
           },
         ],
       }
@@ -56,25 +56,15 @@ const routerOptions = {
   basename: CONFIG_APP.baseName,
 };
 try {
-  const ROUTER = createBrowserRouter(router, routerOptions);
+	const ROUTER = createBrowserRouter(router, routerOptions);
+	const element = document.getElementById("root") || document.body;
 
-  const element = document.getElementById("root") || document.body;
-
-  if (!isDevMode()) {
-    createRoot(element).render(
-      <React.StrictMode>
-        <Provider store={store}>
-          <RouterProvider router={ROUTER} />
-        </Provider>
-      </React.StrictMode>
-    );
-  } else {
-    createRoot(element).render(
-      <Provider store={store}>
-        <RouterProvider router={ROUTER} />
-      </Provider>
-    );
-  }
+	createRoot(element).render(
+		<Provider store={store}>
+		<RouterProvider router={ROUTER} />
+		</Provider>
+	);
+  
 } catch (error) {
   console.error(error);
 }

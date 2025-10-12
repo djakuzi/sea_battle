@@ -4,50 +4,50 @@ import store from "@app-redux/store";
 import { actionsServerStatus } from "../../../../redux/slice/status-server/serverStatus.slice";
 import { runCallback } from "@app-common/script/utils/callback/method/runCallback";
 import { createNotificftionByList } from "@app-rootController/Visual-Interface/elements/Notification/modules/notification";
-import { SERVER_STATUS } from "@app-core/data/list-error/serverStatus";
+import { LOG_SERVER_STATUS } from "../../../../core/data/list-log/serverStatus";
 import { devModeConsole } from "@app-common/script/modules/Developer/methods/devModeConsole";
 
 export class CoreServerStatus extends Websocket {
-    constructor(
-        path: string
-    ) {
-        super(path);
-    }
+	constructor(
+		path: string
+	) {
+		super(path);
+	}
 
-    connect = (callback?: TypeCallback): void => {
-        super._connect(() => {
-            store.dispatch(actionsServerStatus.setIsConnection());
+	connect = (callback?: TypeCallback): void => {
+		super._connect(() => {
+			store.dispatch(actionsServerStatus.setIsConnection());
 
-            if (!this.state.isFirstConnect) {
-                createNotificftionByList('notification', SERVER_STATUS.connection.notification);
-                devModeConsole('log', SERVER_STATUS.connection.log);
-            }
+			if (!this.state.isFirstConnect) {
+				createNotificftionByList('notification', LOG_SERVER_STATUS.connection.notification);
+				devModeConsole('log', LOG_SERVER_STATUS.connection.log);
+			}
 
-            runCallback(callback);
-        });
-    };
+			runCallback(callback);
+		});
+	};
 
-    disconnect = (callback?: TypeCallback): void => {
-        super._disconnect(() => {
-            store.dispatch(actionsServerStatus.setIsDisconnect());
+	disconnect = (callback?: TypeCallback): void => {
+		super._disconnect(() => {
+			store.dispatch(actionsServerStatus.setIsDisconnect());
 
-            createNotificftionByList('notification', SERVER_STATUS.disconnected.notification);
-            devModeConsole('log', SERVER_STATUS.disconnected.log);
+			createNotificftionByList('notification', LOG_SERVER_STATUS.disconnected.notification);
+			devModeConsole('log', LOG_SERVER_STATUS.disconnected.log);
 
-            runCallback(callback);
-        });
-    };
+			runCallback(callback);
+		});
+	};
 
-    reconnect = (callback?: TypeCallback): void => {
-        super._reconnect(() => {
-            store.dispatch(actionsServerStatus.setIsConnection());
+	reconnect = (callback?: TypeCallback): void => {
+		super._reconnect(() => {
+			store.dispatch(actionsServerStatus.setIsConnection());
 
-            createNotificftionByList('notification', SERVER_STATUS.reconnecting.notification);
-            devModeConsole('log', SERVER_STATUS.tryReconnecting.log);
+			createNotificftionByList('notification', LOG_SERVER_STATUS.reconnecting.notification);
+			devModeConsole('log', LOG_SERVER_STATUS.tryReconnecting.log);
 
-            runCallback(callback);
-        });
-    };
+			runCallback(callback);
+		});
+	};
 }
 
 export const WsServerStatus = new CoreServerStatus('/status-server');

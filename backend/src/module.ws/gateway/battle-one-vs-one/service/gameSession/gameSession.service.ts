@@ -62,6 +62,8 @@ export class ServiceGameSessions {
 
 		this.emit.sessionCreated(participant1.client, idSession);
 		this.emit.sessionCreated(participant2.client, idSession);
+
+		console.log(`Отправлена сессия игры: ${idSession} для игроков ${participant1.data.id} и ${participant2.data.id}`);
 	}
 
 	async checkDataShipParticipants(

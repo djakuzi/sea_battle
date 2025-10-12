@@ -1,7 +1,7 @@
-import { TypeResultBattle } from "@app-layouts/Battle/types/battle";
+import { TypeResultBattle } from "../../../../layouts/Battle/types/battle.enum";
 import { PayloadAction } from "@reduxjs/toolkit";
 
 /** Установить результат битвы */
 export const setResultBattle = (state, action: PayloadAction<TypeResultBattle>) => {
-    state.battle.winner = action.payload;
+	state.battle.winner = action.payload;
 };

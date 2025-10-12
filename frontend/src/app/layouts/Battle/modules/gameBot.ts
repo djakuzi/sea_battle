@@ -1,6 +1,6 @@
 import { transformationToFullCoordShips } from '@app-common/script/modules/ship.module';
-import { TypeParticipant } from '../types/battle';
-import { Battle } from './battle';
+import { EnumParticipant, EnumStatusBattle, EnumStatusShot } from '../types/battle.enum';
+import { Game } from './game.core';
 import { BotBattle } from './bot';
 import {
 	IntrCoord,
@@ -25,8 +25,8 @@ import { standartSetTimeout } from '@app-common/script/modules/TimeOut/methods/s
  * @method init - инициализация битвы
  * @method unInit - удаление битвы
  */
-export class BattleBot extends Battle {
-	nameClass = 'BattleBot';
+export class GameBot extends Game {
+	nameClass = 'GameBot';
 
 	private bot: BotBattle;
 
@@ -44,16 +44,16 @@ export class BattleBot extends Battle {
 		unknownResultShot: 'Result of the shot is unknown',
 	};
 
-	constructor(bot) {
+	constructor(bot: BotBattle) {
 		super();
 		this.bot = bot;
-		this.updateCountRemainingShip('player', 10);
+		this.updateCountRemainingShip(EnumParticipant.PLAYER, 10);
 	}
 	/**
 	 * @method setFirstMove - определяем кто первый ходит
 	 */
 	setFirstMove(): void {
-		const firstMove: TypeParticipant = Math.random() > 0.5 ? 'player' : 'enemy';
+		const firstMove: EnumParticipant = Math.random() > 0.5 ? EnumParticipant.PLAYER : EnumParticipant.ENEMY;
 		this.dispatch(actionsBattle.setParticipantMove(firstMove));
 	}
 	/**
@@ -78,7 +78,7 @@ export class BattleBot extends Battle {
 	private initCallbackTimerEnd = (): void => {
 		this.callbackEndTimer = (): void => {
 			const { moveParticipant } = this.getState().battle.battle;
-			const nextMove: TypeParticipant = moveParticipant == 'enemy' ? 'player' : 'enemy';
+			const nextMove: EnumParticipant = moveParticipant == EnumParticipant.ENEMY ? EnumParticipant.PLAYER : EnumParticipant.ENEMY;
 
 			this.dispatch(actionsBattle.setParticipantMove(nextMove));
 			this.activateMoveParticipant();
@@ -117,7 +117,7 @@ export class BattleBot extends Battle {
 			coordFullPuttingShips: IntrFullDataShipBattle[]
 		): IntrDataShot {
 			const objResult: IntrDataShot = {
-				status: 'miss',
+				status: EnumStatusShot.MISS,
 				coord: coordsShot,
 				dataShip: false,
 			};
@@ -139,9 +139,9 @@ export class BattleBot extends Battle {
 						let { countHit } = dataShip;
 						countHit += 1;
 
-						const statusHit = sizeShip == countHit ? 'kill' : 'hit';
+						const statusHit = sizeShip == countHit ? EnumStatusShot.KILL : EnumStatusShot.HIT;
 						dataShip.countHit = countHit;
-						dataShip.isKill = statusHit == 'kill';
+						dataShip.isKill = statusHit == EnumStatusShot.KILL;
 
 						objResult.status = statusHit;
 						objResult.dataShip = dataShip.isKill ? objDataShip : false;
@@ -158,7 +158,7 @@ export class BattleBot extends Battle {
 		 */
 		const checkResultShot = (
 			resultShot: IntrDataShot,
-			shotToParticipant: TypeParticipant
+			shotToParticipant: EnumParticipant
 		): void => {
 			const { unknownResultShot } = this.objErrorBattleBot;
 			const { status, coord } = resultShot;
@@ -184,7 +184,7 @@ export class BattleBot extends Battle {
 		 * Если есть @param {TypeParticipant} changeMoveParticipant, то ход
 		 * переходит этому типу игрока.
 		 */
-		const resetMoveParticipant = (changeMoveParticipant: TypeParticipant): void => {
+		const resetMoveParticipant = (changeMoveParticipant: EnumParticipant): void => {
 			this.resetTimer();
 
 			if (changeMoveParticipant) {
@@ -197,7 +197,7 @@ export class BattleBot extends Battle {
 		 * true - есть
 		 * false - нет
 		 */
-		const isCountRemainingShip = (typePlayers: TypeParticipant): boolean => {
+		const isCountRemainingShip = (typePlayers: EnumParticipant): boolean => {
 			const isZero = this.getState().battle[typePlayers].countRemainingShip > 0;
 			return isZero;
 		};
@@ -214,7 +214,7 @@ export class BattleBot extends Battle {
 	 * @method startGame - начало игры
 	 */
 	private startGame = (): void => {
-		this.changeStatusBattle('game');
+		this.changeStatusBattle(EnumStatusBattle.GAME);
 		this.activateMoveParticipant();
 	};
 
@@ -225,9 +225,9 @@ export class BattleBot extends Battle {
 		try {
 			const { moveParticipant } = this.getState().battle.battle;
 
-			if (moveParticipant == 'player') {
+			if (moveParticipant == EnumParticipant.PLAYER) {
 				this.MovePlayer();
-			} else if (moveParticipant == 'enemy') {
+			} else if (moveParticipant == EnumParticipant.ENEMY) {
 				this.setTimer();
 				standartSetTimeout(1000, this.MoveBot);
 			}
@@ -254,7 +254,7 @@ export class BattleBot extends Battle {
 		const coords = resultShot.dataShip ? resultShot.dataShip.coords : undefined;
 		const { status } = resultShot;
 
-		this.privateMthds.checkResultShot(resultShot, 'player');
+		this.privateMthds.checkResultShot(resultShot, EnumParticipant.PLAYER);
 		this.bot.updateShotResult(selectCoord, status, coords);
 
 		if (status == 'hit') {
@@ -264,9 +264,9 @@ export class BattleBot extends Battle {
 		}
 
 		if (status == 'kill' && resultShot.dataShip) {
-			this.updateCountRemainingShip('player');
+			this.updateCountRemainingShip(EnumParticipant.PLAYER);
 			this.privateMthds.resetMoveParticipant();
-			isCountShipEnemy = this.privateMthds.isCountRemainingShip('player');
+			isCountShipEnemy = this.privateMthds.isCountRemainingShip(EnumParticipant.PLAYER);
 
 			if (isCountShipEnemy) standartSetTimeout(1000, this.MoveBot);
 		}
@@ -277,7 +277,7 @@ export class BattleBot extends Battle {
 		}
 
 		if (status == 'miss') {
-			this.privateMthds.resetMoveParticipant('player');
+			this.privateMthds.resetMoveParticipant(EnumParticipant.PLAYER);
 		}
 	};
 	/**
@@ -328,11 +328,11 @@ export class BattleBot extends Battle {
 				objCoord,
 				this.coordFullPuttingShipsEnemy
 			);
-			this.privateMthds.checkResultShot(resultShot, 'enemy');
+			this.privateMthds.checkResultShot(resultShot, EnumParticipant.ENEMY);
 
 			if (resultShot.status == 'kill') {
-				this.updateCountRemainingShip('enemy');
-				isCountShipEnemy = this.privateMthds.isCountRemainingShip('enemy');
+				this.updateCountRemainingShip(EnumParticipant.ENEMY);
+				isCountShipEnemy = this.privateMthds.isCountRemainingShip(EnumParticipant.ENEMY);
 			}
 
 			if (!isCountShipEnemy) {
@@ -341,7 +341,7 @@ export class BattleBot extends Battle {
 			}
 
 			if (resultShot.status == 'miss') {
-				this.privateMthds.resetMoveParticipant('enemy');
+				this.privateMthds.resetMoveParticipant(EnumParticipant.ENEMY);
 				this.FieldCoordEnemy?.removeEventListener('click', this.handlerClickRect);
 			}
 		} catch (error: unknown) {
@@ -351,7 +351,7 @@ export class BattleBot extends Battle {
 				this.setError('Неизвестная ошибка');
 			}
 
-			this.privateMthds.resetMoveParticipant('enemy');
+			this.privateMthds.resetMoveParticipant(EnumParticipant.ENEMY);
 			this.FieldCoordEnemy?.removeEventListener('click', this.handlerClickRect);
 		}
 	};

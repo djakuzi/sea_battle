@@ -5,7 +5,7 @@ import IMGbg from '../../../../../assets/image/game/constructor/ship.jpg';
 import BattleField from "../../components/BattleField/BattleField";
 import BattleAction from "../../components/BattleAction/BattleAction";
 import { BotBattle } from "../../modules/bot";
-import { BattleBot as logicsBattleBot } from "../../modules/battleBot";
+import { GameBot } from "../../modules/gameBot";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import ModalWindow from "../../../../common/components/ModalWindow/ModalWindow";
@@ -33,14 +33,14 @@ export default function BattleBot(): JSX.Element {
     //ref
     const isMounted = useRef(true);
     const refBot = useRef<BotBattle>(null);
-    const refBattle = useRef<logicsBattleBot>(null);
+	const refBattle = useRef<GameBot>(null);
     const refFielCoordUser = useRef<HTMLDivElement>(null);
     const refFielCoordBot = useRef<HTMLDivElement>(null);
 
     function initBattle(): void {
         if (!isMounted.current) return;
         refBot.current = new BotBattle();
-        refBattle.current = new logicsBattleBot(refBot.current);
+		refBattle.current = new GameBot(refBot.current);
         refBot.current.placeShip();
 
         function firstStep(): void {
