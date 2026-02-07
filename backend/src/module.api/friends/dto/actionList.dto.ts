@@ -1,3 +1,8 @@
+import { IsArray, IsNotEmpty } from "class-validator";
+import { mesEmptyOption } from "src/common/util/message/methods/mesEmptyOption";
+
 export class DtoActionList {
-    listIdPlayers: number[];
+	@IsArray()
+	@IsNotEmpty({ message: mesEmptyOption("listIdPlayers")})
+	listIdPlayers: number[];
 }

@@ -1,6 +1,6 @@
 .count {
     font-size: 1em;
-    color: var(--color-text);
-    text-shadow: 0.05em .05em .1em var(--color-text-shadow);
+    color: var(--text-color);
+    text-shadow: 0.05em .05em .1em var(--text-shadow-color);
     white-space: nowrap;
 }

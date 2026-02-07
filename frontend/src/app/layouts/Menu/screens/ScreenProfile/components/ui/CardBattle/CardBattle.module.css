@@ -1,0 +1,65 @@
+.card {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: .3em;
+	width: 100%;
+	font-size: 1rem;
+	border: .1em solid #ffffff;
+	border-radius: .6em;
+	padding: .4em .5em .4em .5em;
+	cursor: pointer;
+	backdrop-filter: blur(.25em);
+	-webkit-backdrop-filter: blur(.25em);
+	transition: background-color .2s ease;
+	background-color: rgba(255, 255, 255, 0.137);
+	
+	&.lose {
+		border-color: #b61010;
+	}
+
+	&.win {
+		border-color: #03ff5b;
+	}
+}
+
+.lose {
+	border-color: #b61010;
+
+	.card__status {
+		color: #b61010;
+	}
+}
+
+.win {
+	border-color: #03ff5b;
+
+	.card__status {
+		color: #03ff5b;
+	}
+}
+
+.card__status {
+	font-size: 1em;
+}
+
+.card__duration {
+	font-size: 1em;
+	color: var(--text-color);
+}
+
+@media (hover: hover) {
+	.card:hover {
+		background-color: rgba(255, 255, 255, 0.137);
+	}
+}
+
+/* 16/9 */
+[data-aspect-ratio="16:9"] {}
+
+/* /16/9 */
+
+/* 16/10 */
+[data-aspect-ratio="16:10"] {}
+
+/* /16/10 */

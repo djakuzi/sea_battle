@@ -2,6 +2,8 @@
 
 export interface IntrStatusConnectionServer {
     isShow: boolean;
+    isPing: boolean;
+    pingTimeMS: number;
 }
 
 export interface IntrAnimationUi {
@@ -16,4 +18,5 @@ export interface IntrAnimationUi {
 export interface IntrGameSettings {
     statusConnectionServer: IntrStatusConnectionServer;
     animationUi: IntrAnimationUi;
+	isOnlinePlayer: boolean;
 }

@@ -3,20 +3,25 @@ import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
 import { getCorsConfig } from './core/config/cors.config';
 import { ConfigService } from '@nestjs/config';
+import { ValidationPipe } from '@nestjs/common';
 
-async function bootstrap() {
-  const api = await NestFactory.create(AppModule);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+async function startApp() {
+	const app = await NestFactory.create(AppModule);
 
-  const configService = api.get(ConfigService);
-  const corsOptions = await getCorsConfig(configService);
+	const configService = app.get(ConfigService);
+	const corsOptions = await getCorsConfig(configService);
 
-  if (corsOptions) {
-    api.enableCors(corsOptions);
-  }
+	if (corsOptions) {
+		app.enableCors(corsOptions);
+	}
 
-  api.use(cookieParser());
-  await api.listen(process.env.BACKEND_PORT ?? 3000);
+	app.use(cookieParser());
+	app.useGlobalPipes(new ValidationPipe({
+		transform: true,
+		whitelist: true,
+		forbidNonWhitelisted: false,
+	}));
+	await app.listen(process.env.BACKEND_PORT ?? 3000);
 }
 
-bootstrap().then(() => console.log('START SUCCES'));
+startApp();

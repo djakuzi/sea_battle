@@ -1,62 +1,61 @@
 import { JSX, useState } from "react";
 import styles from './ModalFriends.module.css';
 import cn from "classnames";
-import HeaderModal from "../../components/HeaderModal/HeaderModal";
+import HeaderModal from "../../components/ui/HeaderModal/HeaderModal";
 import { useModalClose } from "../../../../../../common/context/ModalCloseContext";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../../../redux/store";
-import { IntrPlayerFull } from "../../../../../../common/types/Player.interface";
 import SearchPlayer from "../../components/SearchPlayer/SearchPlayer";
-import ListFriends from "../../components/ListFriends/ListFriends";
+import ListFriends from "../../components/list/ListFriends/ListFriends";
+import { useGetHeight } from "@app-common/script/hooks/util/useGetHeight.hook";
+import Tabs from "../../components/ui/Tabs/Tabs";
 
 export default function ModalFriends(): JSX.Element {
-    //custom context
-    const resetJsx = useModalClose();
-    //state
-    const [idTab, setIdTab] = useState<number>(0);
-    //redux
-    const { player } = useSelector((s: RootState) => s.auth);
-    const listPlayers = [player as IntrPlayerFull];
+	//custom context
+	const resetJsx = useModalClose();
+	//state
+	const [idTab, setIdTab] = useState<number>(0);
+	const { ref, height } = useGetHeight();
 
-    const clickExit = (): void => {
-        resetJsx();
-    };
+	const clickExit = (): void => {
+		resetJsx();
+	};
 
-    return (
-        <div className={cn(styles['friends'])}>
-            <div className={cn(styles['friends__wrapper'])}>
-                <HeaderModal cls={styles['friends-header']} title="Друзья" onExit={clickExit} />
-                <div className={styles['friends-tabs']}>
-                    <div className={styles['friends-tabs__item']} onClick={() => setIdTab(0)}>
-                        Мои друзья
-                    </div>
-                    <div className={styles['friends-tabs__item']} onClick={() => setIdTab(1)}>
-                        Поиск друга
-                    </div>
-                </div>
-                <div className={styles['friends-body']}>
-                    <div className={cn(
-                        styles['tab'],
-                        {
-                            [styles['tab--show']]: idTab === 0,
-                        }
-                    )}
-                    >
-                        <ListFriends
-                            cls={styles['friends-list']}
-                        />
-                    </div>
-                    <div className={cn(
-                        styles['tab'],
-                        {
-                            [styles['tab--show']]: idTab === 1,
-                        }
-                    )}
-                    >
-                        <SearchPlayer cls={styles['friendx-search']} />
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+	return (
+		<div className={cn(styles['friends'])}>
+			<div className={cn(styles['friends__wrapper'])}>
+				<div className={styles['friends__top']} ref={ref}>
+					<HeaderModal cls={styles['friends-header']} title="Друзья" onExit={clickExit} />
+					<Tabs
+						cls={styles['friends-tabs']}
+						tabs={["Мои друзья", 'Поиск друга']}
+						setIdTab={(i) => setIdTab(i)}
+					/>
+				</div>
+
+				<div className={styles['friends__body']} style={{ paddingTop: height }}>
+					<div className={cn(
+						styles['tab'],
+						{
+							[styles['tab--show']]: idTab === 0,
+						}
+					)}
+					>
+						<ListFriends
+							cls={styles['friends-list']}
+						/>
+					</div>
+					<div className={cn(
+						styles['tab'],
+						{
+							[styles['tab--show']]: idTab === 1,
+						}
+					)}
+					>
+						<SearchPlayer
+							cls={styles['friend-search']}
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }

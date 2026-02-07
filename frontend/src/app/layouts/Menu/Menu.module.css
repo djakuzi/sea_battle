@@ -15,6 +15,8 @@
     height: 100%;
     top: 0;
     left: 0;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
     transition: all .6s ease;
     --webkit-transition: -webkit-backdrop-filter .8s ease;
 }
@@ -40,6 +42,12 @@
 
 .menu-logo {
     width: fit-content;
+}
+
+.menu-online-players {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
 }
 
 /* 16/9 */

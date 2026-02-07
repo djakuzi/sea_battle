@@ -1,64 +1,38 @@
-import { JSX, useEffect, useRef } from "react";
+import { JSX, useEffect, useLayoutEffect, useRef } from 'react';
 import styles from './MainScreenSlider.module.css';
-import cn from "classnames";
-import { PropsMainScreenSlider } from "./MainScreenSlider.props";
-import ScreenMenu from "./ScreenMenu/ScreenMenu";
-import Profile from "./ScreenProfile/ScreenProfile";
-import Settings from "./ScreenSettings/ScreenSettings";
-import { useSelector } from "react-redux";
-import { LIST_TOGGLE_MAIN_SCREEN_MENU } from "../../../core/data/list-component/screenMenu";
-import ScreenAuth from "./ScreenAuth/ScreenAuth";
-import ScreenSidebar from "../components/ScreenSidebar/ScreenAuth/ScreenSidebar";
-import { EnumScreenName } from "../../../core/data/list-component/interfaces/screenMenu.interface";
-import { RootState } from "../../../redux/store";
-import { useAuthCheck } from "@app-common/script/hooks/api-hooks/useAuthCheck.hook";
+import cn from 'classnames';
+import { PropsMainScreenSlider } from './MainScreenSlider.props';
+import ScreenMenu from './ScreenMenu/ScreenMenu';
+import Profile from './ScreenProfile/ScreenProfile';
+import Settings from './ScreenSettings/ScreenSettings';
+import ScreenAuth from './ScreenAuth/ScreenAuth';
+import ScreenSidebar from '../components/ScreenSidebar/ScreenAuth/ScreenSidebar';
+import { useAuthCheck } from '../../../root-controller/script/hook/useAuthCheck.hook';
+import { useSliderScreen } from '../script/hook/useSliderScreen.hook';
+import { useSelector } from 'react-redux';
+import { RootState } from '@app-redux/store';
 
 export default function MainScreenSlider({ cls = '' }: PropsMainScreenSlider): JSX.Element {
-    //redux
-    const nameScreen = useSelector((state: RootState) => state.menuSlider.nameScreen);
-    const { isAuthorized, isAuthChecked } = useAuthCheck();
-
+    const { nameScreen, screenIndex, setScreen } = useSliderScreen();
+    const { isAuth } = useSelector((s: RootState) => s.auth)
     const refSlider = useRef<HTMLDivElement>(null);
-    //style
-    const varStyle = {
-        screen: {
-            ['--index-screen']: getIndexActiveScreen(nameScreen),
-        } as React.CSSProperties,
-    };
 
-    const inlineStyle = {
-        screen: {
-            ...varStyle.screen,
+    useLayoutEffect(() => {
+        if (refSlider.current) {
+            refSlider.current.style.setProperty('--index-screen', String(screenIndex));
+        } else {
+            console.warn('refSlider.current is null on screenIndex change:', screenIndex);
         }
-    };
-
-    useEffect(() => {
-        translateSlider();
-    }, [nameScreen]);
-
-    function getIndexActiveScreen(name: EnumScreenName): number {
-        return LIST_TOGGLE_MAIN_SCREEN_MENU.findIndex(el => el.name == name);
-    }
-
-    function translateSlider(): void {
-        if (!refSlider.current) return;
-
-        const index = getIndexActiveScreen(nameScreen);
-        varStyle.screen['--index-screen'] = String(index);
-    }
-
-    if (!isAuthChecked) {
-        return <div>Загрузка...</div>;
-    }
+    }, [screenIndex]);
 
     return (
         <div className={cn(styles['screen'], cls)}>
-            <div ref={refSlider} style={inlineStyle.screen} className={styles["screen__slider"]}>
-                {isAuthorized ? <Profile /> : <ScreenAuth />}
+            <div ref={refSlider} className={styles['screen__slider']}>
+                {isAuth ? <Profile /> : <ScreenAuth />}
                 <ScreenMenu />
                 <Settings />
             </div>
-            <ScreenSidebar cls={styles['screen__panel']} />
+            <ScreenSidebar cls={styles['screen__panel']} setScreen={setScreen} nameScreen={nameScreen} />
         </div>
     );
 }

@@ -11,7 +11,7 @@ html[data-theme="dark"] .title {
 .title {
     width: fit-content;
     font-size: 1.3vw;
-    color: var(--color-text-title);
+    color: var(--title-color);
 }
 
 .title-txt {
@@ -37,15 +37,17 @@ html[data-theme="dark"] .title {
 /* 16/9 */
 [data-aspect-ratio="16:9"] {
     .title-txt {
-        text-shadow: .05em .05em .2em var(--color-text-shadow);
+        text-shadow: .05em .05em .2em var(--text-shadow-color);
     }
 }
+
 /* /16/9 */
 
 /* 16/10 */
 [data-aspect-ratio="16:10"] {
     .title-txt {
-        text-shadow: .05em .05em .2em var(--color-text-shadow);
+        text-shadow: .05em .05em .2em var(--text-shadow-color);
     }
 }
+
 /* /16/10 */

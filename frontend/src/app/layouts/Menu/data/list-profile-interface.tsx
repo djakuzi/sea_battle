@@ -1,5 +1,5 @@
 
-import { TypeListJsxElement } from "../../../common/script/hooks/useListJSXelement";
+import { TypeListJsxElement } from "../../../common/script/hooks/ui/useListJSXelement";
 import { EnumProfileList } from "../../../core/data/list-component/interfaces/profileMenu.interface";
 import ModalFriends from "../screens/ScreenProfile/modal/ModalFriends/ModalFriends";
 import ModalListBattle from "../screens/ScreenProfile/modal/ModalListBattle/ModalListBattle";

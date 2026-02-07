@@ -2,31 +2,17 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EntityStatisticPlayers } from 'src/common/entity/game.scheme/statistic-players.entity';
 import { StatisticPlayersController } from './statistic.controller';
-import { ChangeStatisticPlayersService } from './services/changeStatistic.service';
-import { StatisticPlayerService } from './services/statisticPlayer.service';
 import { AuthGuardModule } from 'src/common/guard/auth/auth-guard.module';
-import { FindStatisticPlayerService } from './services/findStatisticPlayer.service';
-import { StatisticPlayersRepository } from './repositories/statistic-players.repository';
+import { SCHEMA_SERVICE_STATISCTIC_PLAYER } from './schema';
+import { unpackSchemaService } from 'src/common/util/unpack/schemaService.util';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([
-      EntityStatisticPlayers
-    ]),
-    AuthGuardModule
-  ],
-  controllers: [StatisticPlayersController],
-  providers: [
-    StatisticPlayersRepository,
-    ChangeStatisticPlayersService,
-    StatisticPlayerService,
-    FindStatisticPlayerService
-  ],
-  exports: [
-    StatisticPlayersRepository,
-    ChangeStatisticPlayersService,
-    StatisticPlayerService,
-    FindStatisticPlayerService
-  ]
+	imports: [TypeOrmModule.forFeature([EntityStatisticPlayers]), AuthGuardModule],
+	controllers: [StatisticPlayersController],
+	providers: [...unpackSchemaService(SCHEMA_SERVICE_STATISCTIC_PLAYER)],
+	exports: [
+		...SCHEMA_SERVICE_STATISCTIC_PLAYER.repo,
+		...SCHEMA_SERVICE_STATISCTIC_PLAYER.service,
+	],
 })
-export class StatisticPlayersModule {}
+export class ModuleStatisticPlayers { }

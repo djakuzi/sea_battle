@@ -38,9 +38,9 @@ class FriendCore extends ApiClientService {
 
             return response.data;
         } catch (e) {
-            let errorMessage = 'Неизвестная ошибка входа';
+            let errorMessage = 'Неизвестная ошибка отправления заявки в друзья';
             if (axios.isAxiosError(e)) {
-                errorMessage = e.response?.data?.message || 'Неизвестная ошибка входа';
+				errorMessage = e.response?.data?.message || 'Неизвестная ошибка отправления заявки в друзья';
             }
 
             throw new Error(errorMessage);
@@ -63,10 +63,11 @@ class FriendCore extends ApiClientService {
 
             return response.data;
         } catch (e) {
-            let errorMessage = 'Неизвестная ошибка входа';
+            let errorMessage = 'Неизвестная ошибка принятия запроса';
             if (axios.isAxiosError(e)) {
-                errorMessage = e.response?.data?.message || 'Неизвестная ошибка входа';
+				errorMessage = e.response?.data?.message || 'Неизвестная ошибка принятия запроса';
             }
+
             throw new Error(errorMessage);
         }
     }
@@ -86,10 +87,11 @@ class FriendCore extends ApiClientService {
             );
             return response.data;
         } catch (e) {
-            let errorMessage = 'Неизвестная ошибка входа';
+            let errorMessage = 'Неизвестная ошибка отмены запроса';
             if (axios.isAxiosError(e)) {
-                errorMessage = e.response?.data?.message || 'Неизвестная ошибка входа';
+				errorMessage = e.response?.data?.message || 'Неизвестная ошибка отмены запроса';
             }
+
             throw new Error(errorMessage);
         }
     }
@@ -110,9 +112,9 @@ class FriendCore extends ApiClientService {
 
             return response.data;
         } catch (e) {
-            let errorMessage = 'Неизвестная ошибка входа';
+            let errorMessage = 'Неизвестная ошибка получения друзей';
             if (axios.isAxiosError(e)) {
-                errorMessage = e.response?.data?.message || 'Неизвестная ошибка входа';
+				errorMessage = e.response?.data?.message || 'Неизвестная ошибка получения друзей';
             }
 
             throw new Error(errorMessage);
@@ -134,9 +136,9 @@ class FriendCore extends ApiClientService {
                 });
             return response.data;
         } catch (e) {
-            let errorMessage = 'Неизвестная ошибка входа';
+            let errorMessage = 'Неизвестная ошибка удаления друга';
             if (axios.isAxiosError(e)) {
-                errorMessage = e.response?.data?.message || 'Неизвестная ошибка входа';
+				errorMessage = e.response?.data?.message || 'Неизвестная ошибка удаления друга';
             }
 
             throw new Error(errorMessage);
@@ -158,9 +160,9 @@ class FriendCore extends ApiClientService {
             );
             return response.data;
         } catch (e) {
-            let errorMessage = 'Неизвестная ошибка входа';
+            let errorMessage = 'Неизвестная ошибка';
             if (axios.isAxiosError(e)) {
-                errorMessage = e.response?.data?.message || 'Неизвестная ошибка входа';
+                errorMessage = e.response?.data?.message || 'Неизвестная ошибка';
             }
 
             throw new Error(errorMessage);

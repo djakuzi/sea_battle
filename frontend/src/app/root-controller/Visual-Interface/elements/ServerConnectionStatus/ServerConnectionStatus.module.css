@@ -6,6 +6,18 @@ html[data-theme="dark"] {
     --cs-color-coord-border: #000000;
 }
 
+@keyframes disconnectPanel {
+    from {
+        opacity: 0;
+        transform: translate(100%, 105%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(0, 105%);
+    }
+}
+
 @keyframes connectionStatusServer {
     from {
         transform: rotateY(0);
@@ -28,15 +40,13 @@ html[data-theme="dark"] {
 
 @keyframes disconnectStatusServer {
     from {
-        filter: contrast(1);
         opacity: .9;
         scale: 1;
     }
 
     100% {
-        filter: contrast(.5);
         opacity: .08;
-        scale: .9;
+        scale: .98;
     }
 }
 
@@ -95,19 +105,24 @@ html[data-theme="dark"] {
 }
 
 .server-status-connect {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     font-size: 1em;
-    width: 1.8em;
-    background-color: #ffffff;
-    border-radius: 50%;
+    gap: .5em;
 }
 
-.server-status-connect[data-animation="true"] {
-    animation: connectStatusServer 15s infinite ease forwards;
+[data-animation="true"] .server-status-connect__img {
+    animation: connectStatusServer 7s infinite alternate ease;
+}
+
+.server-status-connect__img {
+    width: 1.8em;
+    border-radius: 50%;
 }
 
 .server-status-connect__img img {
     display: block;
-    font-size: 1em;
     width: 100%;
 }
 
@@ -116,7 +131,7 @@ html[data-theme="dark"] {
     width: 2em;
 }
 
-.server-status-disconnect[data-animation="true"] {
+[data-animation="true"].server-status-disconnect:not(:hover) {
     animation: disconnectStatusServer 2s infinite alternate ease;
 }
 
@@ -125,3 +140,12 @@ html[data-theme="dark"] {
     width: 100%;
 }
 
+.server-disconnect-panel {
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+    width: fit-content;
+    transform: translate(100%, 105%);
+    opacity: 0;
+    animation: disconnectPanel 1.5s ease forwards;
+}

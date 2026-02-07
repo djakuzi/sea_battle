@@ -1,10 +1,11 @@
 import { IntrCoord, IntrCoordPuttingShip } from '../../../common/types/Ship.interface';
-import { actionsBattle } from '../../../redux/slice/battle.slice';
+import { actionsBattle } from '../../../redux/slice/battle/battle.slice';
 import { TypePlaneShip, TypeSizeShip } from '../../../common/types/Ship.type';
 import { IntrInfoEnemy } from '../type/Battle.interface';
 import store from '../../../redux/store';
 import { CONFIG_FIELD } from '../../../core/settings/fieldCoord.settings';
 import { CONFIG_SHIPS } from '../../../core/settings/ships.settings';
+import { EnumEnemy, EnumParticipant } from '../types/battle.enum';
 
 /**
  * @constructor принимает следующие значения:
@@ -37,11 +38,12 @@ export class Bot {
 
   private createBot(): IntrInfoEnemy {
     const dataBot: IntrInfoEnemy = {
-      typeEnemy: 'bot',
-      id: 0,
+      typeEnemy: EnumEnemy.BOT,
+      id: '0',
       nickname: 'Бот Ботович',
       experience: 999,
       countRemainingShip: 10,
+	  
     };
 
     store.dispatch(actionsBattle.setDataEnemy(dataBot));
@@ -77,7 +79,7 @@ export class Bot {
     if (this.isBot) {
       this.dispatch(
         actionsBattle.setCoordPuttingShips({
-          typePlayers: 'enemy',
+          typePlayers: EnumParticipant.ENEMY,
           coordPuttingShips: result,
         }),
       );

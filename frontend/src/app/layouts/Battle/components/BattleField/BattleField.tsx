@@ -23,7 +23,7 @@ function BattleField({ cls, inputRefFielCoordUser, inputRefFielCoordEnemy }: Pro
                 <img className={styles['battle__move-player']} src={IMGarrowPlayer + ''} alt="ваш ход" title="ваш ход" />
                 <img className={styles['battle__move-enemy']} src={IMGarrowEnemy + ''} alt="ход соперника" title="ход соперника" />
             </div>
-            <CoordRect inputRef={inputRefFielCoordEnemy} cls={styles['battle__coords-box']} isMountPort={true} />
+            <CoordRect inputRef={inputRefFielCoordEnemy} cls={styles['battle__coords-box']} isMountPort={true} isHoverCoord={true}/>
         </div>
     );
 }

@@ -1,42 +1,47 @@
-import { JSX, useEffect, useState } from "react";
+import { JSX, useState } from "react";
 import styles from './ModalListBattle.module.css';
 import cn from "classnames";
-import HeaderModal from "../../components/HeaderModal/HeaderModal";
+import HeaderModal from "../../components/ui/HeaderModal/HeaderModal";
 import { useModalClose } from "../../../../../../common/context/ModalCloseContext";
-import { IntrStatisticPlayer } from "../../../../../../network/api/client.api/services/Statistic-player/types/statistic-player.inerface";
+import Tabs from "../../components/ui/Tabs/Tabs";
+import ListBattleOneVsOne from "../../components/list/ListBattleOneVsOne/ListBattleOneVsOne";
+import { useGetHeight } from "@app-common/script/hooks/util/useGetHeight.hook";
 
-export default function ModalListBattle():JSX.Element {
-    //custom context
-    const resetJsx = useModalClose();
-    //state
-    const [dataListBattle, setDataListBattle] = useState<IntrStatisticPlayer>();
+export default function ModalListBattle(): JSX.Element {
+	//custom context
+	const resetJsx = useModalClose();
+	//state
+	const [idTab, setIdTab] = useState<number>(0);
+	const { ref, height } = useGetHeight();
 
-    const clickExit = (): void => {
-        resetJsx();
-    };
+	const clickExit = (): void => {
+		resetJsx();
+	};
 
-    // const loadListBattle = async (): Promise<void> => {
-    //     try {
-    //         const response = await ServiceListBattle.get();
-    //         setDataListBattle(response);
-    //     } catch (e) {
-    //         console.error(e);
-    //     }
-    // };
+	return (
+		<div className={cn(styles['battle'])}>
+			<div className={cn(styles['battle__wrapper'])}>
+				<div className={cn(styles['battle__top'])} ref={ref}>
+					<HeaderModal cls={styles['battle-header']} title="Список боев" onExit={clickExit} />
+					<Tabs
+						cls={styles['friends-tabs']}
+						tabs={["Онлайн", 'Турнир', 'По приглашению']}
+						setIdTab={(i) => setIdTab(i)}
+					/>
+				</div>
 
-    // useEffect(() => {
-    //     loadListBattle();
-    // }, []);
-
-    return (
-        <div className={cn(styles['list-battle'])}>
-            <div className={cn(styles['list-battle__wrapper'])}>
-                <HeaderModal cls={styles['list-battle-header']} title="Список боев" onExit={clickExit} />
-
-                <div className={styles['list-battle-body']}>
-
-                </div>
-            </div>
-        </div>
-    );
+				<div className={styles['battle-body']} style={{ paddingTop: height }}>
+					<div className={cn(
+						styles['tab'],
+						{
+							[styles['tab--show']]: idTab === 0,
+						}
+					)}
+					>
+						<ListBattleOneVsOne cls={styles['one-vs-one']}/>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }

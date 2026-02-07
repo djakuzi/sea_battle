@@ -6,4 +6,5 @@ export interface PropsButtonSearch extends ButtonHTMLAttributes<HTMLButtonElemen
   children?: ReactNode;
   text?: string
   posText?: 'left' | 'right';
+visual?: 'standart' | 'only-img';
 }

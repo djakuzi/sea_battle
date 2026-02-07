@@ -4,9 +4,7 @@ import { AppDispatch, RootState } from '@app-redux/store';
 
 export const errorHandlerMiddleware: Middleware = (store: MiddlewareAPI<AppDispatch, RootState>) => (next) => (action) => {
     if (isRejectedWithValue(action)) {
-        const message = typeof action.payload === 'string'
-            ? action.payload
-            : 'Произошла неизвестная ошибка';
+        const message = typeof action.payload === 'string' ? action.payload : 'Произошла неизвестная ошибка';
 
         notification.createOneNotificftion('error', message, false, 1500);
     }

@@ -1,0 +1,40 @@
+.header {
+	position: relative;
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    padding: .2em;
+    background-color: #55C1FA;
+
+	.header-exit {
+		font-size: .35em;
+		margin-left: .8em;
+		transition: transform .2s ease;
+		
+		&:active {
+			transform: scale(.95);
+		}
+	}
+
+	.header-title {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		font-size: .35em;
+		margin: 0 auto;
+	}
+}
+
+/* 16/9 */
+[data-aspect-ratio="16:9"] {
+
+}
+
+/* /16/9 */
+
+/* 16/10 */
+[data-aspect-ratio="16:10"] {
+
+}
+/* /16/10 */

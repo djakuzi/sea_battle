@@ -1,9 +1,9 @@
 export function isValidPassword(passwordOne: string, passwordTwo: string): boolean {
-    return true
+	return true;
 }
 
 const utilVerification = {
-    isValidPassword
-}
+	isValidPassword,
+};
 
-export default utilVerification
+export default utilVerification;

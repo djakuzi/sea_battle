@@ -1,9 +1,13 @@
 html[data-theme="dark"] {
-    --color-text: #000000;
-    --color-text-prime: #b61010;
-    --color-text-title: #b61010;
-    --color-text-shadow: #ffffff;
-    --color-block-shadow: #ffffff;
-    --color-block-bg: #a40d0d;
-    --color-block-border: #000000;
+    --text-color: #000000;
+    --text-shadow-color: #ffffff;
+    --text-prime-color: #b61010;
+    --text-prime-shadow-color: transparent;
+    --title-color: #b61010;
+    --block-shadow-color: #ffffff;
+    --block-bg-color: #a40d0d;
+    --block-border-color: #000000;
+    --btn-shadow-color: #ffffff;
+    --btn-bg-color: #a40d0d;
+    --btn-border-color: #000000;
 }

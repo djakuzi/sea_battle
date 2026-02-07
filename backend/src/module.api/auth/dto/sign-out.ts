@@ -1,3 +1,1 @@
-export interface signOutUserDto {
-
-}
+export interface signOutUserDto {}

@@ -26,6 +26,10 @@ button {
   cursor: pointer;
 }
 
+input {
+	caret-color: #55C1FA;
+}
+
 .--not-developed {
   pointer-events: none;
   opacity: 0.7;

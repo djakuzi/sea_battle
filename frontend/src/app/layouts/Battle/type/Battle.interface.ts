@@ -1,14 +1,15 @@
-import { TypeBattle, TypeEnemy, TypeParticipant, TypeResultBattle, TypeStatusBattle, TypeStatusShot } from '../types/battle';
+import { EnumEnemy, EnumParticipant, EnumResultBattle, EnumStatusBattle, EnumStatusShot } from '../types/battle.enum';
 import { IntrCoord, IntrCoordPuttingShip, IntrFullCoordPuttingShip } from '../../../common/types/Ship.interface';
+import { EnumVariantPlayType } from '@app-core/data/list-component/interfaces/variantsPlay.interface';
 
 /** IntrTimerBattle - данные таймера
   - time: время в секундах
   - displayTime: для вывода на дисплей игрока
 */
 export interface IntrTimerBattle {
-  time: number;
-  minutes: string;
-  seconds: string;
+	time: number;
+	minutes: string;
+	seconds: string;
 }
 
 /** IntrDataShot - данные о выстреле
@@ -17,14 +18,21 @@ export interface IntrTimerBattle {
   - dataShip: данные корабля, если был выстрел по нему
 */
 export interface IntrDataShot {
-  status: TypeStatusShot;
-  coord: IntrCoord;
-  dataShip: IntrFullCoordPuttingShip | false;
+	status: EnumStatusShot;
+	coord: IntrCoord;
+	dataShip: IntrFullCoordPuttingShip | false;
+}
+
+/** IntrDataShot - данные о выстреле от сервера
+  - isShotedCoord: был ли выстрел по такой координате или нет
+*/
+export interface IntrOnlineDataShot extends IntrDataShot {
+	isShotedCoord?: boolean,
 }
 
 export interface IntrUpdatingCountRemainingShip {
-  typePlayers: TypeParticipant;
-  countRemainingShip: number;
+	typePlayers: EnumParticipant;
+	countRemainingShip: number;
 }
 
 /** IntrGeneralInfoParticipant - общие данные о участниках битвы
@@ -32,28 +40,29 @@ export interface IntrUpdatingCountRemainingShip {
   - coordPuttingShips: массив координат кораблей
 */
 export interface IntrGeneralInfoParticipant {
-  countRemainingShip: number;
-  coordPuttingShips?: IntrCoordPuttingShip[];
+	countRemainingShip: number;
+	coordPuttingShips?: IntrCoordPuttingShip[];
 }
 
 /** IntrInfoPlayer - данные о игроке битвы
   - в данный момент
 */
 export interface IntrInfoPlayer extends IntrGeneralInfoParticipant {
-  coordPuttingShips?: IntrCoordPuttingShip[];
+	coordPuttingShips?: IntrCoordPuttingShip[];
 }
 
 export interface IntrEnemyBattle {
-  id: number;
-  experience: number;
-  nickname: string;
+	id: string;
+	experience: number;
+	nickname: string;
 }
 
 /** IntrInfoEnemy - данные о противнике игрока в битве
   - typeEnemy: тип соперника
 */
 export interface IntrInfoEnemy extends IntrGeneralInfoParticipant, IntrEnemyBattle {
-  typeEnemy: TypeEnemy;
+	typeEnemy: EnumEnemy;
+	guestOrPlayer?: 'guest' | 'player';
 }
 
 /** IntrDataBattle - данные о битве
@@ -64,12 +73,12 @@ export interface IntrInfoEnemy extends IntrGeneralInfoParticipant, IntrEnemyBatt
   - type: тип битвы;
 */
 export interface IntrDataBattle {
-  id: number;
-  roomId: number;
-  type: TypeBattle;
-  moveParticipant: TypeParticipant;
-  status: TypeStatusBattle;
-  winner: TypeResultBattle;
-  timer: IntrTimerBattle;
-  error: string | '';
+	id: number;
+	roomId: number;
+	type: EnumVariantPlayType;
+	moveParticipant: EnumParticipant;
+	status: EnumStatusBattle;
+	winner: EnumResultBattle;
+	timer: IntrTimerBattle;
+	error: string | '';
 }

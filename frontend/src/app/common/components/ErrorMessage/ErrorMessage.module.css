@@ -1,0 +1,12 @@
+.error-message {
+    font-size: 1em;
+    color: black;
+
+	&.error-message--in-list {
+		width: 100%;
+		text-align: center;
+		color: var(--title-color);
+		text-shadow: .1em .1em .3em var(--text-shadow-color);
+	}
+}
+

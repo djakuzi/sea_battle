@@ -1,26 +1,41 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
-import { PlayerFindService } from './service/playerFind.service';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { ServicePlayerFind } from './service/playerFind.service';
 import { FindPlayerDto } from './dto/findPlayer.dto';
 import { DtoPlayerOnlineStatus } from './dto/statusOnlinePlayer.dto';
-import { PlayerService } from './service/player.service';
-import { AuthGuard } from 'src/common/guard/auth/auth.guard';
+import { DtoUpdatedPlayer } from './dto/updatePlayer.dto';
+import { ServicePlayerGet } from './service/playerGet.service';
 
 @Controller('player')
 export class PlayerController {
-    constructor(
-        private readonly playerService: PlayerService,
-        private readonly playerFindService: PlayerFindService
-    ) { }
+	constructor(
+		private readonly playerFindService: ServicePlayerFind,
+		private readonly playerGetService: ServicePlayerGet
+	) {}
 
-    @HttpCode(HttpStatus.OK)
-    @Post('find-players')
-    async find(@Body() dto: FindPlayerDto) {
-        return await this.playerFindService.findPlayers(dto);
-    }
+	@HttpCode(HttpStatus.OK)
+	@Post('update-me')
+	async updateMe(@Body() dto: DtoUpdatedPlayer) {
+		// return await this.playerFindService.updateDataPlayer();
+	}
 
-    @HttpCode(HttpStatus.OK)
-    @Post('status-online')
-    async getStatusOnline(@Body() dto: DtoPlayerOnlineStatus) {
-        return await this.playerService.getStatusOnline(dto);
-    }
+	@HttpCode(HttpStatus.OK)
+	@Post('find-players')
+	async find(@Body() dto: FindPlayerDto) {
+		const args = {
+			filter: {
+				nickname: dto.nickname,
+			},
+		};
+
+		return await this.playerFindService.find(ServicePlayerFind.strategyName.MORE, args);
+	}
+
+	@HttpCode(HttpStatus.OK)
+	@Post('status-network')
+	async getStatusOnline(@Body() dto: DtoPlayerOnlineStatus) {
+		const args = {
+			filter: dto,
+		};
+		return await this.playerGetService.get(ServicePlayerGet.strategyName.STATUS_NETWORK, args);
+	}
 }

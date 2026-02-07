@@ -69,7 +69,7 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: top;
-    background-image: url('../../../assets/image/battle/wreath.png');
+	background-image: url('../../../../../assets/image/game/battle/wreath.png');
     z-index: 599;
     opacity: 0.95;
     animation: showMain 1.3s ease-in-out;
@@ -94,6 +94,7 @@
 }
 
 .action__btn {
+	font-size: 2rem;
     margin-top: 1em;
 }
 

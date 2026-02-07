@@ -1,20 +1,20 @@
-import { EnumVariantPlayType, IntrBatteleVariant } from "./interfaces/variantsPlay.interface";
+import { EnumVariantPlayType, IntrBattleVariant } from "./interfaces/variantsPlay.interface";
 
-export const LIST_VARIANT_PLAY: IntrBatteleVariant[] = [
+export const LIST_VARIANT_PLAY: IntrBattleVariant[] = [
     {
-        type: EnumVariantPlayType.Bot,
+        type: EnumVariantPlayType.BOT,
         title: 'С БОТОМ',
     },
     {
-        type: EnumVariantPlayType.Online,
+        type: EnumVariantPlayType.ONE_VS_ONE,
         title: 'ОНЛАЙН',
     },
     {
-        type: EnumVariantPlayType.Tournament,
+        type: EnumVariantPlayType.TOURNAMENT,
         title: 'ТУРНИР',
     },
     {
-        type: EnumVariantPlayType.Invite,
+        type: EnumVariantPlayType.INVITE,
         title: 'ПО ПРИГЛАШЕНИЮ',
     },
 ];

@@ -1,20 +1,36 @@
-import { Injectable } from "@nestjs/common";
-import { EntityStatisticPlayers } from "src/common/entity/game.scheme/statistic-players.entity";
-import { buildConditionsFindWhere } from "src/common/util/repository/conditions";
-import { EntityManager } from "typeorm";
-import { StatisticPlayersRepository } from "../repositories/statistic-players.repository";
+import { Injectable, NotImplementedException } from '@nestjs/common';
+import { IntrSchemaStrategyOne, StrategyOne } from '../strategies/find/one.strategy';
+import { IntrStandartStrategy } from 'src/common/types/strategy/standartStrategy.interface';
+
+export enum EnumNameStrategy {
+	ONE = 'one',
+}
+
+export interface IntrMapStrategyFindStatisticPlayer {
+	[EnumNameStrategy.ONE]: IntrSchemaStrategyOne;
+}
 
 @Injectable()
-export class FindStatisticPlayerService {
-    constructor(
-        private readonly repoStatisticPlayers: StatisticPlayersRepository,
-    ) {}
+export class ServiceFindStatisticPlayer {
+	static strategyName = EnumNameStrategy;
+	private mapStrategies = new Map<EnumNameStrategy, IntrStandartStrategy<EnumNameStrategy>>();
 
-    async findOneStatistic(filter: Partial<EntityStatisticPlayers>, manager?: EntityManager): Promise<EntityStatisticPlayers | null> {
-        const conditions = buildConditionsFindWhere<EntityStatisticPlayers, Partial<EntityStatisticPlayers>>(filter, 'OR');
-        if (!conditions) return null;
+	constructor(private readonly strategyOne: StrategyOne) {
+		this.mapStrategies.set(this.strategyOne.name, this.strategyOne);
+	}
 
-        const statistic = await this.repoStatisticPlayers.findOne(conditions, manager);
-        return statistic 
-    }
+	async find<M extends EnumNameStrategy>(
+		method: M,
+		args: IntrMapStrategyFindStatisticPlayer[M]['args']
+	): Promise<IntrMapStrategyFindStatisticPlayer[M]['return']> {
+		const strategy = this.mapStrategies.get(method);
+
+		if (!strategy) {
+			throw new NotImplementedException(
+				`Стратегия поиска статистики пользователя не найдена: ${method}`
+			);
+		}
+
+		return (await strategy.execute(args)) as IntrMapStrategyFindStatisticPlayer[M]['return'];
+	}
 }

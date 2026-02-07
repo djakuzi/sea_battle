@@ -4,7 +4,14 @@ import { FriendService } from "@app-network/api/client.api/services/Friend/Frien
 import { PlayerService } from "@app-network/api/client.api/services/Player/Player.service";
 import { useState } from "react";
 
-export function useFindPlayers() {
+export interface IntrUseFindPlayers {
+	listPlayers: IntrPlayerWithActionFriend[] | undefined;
+	error: string | null;
+	findFindPlayers: (filter: any) => Promise<void>;
+	setError: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
+export function useFindPlayers(): IntrUseFindPlayers {
     const [listPlayers, setListPlayers] = useState<IntrPlayerWithActionFriend[]>();
     const [error, setError] = useState<string | null>(null);
 
@@ -55,5 +62,6 @@ export function useFindPlayers() {
         listPlayers,
         error,
         findFindPlayers,
+		setError,
     }
 }

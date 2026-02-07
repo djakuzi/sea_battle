@@ -1,3 +1,7 @@
+import { IsString, IsNotEmpty } from 'class-validator';
+
 export class FindPlayerDto {
-    nickname: string;
+	@IsString()
+	@IsNotEmpty({ message: 'Не заполнено имя игрока' })
+	nickname: string;
 }

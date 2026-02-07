@@ -1,4 +1,5 @@
 .status {
+	position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -8,7 +9,7 @@
     display: flex;
     align-items: center;
     gap: 2vw;
-    border-color: var(--color-block-border);
+    border-color: var(--block-border-color);
     border-style: solid;
     background-color: #00000045;
     backdrop-filter: blur(.08vw);
@@ -19,6 +20,13 @@
     flex-direction: row-reverse;
 }
 
+.status__timer {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
 [data-aspect-ratio="16:9"] {
     & .status__user {
         padding: .5% 1%;
@@ -27,7 +35,7 @@
         backdrop-filter: blur(.08vw);
         -webkit-backdrop-filter: blur(.08vw);
     }
-    
+
     & .status__user-info {
         font-size: 2vw;
     }
@@ -62,4 +70,3 @@
         font-size: 2vw;
     }
 }
-

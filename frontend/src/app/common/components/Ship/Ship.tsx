@@ -2,6 +2,7 @@ import { JSX, useEffect, useState } from "react";
 import styles from './Ship.module.css';
 import cn from "classnames";
 import { PropsShip } from "./Ship.props";
+
 export default function Ship({ style, cls, view = 'blue', size, plane }: PropsShip): JSX.Element {
     const [imgShip, setImgShip] = useState();
     const shipStyle: React.CSSProperties & {

@@ -4,6 +4,7 @@ import NotificationList from "./elements/Notification/NotificationList";
 import ServerConnectionStatus from "./elements/ServerConnectionStatus/ServerConnectionStatus";
 import { useSelector } from "react-redux";
 import { RootState } from "@app-redux/store";
+import ModalList from "./elements/ModalList/ModalList";
 
 export default function VusualInterface(): JSX.Element {
     const { statusConnectionServer } = useSelector((s: RootState) => s.gameSettings);
@@ -12,6 +13,7 @@ export default function VusualInterface(): JSX.Element {
         <div className="visual-interface">
             {statusConnectionServer.isShow && <ServerConnectionStatus cls={'status-connect-server'}/>}
             <NotificationList />
+			<ModalList />
         </div>
     );
 } 

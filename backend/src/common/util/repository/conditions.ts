@@ -1,4 +1,4 @@
-import { FindOptionsWhere } from "typeorm";
+import { FindOptionsWhere } from 'typeorm';
 
 /**
  * Создаёт условия для опции where в TypeORM.
@@ -12,36 +12,35 @@ import { FindOptionsWhere } from "typeorm";
  * @returns Условия для where или null, если фильтр пуст
  */
 export function buildConditionsFindWhere<E, F extends Partial<Record<keyof E, any>>>(
-  filter: F,
-  type: 'AND' | 'OR' = 'OR'
+	filter: F,
+	type: 'AND' | 'OR' = 'OR'
 ): FindOptionsWhere<E>[] | FindOptionsWhere<E> | null {
-  const conditions: FindOptionsWhere<E>[] = [];
-  const andCondition: FindOptionsWhere<E> = {} as FindOptionsWhere<E>;
-  const isTypeOr = type === 'OR';
+	const conditions: FindOptionsWhere<E>[] = [];
+	const andCondition: FindOptionsWhere<E> = {} as FindOptionsWhere<E>;
+	const isTypeOr = type === 'OR';
 
-  for (const rawKey in filter) {
-    const key = rawKey as unknown as keyof E;
-    const value = filter[key];
+	for (const rawKey in filter) {
+		const key = rawKey as unknown as keyof E;
+		const value = filter[key];
 
-    if (value === undefined || value === null) continue;
+		if (value === undefined || value === null) continue;
 
-    if (isTypeOr) {
-      conditions.push({ [key]: value } as FindOptionsWhere<E>);
-    } else {
-      andCondition[key] = value;
-    }
-  }
+		if (isTypeOr) {
+			conditions.push({ [key]: value } as FindOptionsWhere<E>);
+		} else {
+			andCondition[key] = value;
+		}
+	}
 
-  if (isTypeOr) {
-    return conditions.length === 0 ? null : conditions;
-  } else {
-    return Object.keys(andCondition).length === 0 ? null : andCondition;
-  }
+	if (isTypeOr) {
+		return conditions.length === 0 ? null : conditions;
+	} else {
+		return Object.keys(andCondition).length === 0 ? null : andCondition;
+	}
 }
 
 const utilConditions = {
-  buildConditionsFindWhere,
+	buildConditionsFindWhere,
 };
 
-
-export default utilConditions; 
+export default utilConditions;

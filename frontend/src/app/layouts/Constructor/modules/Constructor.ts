@@ -1,11 +1,11 @@
 import { IntrCoord, IntrCoordPuttingShip, IntrFullDataShipBattle } from '../../../common/types/Ship.interface';
-import { actionsConstructor } from '../../../redux/slice/constructor.slice';
+import { actionsConstructor } from '../../../redux/slice/constructor/constructor.slice';
 import store, { RootState } from '../../../redux/store';
 import { TypePlaneShip, TypeSizeShip } from '../../../common/types/Ship.type';
 import { Bot } from '../../Battle/modules/bot';
-import { getElementCoord } from '../../../common/script/modules/fieldCoord.module';
-import { transformationToFullCoordShips } from '../../../common/script/modules/ship.module';
 import { CONFIG_FIELD } from '../../../core/settings/fieldCoord.settings';
+import { getElementCoord } from '@app-common/script/modules/FieldBattle/methods/getElementCoord';
+import { transformationToFullCoordShips } from '@app-common/script/modules/Ship/methods/transformationToFullCoordShips';
 
 interface IntrObjPortShip {
   index: number;
