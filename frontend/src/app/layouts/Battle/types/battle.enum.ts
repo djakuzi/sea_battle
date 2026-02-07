@@ -29,7 +29,8 @@ export enum EnumStatusBattle {
 	NONE = 'false',
 	GAME = 'game',
 	PAUSE = 'pause',
-	FINISHED = 'finished'
+	FINISHED = 'finished',
+	LEAVE_ENEMY = 'leaveEnemy'
 }
 
 /** 

@@ -5,7 +5,7 @@ import {
 	IntrStandartSchemaStrategy,
 	IntrStandartStrategy,
 } from 'src/common/types/strategy/standartStrategy.interface';
-import { FriendRequestRepository } from 'src/module.api/friends/repositories/friendReguest.repository';
+import { RepoFriendRequest } from 'src/module.api/friends/repositories/friendReguest.repo';
 import { ServiceRemoveFriendReguest } from 'src/module.api/friends/services/reguest/removeFriendRequest.service';
 import { DataSource, EntityManager } from 'typeorm';
 
@@ -29,7 +29,7 @@ export class StrategyDefault
 
 	constructor(
 		private readonly dataSource: DataSource,
-		private readonly repoFriendRequest: FriendRequestRepository
+		private readonly repoFriendRequest: RepoFriendRequest
 	) { }
 
 	async execute(

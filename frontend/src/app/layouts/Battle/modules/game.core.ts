@@ -1,15 +1,15 @@
 import { IntrCoord, IntrCoordPuttingShip, IntrFullCoordPuttingShip, IntrFullDataShipBattle } from '../../../common/types/Ship.interface';
 import { actionsBattle } from '../../../redux/slice/battle/battle.slice';
 import store, { RootState } from '../../../redux/store';
-import { EnumParticipant, EnumStatusBattle } from '../types/battle.enum';
+import { EnumParticipant, EnumResultBattle, EnumStatusBattle } from '../types/battle.enum';
 import { createMessageError, StandartError } from '../../../common/script/modules/error';
 import { TypeCallback } from '../../../common/types/typeCallback.type';
-import { IntrUpdatingCountRemainingShip } from '../type/Battle.interface';
+import { IntrTimerBattle, IntrUpdatingCountRemainingShip } from '../type/Battle.interface';
 import { createMessageWarn, StandartWarn } from '../../../common/script/modules/warn';
-import { mthdsCoords } from '../../../common/script/modules/fieldCoord.module';
 import { createOneNotificftion } from '../../../root-controller/Visual-Interface/elements/Notification/modules/notification';
 import { CONFIG_FIELD } from '../../../core/settings/fieldCoord.settings';
 import { CONFIG_BATTLE } from '../../../core/settings/battle.settings';
+import { ModuleFieldBattle } from '@app-common/script/modules/FieldBattle/FieldBattle.module';
 
 /**
  * @class - класс, отвечет за общие событие битвы.
@@ -43,7 +43,7 @@ import { CONFIG_BATTLE } from '../../../core/settings/battle.settings';
 export class Game {
 	nameClass = 'Game';
 	protected callbackEndTimer: TypeCallback | null = null;
-	protected getState = (): RootState => store.getState();
+	getState = (): RootState => store.getState();
 	protected dispatch = store.dispatch;
 	//таймер
 	protected timerId;
@@ -51,12 +51,12 @@ export class Game {
 	protected style = CONFIG_FIELD.classesCoord;
 	//enemy
 	FieldCoordEnemy: HTMLDivElement | null = null;
-	protected coordPuttingShipsEnemy: IntrCoordPuttingShip[] = [];
-	protected coordFullPuttingShipsEnemy: IntrFullDataShipBattle[] = [];
+	coordPuttingShipsEnemy: IntrCoordPuttingShip[] = [];
+	coordFullPuttingShipsEnemy: IntrFullDataShipBattle[] = [];
 	//player
 	FieldCoordPlayer: HTMLDivElement | null = null;
-	protected coordPuttingShipsPlayer: IntrCoordPuttingShip[] = [];
-	protected coordFullPuttingShipsPlayer: IntrFullDataShipBattle[] = [];
+	coordPuttingShipsPlayer: IntrCoordPuttingShip[] = [];
+	coordFullPuttingShipsPlayer: IntrFullDataShipBattle[] = [];
 	//error
 	protected isError = false;
 	protected objError = {
@@ -78,10 +78,10 @@ export class Game {
 	/**
 	 * @method updateTimer обновляет таймер боя
 	 */
-	protected updateTimer = (): void => {
+	updateTimer = (timer?: IntrTimerBattle): void => {
 		const { oneNotification } = this.getState().notification;
 		const { moveParticipant } = this.getState().battle.battle;
-		const { time } = this.getState().battle.battle.timer;
+		const time = timer ? timer.time : this.getState().battle.battle.timer.time;
 		const minutes = Math.floor(time / 60);
 		const seconds = time % 60;
 
@@ -95,8 +95,8 @@ export class Game {
 			this.dispatch(
 				actionsBattle.updateTimer({
 					time: time - 1,
-					minutes: `${minutes.toString().padStart(2, '0')}`,
-					seconds: `${seconds.toString().padStart(2, '0')}`,
+					minutes: timer ? timer.minutes : `${minutes.toString().padStart(2, '0')}`,
+					seconds: timer ? timer.seconds : `${seconds.toString().padStart(2, '0')}`,
 				}),
 			);
 		}
@@ -105,6 +105,8 @@ export class Game {
 	 * @method setTimer начать отсчет боя
 	 */
 	setTimer(): void {
+		if (this.timerId !== null) return; 
+
 		this.timerId = setInterval(this.updateTimer, 1000);
 	}
 	/**
@@ -112,6 +114,8 @@ export class Game {
 	 */
 	stopTimer(callback?: TypeCallback | null): void {
 		clearInterval(this.timerId);
+		this.timerId = null;
+		
 		if (callback) {
 			callback();
 		}
@@ -121,6 +125,7 @@ export class Game {
 	 */
 	resetTimer(callback?: TypeCallback | null): void {
 		clearInterval(this.timerId);
+		this.timerId = null;
 
 		this.dispatch(
 			actionsBattle.updateTimer({
@@ -160,17 +165,6 @@ export class Game {
 		return elCoord;
 	};
 	/**
-	 * @method checkClassCoord - проверить наличие классов
-	 */
-	protected checkClassCoord = (elCoord: HTMLDivElement): boolean => {
-		const isKill = elCoord.classList.contains(this.style.kill);
-		const isMiss = elCoord.classList.contains(this.style.miss);
-		const isPerimenter = elCoord.classList.contains(this.style.perimeter);
-		const isHit = elCoord.classList.contains(this.style.hit);
-
-		return isKill || isMiss || isPerimenter || isHit;
-	};
-	/**
 	 * @method proccesHitToCoord - установить попадание по кораблю;
 	 */
 	proccesHitToCoord = (
@@ -178,9 +172,9 @@ export class Game {
 		typeParticipant: EnumParticipant = EnumParticipant.ENEMY
 	): void => {
 		const fieldCoord = this.getFieldCoord(typeParticipant);
-
+		
 		if (fieldCoord) {
-			mthdsCoords.setHit(coord, fieldCoord);
+			ModuleFieldBattle.setHit(coord, fieldCoord);
 		} else {
 			const { notFoundField } = this.objError;
 			this.setError(notFoundField);
@@ -196,7 +190,7 @@ export class Game {
 		const fieldCoord = this.getFieldCoord(typeParticipant);
 
 		if (fieldCoord) {
-			mthdsCoords.setMiss(coord, fieldCoord);
+			ModuleFieldBattle.setMiss(coord, fieldCoord);
 		} else {
 			const { notFoundField } = this.objError;
 			this.setError(notFoundField);
@@ -214,9 +208,9 @@ export class Game {
 		const fieldCoord = this.getFieldCoord(typeParticipant);
 
 		if (fieldCoord) {
-			mthdsCoords.setPerimeter(plane, coords, fieldCoord);
-			mthdsCoords.setKill(coords, fieldCoord);
-			mthdsCoords.showShip(dataShip, fieldCoord);
+			ModuleFieldBattle.setPerimeter(plane, coords, fieldCoord);
+			ModuleFieldBattle.setKill(coords, fieldCoord);
+			ModuleFieldBattle.showShip(dataShip, fieldCoord);
 		} else {
 			const { notFoundField } = this.objError;
 			this.setError(notFoundField);
@@ -228,7 +222,8 @@ export class Game {
 	 */
 	protected updateCountRemainingShip = (
 		typePlayers: EnumParticipant, 
-		count?: number
+		count?: number,
+		isShowWinner: boolean = true,
 	): void => {
 		const currentCount = this.getState().battle[typePlayers].countRemainingShip;
 		const obj: IntrUpdatingCountRemainingShip = {
@@ -238,12 +233,14 @@ export class Game {
 
 		this.dispatch(actionsBattle.updateCountRemainingShip(obj));
 
-		if (obj.countRemainingShip <= 0 && typePlayers == EnumParticipant.PLAYER) {
-			this.setResultWinner(EnumParticipant.ENEMY);
-		}
+		if (isShowWinner) {
+			if (obj.countRemainingShip <= 0 && typePlayers == EnumParticipant.PLAYER) {
+				this.setResultWinner(EnumResultBattle.ENEMY);
+			}
 
-		if (obj.countRemainingShip <= 0 && typePlayers == EnumParticipant.ENEMY) {
-			this.setResultWinner(EnumParticipant.PLAYER);
+			if (obj.countRemainingShip <= 0 && typePlayers == EnumParticipant.ENEMY) {
+				this.setResultWinner(EnumResultBattle.PLAYER);
+			}
 		}
 	};
 	/**
@@ -254,7 +251,7 @@ export class Game {
 
 		if (fieldCoord) {
 			this.coordFullPuttingShipsPlayer.forEach((el) => {
-				mthdsCoords.showShip(el, fieldCoord);
+				ModuleFieldBattle.showShip(el, fieldCoord);
 			});
 		} else {
 			const { notFoundField } = this.objError;
@@ -288,7 +285,7 @@ export class Game {
 	/**
 	 * @method changeMoveParticipant изменяем ход
 	 */
-	protected changeMoveParticipant<R>(participant: EnumParticipant, callback?: TypeCallback<R>): R | void {
+	changeMoveParticipant<R>(participant: EnumParticipant, callback?: TypeCallback<R>): R | void {
 		this.dispatch(actionsBattle.setParticipantMove(participant));
 
 		if (callback) {
@@ -298,21 +295,32 @@ export class Game {
 	/**
 	 * @method showWinner показываем победителя
 	 */
-	protected setResultWinner = (participantWinner: EnumParticipant): void => {
+	setResultWinner = (participantWinner: EnumResultBattle): void => {
 		const { FieldCoordEnemy, coordFullPuttingShipsEnemy, dispatch } = this;
 
 		this.stopTimer();
-		dispatch(actionsBattle.setStatusBattle('finished'));
+
+		dispatch(actionsBattle.setStatusBattle(EnumStatusBattle.FINISHED));
 
 		if (FieldCoordEnemy) {
 			coordFullPuttingShipsEnemy.forEach((el) => {
-				mthdsCoords.showShip(el, FieldCoordEnemy);
+				ModuleFieldBattle.showShip(el, FieldCoordEnemy);
 			});
 		}
 
 		setTimeout(() => {
 			dispatch(actionsBattle.setResultBattle(participantWinner));
 		}, 500);
+	};
+	/**
+	 * @method isCountRemainingShip - есть ли у врага еще корабли
+	 * true - есть
+	 * false - нет
+	 */
+	
+	isCountRemainingShip = (typePlayers: EnumParticipant): boolean => {
+		const isZero = this.getState().battle[typePlayers].countRemainingShip > 0;
+		return isZero;
 	};
 	/**
 	 * @method setError устанавливаем ошибку

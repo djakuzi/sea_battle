@@ -7,6 +7,7 @@ import { IntrInfoParticipants } from 'src/game/core/types/gameParticipants.inter
 import { IntrFullInfoShip } from 'src/common/types/ship/ship.interface';
 import { getSession } from '../../../../../common/util/session/methods/getSession';
 import { getEnemyParticipant } from '../../script/util/session/methods/getEnemyParticipant';
+import { IntrSessionOneVsOne } from '../../types/session/session.interface';
 
 @Injectable()
 export class ServiceGame {
@@ -44,23 +45,57 @@ export class ServiceGame {
 				session.session.participants[key].client,
 				enemy.data,
 				firstMove as string,
-			)
+			);
+
+			game?.setListenner('Timer', 'onDelayUpdate', (
+				time: number,
+				minutes: string,
+				seconds: string
+			) => {
+				this.emit.updateTime(
+					session.session.participants[key].client,
+					{
+						time,
+						minutes,
+						seconds
+					}
+				);
+			})
+
+			game?.setListenner('Timer', 'onEnd', () => {
+				this.emit.endTime(session.session.participants[key].client);
+				game.Timer.updateDataTimer();
+				game.Timer.setTimer();
+			})
 		}
+
+		game?.startGame();
 
 		console.log(`Игра началась в сессии с id: ${idSession}}. Первый ходит ${firstMove}.`);
 	}
 
 	async finishGame(
-		idSession: string,
+		session: IntrSessionOneVsOne,
 		idWinner: string,
 	): Promise<void> {
-		const session = getSession(this.serviceGameSessions.gameSessions, idSession);
-
+		
 		session.session.endDate = new Date();
 		session.session.idWinner = idWinner;
+		session.game?.destroy();
+		console.log(`Сессия игры с id ${session.session.id} окончена. Победитель игрок с id -  ${idWinner}`);
+		
+		this.serviceGameSessions.endSession(session);
+	}
 
-		console.log(`Сессия игры с id ${idSession} окончена. Победитель игрок с id -  ${idWinner}`);
+	async leaveParticipant(idParticipant: string, idSession: string) {
+		const session = getSession(this.serviceGameSessions.gameSessions, idSession);
+		const enemy = getEnemyParticipant(session.session, idParticipant);
 
-		this.serviceGameSessions.deleteSession(idSession);
+		this.emit.enemyLeft(enemy.client);
+
+		console.log(`Сессия игры с id ${idSession} прекращена. Игрок с id -  ${idParticipant} покинул игру`);
+
+		session.game?.destroy();
+		this.serviceGameSessions.deleteSession(session);
 	}
 }

@@ -6,13 +6,13 @@ import { CustomOptionWhere } from '../../../common/types/repository/CustomOption
 import { StandartRepository } from 'src/common/repository/standart-repository.repository';
 
 @Injectable()
-export class UsersRepository extends StandartRepository<EntityUser> {
+export class UsersRepository extends StandartRepository {
 	constructor(
 		private readonly dataSource: DataSource,
 		@InjectRepository(EntityUser)
 		private repoUser: Repository<EntityUser>
 	) {
-		super(dataSource, repoUser);
+		super(dataSource);
 	}
 
 	getRepo(manager?: EntityManager): Repository<EntityUser> {

@@ -4,7 +4,7 @@ import {
 	IntrStandartStrategy,
 } from 'src/common/types/strategy/standartStrategy.interface';
 import { EntityManager } from 'typeorm';
-import { FriendShipRepository } from 'src/module.api/friends/repositories/friendship.repository';
+import { RepoFriendShip } from 'src/module.api/friends/repositories/friendship.repo';
 import { IntrIsFriendships } from 'src/module.api/friends/interface/isFriends.interface';
 import { ServiceIsFriendShip } from 'src/module.api/friends/services/friendship/isFriendShip.service';
 
@@ -29,7 +29,7 @@ export class StrategyByList
 	implements IntrStandartStrategy<typeof ServiceIsFriendShip.strategyName.LIST> {
 	readonly name = ServiceIsFriendShip.strategyName.LIST;
 
-	constructor(private readonly repoFriendship: FriendShipRepository) { }
+	constructor(private readonly repoFriendship: RepoFriendShip) { }
 
 	async execute(
 		args: IntrSchemaStrategyByList['args']

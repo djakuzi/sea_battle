@@ -1,5 +1,7 @@
 .--coord-kill {
     position: relative;
+	cursor: default;
+	transform: none !important;
 }
 
 .--coord-kill::after {
@@ -18,6 +20,8 @@
 
 .--coord-hit {
     position: relative;
+	cursor: default;
+	transform: none !important;
 }
 
 .--coord-hit::after {
@@ -34,16 +38,23 @@
 
 .--coord-miss {
     background-color: #80470066;
+	cursor: default;
+	transform: none !important;
 }
 
 .--coord-perimeter {
     background-color: #35466d6e;
+	cursor: default;
+	transform: none !important;
 }
 
 .--coord-putting {
     background-color: #35466d91;
+	cursor: default;
+	transform: none !important;
 }
 
 .--coord-highlight {
     background-color: #51336f73;
+	transform: none !important;
 }

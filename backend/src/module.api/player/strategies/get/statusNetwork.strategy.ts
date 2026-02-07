@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { EntityPlayer } from 'src/common/entity/game.scheme/player.entity';
-import { PlayerRepository } from '../../repositories/player.repository';
+import { RepoPlayer } from '../../repositories/player.repo';
 import {
 	IntrStandartSchemaStrategy,
 	IntrStandartStrategy,
@@ -31,7 +31,7 @@ export class StrategyStatusNetwork
 	implements IntrStandartStrategy<typeof ServicePlayerGet.strategyName.STATUS_NETWORK> {
 	readonly name = ServicePlayerGet.strategyName.STATUS_NETWORK;
 
-	constructor(private readonly repoPlayer: PlayerRepository) { }
+	constructor(private readonly repoPlayer: RepoPlayer) { }
 
 	async execute(
 		args: IntrSchemaStrategyStatusNetwork['args']

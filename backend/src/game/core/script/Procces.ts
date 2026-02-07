@@ -1,11 +1,12 @@
 import { IntrFullInfoShip, IntrShipCoord } from "src/common/types/ship/ship.interface";
 import { IntrDataShipGame } from "../types/gameShip.interface";
-import { IntrDataShot } from "../types/gameShot.interface";
+import { IntrDataShot, IntrResultDataShot } from "../types/gameShot.interface";
 import { CoreGame } from "../coreGame";
 import { EnumStatusShot } from "../types/game.enum";
+import { IntrStatisticParticipants } from "../types/statistic/statisticParticipants.interface";
 
-export class Procces {
-	private core: CoreGame;
+export class Core {
+	protected core: CoreGame;
 
 	winnerParticipant: string | null;
 
@@ -34,22 +35,7 @@ export class Procces {
 		}
 	}
 
-	private checkWinner(): string | null{
-		let winner: string | null = null;
-
-		this.countRemainingShips.forEach((count, participantId) => {
-			if (count <= 0) {
-				winner = [...this.countRemainingShips.keys()].find(id => id !== participantId) || null;
-			}
-		});
-
-		this.winnerParticipant = winner;
-
-		this.core.Status.finished();
-		return winner;
-	}
-
-	private isShotedCoord(
+	protected isShotedCoord(
 		coord: IntrShipCoord,
 		idParticipants: string,
 	) {
@@ -64,7 +50,7 @@ export class Procces {
 		return typeCoord ? true : false;
 	}
 
-	private updateFullFieldCoord(
+	protected updateFullFieldCoord(
 		coord: IntrShipCoord,
 		type: 'miss' | 'hit',
 		idParticipants: string,
@@ -80,7 +66,7 @@ export class Procces {
 		this.fullFieldCoord.set(idParticipants, field);
 	}
 
-	private updateRemainingShips(idParticipants: string, isDecrease: boolean) {
+	protected updateRemainingShips(idParticipants: string, isDecrease: boolean) {
 		if (isDecrease) {
 			const count = this.countRemainingShips.get(idParticipants);
 
@@ -94,7 +80,7 @@ export class Procces {
 		}
 	}
 
-	private checkShotToCoord(
+	protected checkShotToCoord(
 		coordsShot: IntrShipCoord,
 		dataShipGame: IntrDataShipGame[]
 	): IntrDataShot {
@@ -136,14 +122,62 @@ export class Procces {
 		return objResult
 	}
 
+	getDataShip(idParticipants: string): IntrDataShipGame[] {
+		const res = this.fieldCoordShips.get(idParticipants);
+		if (!res) {
+			throw new Error('Не найдены данные о кораблях битвы игрока с id: ' + idParticipants);
+		}
+
+		return res;
+	}
+
+	getEnemyDataShip(currentPlayerId: string): IntrDataShipGame[] {
+		for (const [id, ships] of this.fieldCoordShips.entries()) {
+			if (id !== currentPlayerId) {
+				return ships;
+			}
+		}
+
+		throw new Error('Данные о кораблях противника не найдены');
+	}
+}
+
+export class Procces extends Core {
+	constructor(
+		core: CoreGame,
+		fieldCoordShips: Record<string, IntrFullInfoShip[]>,
+	) {
+		super(core, fieldCoordShips);
+	}
+
+	private checkWinner(): string | null{
+		let winner: string | null = null;
+
+		this.countRemainingShips.forEach((count, participantId) => {
+			if (count <= 0) {
+				winner = [...this.countRemainingShips.keys()].find(id => id !== participantId) || null;
+			}
+		});
+
+		if (winner) {
+			this.winnerParticipant = winner;
+			this.core.Status.finished();
+		}
+
+		return winner;
+	}
+
 	shotToCoord(
 		coordsShot: IntrShipCoord,
-		idParticipants: string,
-	): IntrDataShot {
-		const dataShipGame = this.fieldCoordShips.get(idParticipants);
+		idEnemyParticipants: string,
+		idCurrentParticipants: string
+	): IntrResultDataShot {
+		const dataShipGame = this.fieldCoordShips.get(idEnemyParticipants);
 
-		if (this.isShotedCoord(coordsShot, idParticipants)) {
-			throw new Error('По этим координатам уже был воспроизведен выстрел');
+		if (this.isShotedCoord(coordsShot, idEnemyParticipants)) {
+			return {
+				isShotedCoord: true
+			}
 		}
 
 		if (!dataShipGame) {
@@ -158,13 +192,22 @@ export class Procces {
 		this.updateFullFieldCoord(
 			objResult.coord,
 			objResult.status == EnumStatusShot.MISS ? EnumStatusShot.MISS : EnumStatusShot.HIT,
-			idParticipants
+			idEnemyParticipants
 		)
 
 		this.updateRemainingShips(
-			idParticipants,
+			idEnemyParticipants,
 			objResult.status == EnumStatusShot.KILL,
 		)
+
+		if (this.core.Config.getOptionsConfig('isKeepStatistics')) {
+			const data:Partial<IntrStatisticParticipants> = {
+				countShots: 1,
+				countHits: objResult.status === EnumStatusShot.MISS ? undefined : 1,
+			}
+
+			this.core.Statistic.update(idCurrentParticipants, data);
+		}
 
 		this.checkWinner();
 

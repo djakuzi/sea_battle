@@ -34,3 +34,19 @@
     font-style: normal;
     font-display: swap;
 }
+
+@font-face {
+	font-family: 'DigitalPixelV100-Regular';
+	src: url('../../assets/fonts/DigitalPixelV100-Regular.woff') format(woff);
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: '20552';
+	src: url('../../assets/fonts/20552.woff') format(woff);
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}

@@ -11,6 +11,7 @@ import {
 import { EntityUser } from '../public.scheme/user.entity';
 import { EntityFriendRequest } from './friendRequest.entity';
 import { EntityFriendship } from './friendShip.entity';
+import { EntityOneVsOne } from '../battles.sheme/oneVsOne.entity';
 
 @Entity({ schema: 'game', name: 'players' })
 export class EntityPlayer {
@@ -48,11 +49,18 @@ export class EntityPlayer {
 	@OneToMany(() => EntityFriendRequest, (friendRequest) => friendRequest.receiver)
 	receivedRequests: EntityFriendRequest[];
 
-	// Обратная связь для player1
 	@OneToMany(() => EntityFriendship, (friendship) => friendship.player1)
 	friendshipsAsPlayer1: EntityFriendship[];
 
-	// Обратная связь для player2
 	@OneToMany(() => EntityFriendship, (friendship) => friendship.player2)
 	friendshipsAsPlayer2: EntityFriendship[];
+
+	@OneToMany(() => EntityOneVsOne, (oneVsOne) => oneVsOne.player1)
+	battlesAsPlayer1: EntityOneVsOne[];
+
+	@OneToMany(() => EntityOneVsOne, (oneVsOne) => oneVsOne.player2)
+	battlesAsPlayer2: EntityOneVsOne[];
+
+	@OneToMany(() => EntityOneVsOne, (oneVsOne) => oneVsOne.winner)
+	battlesAsWinner: EntityOneVsOne[];
 }

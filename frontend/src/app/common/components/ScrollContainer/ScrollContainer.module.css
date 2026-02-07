@@ -1,0 +1,13 @@
+.scroll {
+	max-height: 100%;
+	
+	&.scroll-horizontal {
+		overflow-x: auto;
+		overflow-y: hidden;
+	}
+
+	&.scroll-vertical {
+		overflow-x: hidden;
+		overflow-y: auto;
+	}
+}

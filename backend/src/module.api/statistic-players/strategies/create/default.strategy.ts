@@ -4,7 +4,7 @@ import {
 	IntrStandartSchemaStrategy,
 	IntrStandartStrategy,
 } from 'src/common/types/strategy/standartStrategy.interface';
-import { StatisticPlayersRepository } from '../../repositories/statistic-players.repository';
+import { StatisticPlayersRepository } from '../../repositories/statistic-players.repo';
 import { EntityStatisticPlayers } from 'src/common/entity/game.scheme/statistic-players.entity';
 import { ServiceCreativeStatisticPlayer } from '../../services/createStatisticPlayer.service';
 

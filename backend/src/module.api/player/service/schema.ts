@@ -5,13 +5,13 @@ import { StrategyStatusNetwork as StrategyGetStatusNetwork } from '../strategies
 import { StrategyStatusNetwork as StrategyUpdateStatusNetwork } from '../strategies/update/statusNetwork.strategy';
 import { StrategyFindOne } from '../strategies/find/onePlayer.strategy';
 import { StrategyFindMore } from '../strategies/find/morePlayer.strategy';
-import { PlayerRepository } from '../repositories/player.repository';
+import { RepoPlayer } from '../repositories/player.repo';
 import { ServiceCreatePlayer } from './createPlayer.service';
 import { StrategyDefault } from '../strategies/create/default.strategy';
 import { StrategyGuestOrPlayer } from '../strategies/get/guestOrPlayer';
 
 export const SCHEMA_SERVICE_PLAYER = {
-	repo: [PlayerRepository],
+	repo: [RepoPlayer],
 	service: [ServiceCreatePlayer, ServicePlayerFind, ServicePlayerGet, ServicePlayerUpdate],
 	strategy: {
 		create: [StrategyDefault],

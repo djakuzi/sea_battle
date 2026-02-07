@@ -1,25 +1,57 @@
 .button {
+	will-change: transform;
     display: flex;
     align-items: center;
+	justify-content: center;
     font-size: 1em;
-    gap: .5em;
+    gap: .3em;
+	padding: .5em;
+	border-radius: 1em;
+	font-family: 'opsilon', sans-serif;
     background-color: transparent;
     border: 0;
     outline: none;
     cursor: pointer;
+	transition: opacity .2s ease, transform .2s ease;
+
+	&:active {
+		transform: scale(.95);
+	}
+
+	@media (hover: hover) {
+		&:hover {
+			opacity: .6;
+		}
+	}
+
+	.button-img {
+		font-size: 1em;
+		width: 1em;
+		height: 1em;
+	}
+
+	.button-img svg {
+		width: 100%;
+		fill: transparent;
+		stroke: #ffffff;
+	}
+
+	.button-text {
+		font-size: 1em;
+		color: #55C1FA;
+	}
 }
 
-.button-img {
-    font-size: 2em;
+.standart {
+	background-color: var(--btn-bg-color);
+
+	.button-text {
+		color: var(--text-color);
+	}
 }
 
-.button-img svg {
-    fill: #55C1FA;
-}
-
-.button-text {
-    font-size: 1em;
-    color: #55C1FA;
+.only-img {
+	padding: 0;
 }
 
 /* 16/9 */

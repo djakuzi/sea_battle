@@ -23,10 +23,11 @@
     color: var(--text-color);
     text-shadow: .1em .1em .2em var(--text-shadow-color);
     white-space: nowrap;
+	margin-bottom: .1em;
 }
 
 .player__info-rank {
-    font-size: 0.8em;
+    font-size: 0.5em;
     color: var(--text-prime-color);
     text-shadow: .1em .1em .15em var(--text-shadow-color);
 }

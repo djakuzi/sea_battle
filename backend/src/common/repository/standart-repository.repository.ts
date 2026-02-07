@@ -1,9 +1,8 @@
 import { DataSource, EntityManager, EntityTarget, ObjectLiteral, Repository } from 'typeorm';
 
-export class StandartRepository<E extends ObjectLiteral> {
+export class StandartRepository {
 	constructor(
 		protected readonly database: DataSource,
-		protected readonly repo: Repository<E>
 	) {}
 
 	getRepoEntity<T extends ObjectLiteral>(

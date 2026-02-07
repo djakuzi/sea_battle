@@ -1,4 +1,3 @@
-import { transformationToFullCoordShips } from '@app-common/script/modules/ship.module';
 import { EnumParticipant, EnumStatusBattle, EnumStatusShot } from '../types/battle.enum';
 import { Game } from './game.core';
 import { BotBattle } from './bot';
@@ -10,6 +9,8 @@ import {
 import { IntrDataShot } from '../type/Battle.interface';
 import { actionsBattle } from '../../../redux/slice/battle/battle.slice';
 import { standartSetTimeout } from '@app-common/script/modules/TimeOut/methods/standartSetTimeout';
+import { isNoCanShot } from '@app-common/script/modules/FieldBattle/methods/isShotedCoord';
+import { transformationToFullCoordShips } from '@app-common/script/modules/Ship/methods/transformationToFullCoordShips';
 
 /**
  * @class @extends Battle - отвечет за битву с ботом.
@@ -192,21 +193,11 @@ export class GameBot extends Game {
 				this.activateMoveParticipant();
 			}
 		};
-		/**
-		 * @method isCountRemainingShip - есть ли у врага еще корабли
-		 * true - есть
-		 * false - нет
-		 */
-		const isCountRemainingShip = (typePlayers: EnumParticipant): boolean => {
-			const isZero = this.getState().battle[typePlayers].countRemainingShip > 0;
-			return isZero;
-		};
 
 		this.privateMthds = {
 			checkShotToCoord,
 			checkResultShot,
 			resetMoveParticipant,
-			isCountRemainingShip,
 		};
 	};
 
@@ -266,7 +257,7 @@ export class GameBot extends Game {
 		if (status == 'kill' && resultShot.dataShip) {
 			this.updateCountRemainingShip(EnumParticipant.PLAYER);
 			this.privateMthds.resetMoveParticipant();
-			isCountShipEnemy = this.privateMthds.isCountRemainingShip(EnumParticipant.PLAYER);
+			isCountShipEnemy = this.isCountRemainingShip(EnumParticipant.PLAYER);
 
 			if (isCountShipEnemy) standartSetTimeout(1000, this.MoveBot);
 		}
@@ -305,7 +296,7 @@ export class GameBot extends Game {
 		try {
 			const { coordX, coordY } = coord.dataset;
 			const { notFoundShotToCoord } = this.objErrorBattleBot;
-			const isClass = this.checkClassCoord(coord);
+			const resIsNoCanShot = isNoCanShot(coord);
 			let isCountShipEnemy: boolean = true;
 
 			if (!coordX || !coordY) {
@@ -313,7 +304,7 @@ export class GameBot extends Game {
 				return;
 			}
 
-			if (isClass) {
+			if (resIsNoCanShot) {
 				const { banToShotCoord } = this.objWarn;
 				this.setWarn(banToShotCoord);
 				return;

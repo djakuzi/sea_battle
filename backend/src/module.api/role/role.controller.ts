@@ -1,13 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
-import { RoleService } from './services/role.service';
+import { ServiceRole } from './services/role.service';
 
 @Controller('role')
 export class RoleController {
-	constructor(private readonly roleService: RoleService) {}
+	constructor(private readonly ServiceRole: ServiceRole) { }
 
 	@Get('')
 	async getAll(): Promise<string> {
-		const result = await this.roleService.getAllRoles();
+		const result = await this.ServiceRole.getAllRoles();
 
 		let html = '';
 

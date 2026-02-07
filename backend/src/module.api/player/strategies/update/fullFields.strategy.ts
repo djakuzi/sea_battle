@@ -12,7 +12,7 @@
 //     readonly name = EnumNameStrategyUpdatePlayer.FULL_FIELDS;
 
 //     constructor(
-//         private readonly repoPlayer: PlayerRepository,
+//         private readonly repoPlayer: RepoPlayer,
 //     ) { }
 
 //     async execute(args: IntrSchemaStrategyFullFields['args']): Promise<IntrSchemaStrategyFullFields['return']> {

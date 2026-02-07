@@ -36,7 +36,6 @@ export class PlayerController {
 		const args = {
 			filter: dto,
 		};
-
 		return await this.playerGetService.get(ServicePlayerGet.strategyName.STATUS_NETWORK, args);
 	}
 }

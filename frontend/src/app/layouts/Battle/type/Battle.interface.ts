@@ -23,6 +23,13 @@ export interface IntrDataShot {
 	dataShip: IntrFullCoordPuttingShip | false;
 }
 
+/** IntrDataShot - данные о выстреле от сервера
+  - isShotedCoord: был ли выстрел по такой координате или нет
+*/
+export interface IntrOnlineDataShot extends IntrDataShot {
+	isShotedCoord?: boolean,
+}
+
 export interface IntrUpdatingCountRemainingShip {
 	typePlayers: EnumParticipant;
 	countRemainingShip: number;

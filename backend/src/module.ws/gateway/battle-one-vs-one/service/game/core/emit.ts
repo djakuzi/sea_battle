@@ -1,7 +1,9 @@
 import { Socket } from "socket.io"
 import { ServiceGame } from "../game.service";
-import { IntrDataShot } from "src/game/core/types/gameShot.interface";
+import { IntrResultDataShot } from "src/game/core/types/gameShot.interface";
 import { TypePlayerType } from "src/common/types/player/typePlayer.type";
+import { IntrUpdateTime } from "../../../types/game/timer.interface";
+import { IntrWinner } from "../../../types/game/winner.interface";
 
 export class Emit {
 	private core: ServiceGame;
@@ -26,9 +28,22 @@ export class Emit {
 		});
 	}
 
+	async updateTime(
+		client: Socket,
+		time: IntrUpdateTime,
+	): Promise<void> {
+		client.emit('updateTime', time);
+	}
+
+	async endTime(
+		client: Socket,
+	): Promise<void> {
+		client.emit('endTime');
+	}
+
 	async myShot(
 		client: Socket, 
-		resultShot: IntrDataShot,
+		resultShot: IntrResultDataShot,
 		moveParticipant: string,
 	): Promise<void> {
 		client.emit('myShot', {
@@ -39,7 +54,7 @@ export class Emit {
 
 	async shotAtMe(
 		client: Socket,
-		resultShot: IntrDataShot,
+		resultShot: IntrResultDataShot,
 		moveParticipant: string,
 	): Promise<void> {
 		client.emit('shotAtMe', {
@@ -50,10 +65,14 @@ export class Emit {
 
 	async winner(
 		client: Socket,
-		playerId: string,
+		data: IntrWinner
 	): Promise<void> {
-		client.emit('winner', {
-			idWinner: playerId,
-		});
+		client.emit('winner', data);
+	}
+
+	async enemyLeft(
+		client: Socket,
+	): Promise<void> {
+		client.emit('enemyLeft');
 	}
 }

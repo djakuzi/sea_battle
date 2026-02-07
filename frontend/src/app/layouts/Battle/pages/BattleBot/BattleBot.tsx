@@ -6,13 +6,15 @@ import BattleField from "../../components/BattleField/BattleField";
 import BattleAction from "../../components/BattleAction/BattleAction";
 import { BotBattle } from "../../modules/bot";
 import { GameBot } from "../../modules/gameBot";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import ModalWindow from "../../../../common/components/ModalWindow/ModalWindow";
 import ModalPause from "../../components/ModalPause/ModalPause";
 import ModalLose from "../../components/ModalLose/ModalLose";
 import ModalWinner from "../../components/ModalWinner/ModalWinner";
 import { standartSetTimeout } from "../../../../common/script/modules/TimeOut/methods/standartSetTimeout";
+import { useNavigate } from "react-router-dom";
+import { actionsBattle } from "@app-redux/slice/battle/battle.slice";
 
 const statusLoad = {
     status: false,
@@ -27,7 +29,7 @@ interface IntrStatusLaod {
 export default function BattleBot(): JSX.Element {
     //redux
     const { error, status, winner } = useSelector((state: RootState) => state.battle.battle);
-
+	const dispatch = useDispatch();
     //state
     const [statusLoadBattle, setStatusLoadBattle] = useState<IntrStatusLaod>(statusLoad);
     //ref
@@ -36,6 +38,15 @@ export default function BattleBot(): JSX.Element {
 	const refBattle = useRef<GameBot>(null);
     const refFielCoordUser = useRef<HTMLDivElement>(null);
     const refFielCoordBot = useRef<HTMLDivElement>(null);
+	//another
+	const navigate = useNavigate();
+
+	const callbackAction = {
+		exit: () => {
+			navigate('/menu');
+			dispatch(actionsBattle.clearDataBattle());
+		}
+	}
 
     function initBattle(): void {
         if (!isMounted.current) return;
@@ -97,7 +108,7 @@ export default function BattleBot(): JSX.Element {
         <div className={styles['battle']} style={{ backgroundImage: `url(${IMGbg})` }}>
             {!statusLoadBattle.status && <FullLoad isBackground={false} text={statusLoadBattle.steps} cls={styles['load__anchor']} ></FullLoad>}
             <div className={styles['battle__wrapper']}>
-                <BattleAction />
+				<BattleAction callback={callbackAction}/>
                 <BattleField cls={styles['battle__field']} inputRefFielCoordEnemy={refFielCoordBot} inputRefFielCoordUser={refFielCoordUser} />
             </div>
             {status == 'pause' && <ModalWindow isShow={status == 'pause'}> <ModalPause /> </ModalWindow>}

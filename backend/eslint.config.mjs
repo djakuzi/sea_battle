@@ -10,7 +10,7 @@ export default tseslint.config(
 	},
 	eslint.configs.recommended,
 	...tseslint.configs.recommendedTypeChecked,
-	eslintPluginPrettierRecommended,
+	// eslintPluginPrettierRecommended,
 	{
 		languageOptions: {
 			globals: {
@@ -34,6 +34,7 @@ export default tseslint.config(
 			'@typescript-eslint/no-empty-interface': 'off',
 			'@typescript-eslint/no-empty-object-type': 'off',
 			'@typescript-eslint/require-await': 'off',
+			'@typescript-eslint/no-unsafe-call': 'off',
 		},
 	}
 );

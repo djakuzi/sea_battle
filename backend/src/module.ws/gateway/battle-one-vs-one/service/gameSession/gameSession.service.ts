@@ -6,17 +6,25 @@ import { IntrFullInfoShip } from 'src/common/types/ship/ship.interface';
 import { Emit } from './core/emit';
 import { Sub } from './core/sub';
 import { ServiceGame } from '../game/game.service';
+import { ServiceUpdateStatisticPlayer } from 'src/module.api/statistic-players/services/updateStatisticPlayer.service';
+import { Finish } from './core/finish';
+import { ServiceCreateBattles } from 'src/module.api/battles/services/createBattles.service';
 
 @Injectable()
 export class ServiceGameSessions {
-	readonly emit: Emit = new Emit(this);
+	protected emit: Emit = new Emit(this);
+	protected finish: Finish = new Finish(this);
+
 	readonly sub: Sub = new Sub(this);
 
 	readonly gameSessions: Map<string, IntrSessionOneVsOne> = new Map();
+	readonly playerSession: Map<string, string> = new Map();
 	readonly dataShipCoord: Map<string, Record<string, IntrFullInfoShip[] | null>> = new Map();
 
 	constructor(
 		private readonly serviceGame: ServiceGame,
+		readonly serviceUpdateStatisticPlayer: ServiceUpdateStatisticPlayer,
+		readonly serviceCreateBattles: ServiceCreateBattles,
 	) {}
 
 	async createSession(participant1: IntrWaitingParticipant, participant2: IntrWaitingParticipant): Promise<IntrSessionOneVsOne> {
@@ -43,11 +51,24 @@ export class ServiceGameSessions {
 		this.gameSessions.set(idSession, gameSession);
 		this.sendSessionDataToParticipants(participant1, participant2, idSession);
 
+		this.playerSession.set(participant1.data.id, idSession);
+		this.playerSession.set(participant2.data.id, idSession);
+
 		return gameSession;
 	}
 
-	async deleteSession(idSession:string):Promise<void> {
-		this.gameSessions.delete(idSession);
+	async endSession(session: IntrSessionOneVsOne) {
+		this.finish.updateStatistic(session);
+		this.finish.createHistoryBattles(session);
+		this.deleteSession(session);
+	}
+
+	async deleteSession(session: IntrSessionOneVsOne):Promise<void> {
+		for (const key in session.session.participants) {
+			session.session.participants[key].client.removeAllListeners();
+		}
+		
+		this.gameSessions.delete(session.session.id);
 	}
 
 	sendSessionDataToParticipants(
@@ -114,7 +135,6 @@ export class ServiceGameSessions {
 
 		gameSession.game = game;
 
-		this.gameSessions.set(idSession, gameSession);
 		this.dataShipCoord.delete(idSession);
 
 		this.serviceGame.startGame(idSession);

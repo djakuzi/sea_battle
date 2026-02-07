@@ -13,7 +13,7 @@ import { ConfigService } from '@nestjs/config';
 import { getJwtConfig } from 'src/core/config/jwt.config';
 import { TokenService } from './service/token.service';
 import { EntityPlayer } from 'src/common/entity/game.scheme/player.entity';
-import { StatisticPlayersModule } from '../statistic-players/statistic.module';
+import { ModuleStatisticPlayers } from '../statistic-players/statistic.module';
 import { AuthGuardModule } from 'src/common/guard/auth/auth-guard.module';
 import { UserModule } from '../user/user.module';
 import { StrategyRegisterEmail } from './strategies/register/email.strategies';
@@ -36,7 +36,7 @@ import { RoleModule } from '../role/role.module';
 		}),
 		AuthGuardModule,
 		UserModule,
-		StatisticPlayersModule,
+		ModuleStatisticPlayers,
 		PlayerModule,
 		RoleModule,
 	],
@@ -50,4 +50,4 @@ import { RoleModule } from '../role/role.module';
 		StrategyEmailSignIn,
 	],
 })
-export class AuthModule {}
+export class AuthModule { }

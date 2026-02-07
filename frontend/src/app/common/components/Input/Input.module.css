@@ -6,24 +6,7 @@
     border: none;
     border-radius: .5em;
     overflow: hidden;
-    font-family: 'Impact', sans-serif;
-    background-color: transparent;
-    color: white;
-    backdrop-filter: blur(.1em);
-    -webkit-backdrop-filter: blur(.1em);
-    text-align: center;
-    box-shadow: 0 .2em .5em 0em rgba(0, 0, 0, 0.675);
-}
-
-.input {
-    --font-size: .15em;
-    display: flex;
-    width: 100%;
-    font-size: var(--font-size);
-    border: none;
-    border-radius: .5em;
-    overflow: hidden;
-    font-family: 'Impact', sans-serif;
+	font-family: 'opsilon', sans-serif;
     background-color: transparent;
     color: white;
     backdrop-filter: blur(.1em);
@@ -48,6 +31,7 @@
     padding: 0.3em;
     outline: none;
     font-size: 1em;
+	font-family: '20552';
     background-color: transparent;
     border: none;
     color: #ffffff;

@@ -31,10 +31,9 @@ export class Sub {
 			mapDataShips = {
 				[playerId]: dataShips,
 			};
+
+			core.dataShipCoord.set(idSession, mapDataShips);
 		}
-
-
-		core.dataShipCoord.set(idSession, mapDataShips);
 
 		if (checkedShipForStartGame) {
 			await this.core.checkDataShipParticipants(idSession);

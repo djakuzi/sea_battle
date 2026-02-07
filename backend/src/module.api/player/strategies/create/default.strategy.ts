@@ -6,7 +6,7 @@ import {
 	IntrStandartStrategy,
 } from 'src/common/types/strategy/standartStrategy.interface';
 import { EntityManager } from 'typeorm';
-import { PlayerRepository } from '../../repositories/player.repository';
+import { RepoPlayer } from '../../repositories/player.repo';
 import { ServiceCreatePlayer } from '../../service/createPlayer.service';
 
 export interface IntrArgsStrategyDefault {
@@ -25,7 +25,7 @@ export class StrategyDefault
 	implements IntrStandartStrategy<typeof ServiceCreatePlayer.strategyName.DEFAULT> {
 	readonly name = ServiceCreatePlayer.strategyName.DEFAULT;
 
-	constructor(private readonly repoPlayer: PlayerRepository) { }
+	constructor(private readonly repoPlayer: RepoPlayer) { }
 
 	async execute(
 		args: IntrSchemaStrategyDefault['args']

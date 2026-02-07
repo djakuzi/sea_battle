@@ -4,7 +4,7 @@ import {
 	IntrStandartStrategy,
 } from 'src/common/types/strategy/standartStrategy.interface';
 import { EntityPlayer } from 'src/common/entity/game.scheme/player.entity';
-import { FriendShipRepository } from 'src/module.api/friends/repositories/friendship.repository';
+import { RepoFriendShip } from 'src/module.api/friends/repositories/friendship.repo';
 import { ServiceFindFriendShip } from 'src/module.api/friends/services/friendship/findFriendShip.service';
 
 export interface IntrArgsStrategyMore {
@@ -26,7 +26,7 @@ export class StrategyMore
 	implements IntrStandartStrategy<typeof ServiceFindFriendShip.strategyName.MORE> {
 	readonly name = ServiceFindFriendShip.strategyName.MORE;
 
-	constructor(private readonly repoFriendship: FriendShipRepository) { }
+	constructor(private readonly repoFriendship: RepoFriendShip) { }
 
 	async execute(args: IntrSchemaStrategyMore['args']): Promise<IntrSchemaStrategyMore['return']> {
 		const res = await this.repoFriendship.findFriendships({

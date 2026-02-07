@@ -1,0 +1,19 @@
+html {
+    --cs-color-coord-border: #ffffff;
+}
+
+html[data-theme="dark"] {
+    --cs-color-coord-border: #000000;
+}
+
+/* 16/9 */
+[data-aspect-ratio="16:9"] {
+    
+}
+/* /16/9 */
+
+/* /16/10 */
+[data-aspect-ratio="16:10"] {
+
+}
+/* /16/10 */

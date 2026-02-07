@@ -25,20 +25,31 @@ export class GatewayBattleOneVsOne extends DefaultGateway {
 	}
 
 	async handleConnection(client: Socket) {
-		const playerId = this.getPlayerId(client);
+		const idPlayer = this.getPlayerId(client);
 
-		if (playerId) {
-			await this.serviceQueue.addPlayerToQueue(client, playerId);
-			this.serviceStorageSocket.registerSocket(playerId, this.namespace, client.id);
+		if (idPlayer) {
+			await this.serviceQueue.addPlayerToQueue(client, idPlayer);
+			this.serviceStorageSocket.registerSocket(idPlayer, this.namespace, client.id);
 		}
 	}
 
 	async handleDisconnect(client: Socket) {
-		const playerId = this.getPlayerId(client);
+		try {
+			const idPlayer = this.getPlayerId(client);
 
-		if (playerId) {
-			this.serviceQueue.removePlayerFromQueue(playerId);
-			this.serviceStorageSocket.unregisterSocket(playerId, this.namespace);
+			if (idPlayer) {
+				const idSession = this.serviceGameSessions.playerSession.get(idPlayer);
+
+				if (idSession) {
+					this.serviceGame.leaveParticipant(idPlayer, idSession)
+				} else {
+					this.serviceQueue.removePlayerFromQueue(idPlayer);
+				}
+
+				this.serviceStorageSocket.unregisterSocket(idPlayer, this.namespace);
+			}
+		} catch (error) {
+			console.error(error);
 		}
 	}
 
@@ -47,37 +58,37 @@ export class GatewayBattleOneVsOne extends DefaultGateway {
 		@MessageBody() payload: { idSession: string; ships: IntrFullInfoShip[] },
 		@ConnectedSocket() client: Socket,
 	): Promise<void> {
-		const playerId = this.getPlayerId(client);
+		const idPlayer = this.getPlayerId(client);
 
 		const { idSession, ships } = payload;
 
 		try {
-			await this.serviceGameSessions.sub.sendShipData(playerId, ships, idSession);
-		} catch {
+			await this.serviceGameSessions.sub.sendShipData(idPlayer, ships, idSession);
+		} catch (error){
 			/**
 			 * TODO: add to logger list
 			 */
-			console.error('Ошибка')
+			console.error(error);
 		}
 	}
 
 	@SubscribeMessage('shotByParticipant')
 	async handleShotByParticipant(
 		@MessageBody() payload: { idSession: string; coord: IntrShipCoord },
-		client: Socket,
+		@ConnectedSocket() client: Socket,
 	): Promise<void> {
-		const playerId = this.getPlayerId(client);
+		const idPlayer = this.getPlayerId(client);
 
 		const { idSession, coord } = payload;
 
 		try {
 			await this.serviceGame.sub.shotByParticipant(
-				playerId,
+				idPlayer,
 				idSession,
 				coord
 			)
-		} catch {
-			console.error('Ошибка');
+		} catch (error) {
+			console.error(error);
 		}
 	}
 }

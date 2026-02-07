@@ -12,6 +12,24 @@ html[data-theme="dark"] .box {
     overflow: hidden;
 }
 
+.rect--coord-hover {
+	cursor: pointer;
+	will-change: transform;
+	transition: transform 0.1s ease, border-color 0.2s ease;
+}
+
+.rect--coord-hover:active {
+	transform: scale(0.8);
+	border-color: black;
+}
+
+@media (hover: hover) {
+	.rect--coord-hover:hover {
+		transform: scale(0.85);
+		border-color: black;
+	}
+}
+
 .port {
     bottom: 0;
     transform: translateX(100vw);

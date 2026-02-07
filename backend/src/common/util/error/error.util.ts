@@ -3,5 +3,5 @@ import { ExceptionUserNotFound } from "./methods/notFoundUser";
 
 export const UtilError = {
 	ExceptionPlayerByUserNotFound,
-	ExceptionUserNotFound
+	ExceptionUserNotFound,
 }

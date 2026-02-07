@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { EntityPlayer } from 'src/common/entity/game.scheme/player.entity';
-import { PlayerRepository } from '../../repositories/player.repository';
+import { RepoPlayer } from '../../repositories/player.repo';
 import {
 	IntrStandartSchemaStrategy,
 	IntrStandartStrategy,
@@ -8,7 +8,7 @@ import {
 import { EntityManager } from 'typeorm';
 import { ServicePlayerUpdate } from '../../service/playerUpdate.service';
 import { UpdatePlayer, UpdatePlayerData } from '../../interface/UpdatePlayer.interface';
-import { ResultUpdateEntity } from 'src/common/interface/ResultUpdateEntity.interface';
+import { ResultUpdateEntity } from 'src/common/types/entity/ResultUpdateEntity.interface';
 import { getInfoUpdateEntity } from 'src/common/util/entity/methods/getInfoUpdateEntity';
 
 export interface IntrArgsStrategyStatusNetwork {
@@ -33,7 +33,7 @@ export class StrategyStatusNetwork
 	implements IntrStandartStrategy<typeof ServicePlayerUpdate.strategyName.STATUS_NETWORK> {
 	readonly name = ServicePlayerUpdate.strategyName.STATUS_NETWORK;
 
-	constructor(private readonly repoPlayer: PlayerRepository) { }
+	constructor(private readonly repoPlayer: RepoPlayer) { }
 
 	async execute(
 		args: IntrSchemaStrategyStatusNetwork['args']

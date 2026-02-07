@@ -134,7 +134,7 @@ export default function Constructor(): JSX.Element {
 						cls={cn(styles['constructor-action__exit'], 'button-action')}
 						isBtn={true}
 						onClick={exit}
-						versionBtn="button-action"
+						visual="button-action"
 					>
 						Назад
 					</Button>
@@ -160,7 +160,7 @@ export default function Constructor(): JSX.Element {
 						)}
 						isBtn={true}
 						onClick={play}
-						versionBtn="button-action"
+						visual="button-action"
 					>
 						<div className={styles['constructor-action-play__text']}>{textbtn[typeGame + '']}</div>
 						<div className={styles['constructor-action-play__bang']}>

@@ -1,9 +1,6 @@
 import { Injectable, NotImplementedException } from '@nestjs/common';
 import { IntrStandartStrategy } from 'src/common/types/strategy/standartStrategy.interface';
-import {
-	IntrSchemaStrategyDefault,
-	StrategyDefault,
-} from '../../strategies/friendship/remove/default.strategy';
+import { IntrSchemaStrategyDefault, StrategyDefault } from '../../strategies/reguest/remove/default.strategy';
 
 export enum EnumNameStrategy {
 	DEFAULT = 'default',

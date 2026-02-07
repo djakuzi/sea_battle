@@ -1,4 +1,4 @@
-import { ResultUpdateEntity } from 'src/common/interface/ResultUpdateEntity.interface';
+import { ResultUpdateEntity } from 'src/common/types/entity/ResultUpdateEntity.interface';
 import { UpdateResult } from 'typeorm';
 
 export function getInfoUpdateEntity(result: UpdateResult): ResultUpdateEntity {

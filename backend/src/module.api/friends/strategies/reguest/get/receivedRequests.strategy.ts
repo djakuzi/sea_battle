@@ -6,7 +6,7 @@ import {
 import { EntityManager } from 'typeorm';
 import { EntityFriendRequest } from 'src/common/entity/game.scheme/friendRequest.entity';
 import { buildConditionsFindWhere } from 'src/common/util/repository/conditions';
-import { FriendRequestRepository } from 'src/module.api/friends/repositories/friendReguest.repository';
+import { RepoFriendRequest } from 'src/module.api/friends/repositories/friendReguest.repo';
 import { ServiceGetReguestFriend } from 'src/module.api/friends/services/reguest/getFriendRequest.service';
 
 export interface IntrArgsStrategyReceivedRequests {
@@ -31,7 +31,7 @@ export class StrategyReceivedRequests
 	implements IntrStandartStrategy<typeof ServiceGetReguestFriend.strategyName.RECEIVED_REQUESTS> {
 	readonly name = ServiceGetReguestFriend.strategyName.RECEIVED_REQUESTS;
 
-	constructor(private readonly repoFriendRequest: FriendRequestRepository) { }
+	constructor(private readonly repoFriendRequest: RepoFriendRequest) { }
 
 	async execute(
 		args: IntrSchemaStrategyReceivedRequests['args']

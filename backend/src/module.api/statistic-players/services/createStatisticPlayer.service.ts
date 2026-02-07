@@ -10,8 +10,6 @@ export interface IntrMapStrategyCreativeStatisticPlayer {
 	[EnumNameStrategy.DEFAULT]: IntrSchemaStrategyDefault;
 }
 
-export const LIST_СREATIVE_STRATEGIES = [StrategyDefault];
-
 @Injectable()
 export class ServiceCreativeStatisticPlayer {
 	static strategyName = EnumNameStrategy;

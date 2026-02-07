@@ -5,7 +5,7 @@ import { IntrInfoEnemy } from '../type/Battle.interface';
 import store from '../../../redux/store';
 import { CONFIG_FIELD } from '../../../core/settings/fieldCoord.settings';
 import { CONFIG_SHIPS } from '../../../core/settings/ships.settings';
-import { EnumEnemy } from '../types/battle.enum';
+import { EnumEnemy, EnumParticipant } from '../types/battle.enum';
 
 /**
  * @constructor принимает следующие значения:
@@ -79,7 +79,7 @@ export class Bot {
     if (this.isBot) {
       this.dispatch(
         actionsBattle.setCoordPuttingShips({
-          typePlayers: 'enemy',
+          typePlayers: EnumParticipant.ENEMY,
           coordPuttingShips: result,
         }),
       );

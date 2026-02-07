@@ -41,7 +41,7 @@ export class FriendController {
 	@Get()
 	@HttpCode(HttpStatus.OK)
 	@UseGuards(AuthGuard)
-	async getFriends(@Req() req: Request) {
+	async getMyFriends(@Req() req: Request) {
 		const argsFind = {
 			idPlayer: (req.user as EntityUser).player.id,
 		};
@@ -55,7 +55,7 @@ export class FriendController {
 	@Get(':id')
 	@HttpCode(HttpStatus.OK)
 	@UseGuards(AuthGuard)
-	async getMyFriends(@Param('id') id: string) {
+	async getFriends(@Param('id') id: string) {
 		const argsFind = {
 			idPlayer: +id,
 		};

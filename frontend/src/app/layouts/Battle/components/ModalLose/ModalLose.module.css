@@ -75,7 +75,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../../../assets/image/battle/blood.png');
+    background-image: url('../../../../../assets/image/game/battle/blood.png');
     background-repeat: no-repeat;
     background-size: cover;
     pointer-events: none;
@@ -101,6 +101,7 @@
 }
 
 .action__btn {
+	font-size: 2rem;
     margin-top: 1em;
 }
 

@@ -42,12 +42,17 @@ export class Move extends Core {
 		return this.data.nextParticipantId === id;
 	}
 
-	switchTurn(): void {
-		const participantsArray = Array.from(this.core.participants.values());
-		const currentPlayerIndex = participantsArray.findIndex(p => p.id === this.data.nextParticipantId);
+	switchTurn(id?:string): void {
+		if (id) {
+			this.data.nextParticipantId = id;
+		} else {
+			const participantsArray = Array.from(this.core.participants.values());
+			const currentPlayerIndex = participantsArray.findIndex(p => p.id === this.data.nextParticipantId);
 
-		const nextPlayerIndex = (currentPlayerIndex + 1) % participantsArray.length;
-		this.data.nextParticipantId = participantsArray[nextPlayerIndex].id;
+			const nextPlayerIndex = (currentPlayerIndex + 1) % participantsArray.length;
+			this.data.nextParticipantId = participantsArray[nextPlayerIndex].id;
+		}
+
 		console.log(`Теперь ходит: ${this.data.nextParticipantId}`);
 	}
 }

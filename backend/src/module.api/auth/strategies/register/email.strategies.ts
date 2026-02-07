@@ -8,7 +8,7 @@ import * as argon2 from 'argon2';
 import { ServiceVerififcationUser } from '../../service/verification-user.service';
 import { RoleId } from 'src/common/types/role';
 import { createNickname } from 'src/module.api/player/util/player.util';
-import { RoleUserService } from 'src/module.api/role/services/role_user.service';
+import { ServiceRoleUser } from 'src/module.api/role/services/roleUser.service';
 import { ServiceCreativeStatisticPlayer } from 'src/module.api/statistic-players/services/createStatisticPlayer.service';
 import { EntityManager } from 'typeorm';
 import { VerificationId } from '../../type/verification';
@@ -28,7 +28,7 @@ export class StrategyRegisterEmail {
 		private readonly serviceConfig: ConfigService,
 		private readonly serviceUserCreate: ServiceCreateUser,
 		private readonly serviceVerificationUser: ServiceVerififcationUser,
-		private readonly serviceRoleUser: RoleUserService,
+		private readonly serviceRoleUser: ServiceRoleUser,
 		private readonly servicePlayerCreate: ServiceCreatePlayer,
 		private readonly serviceCreativeStatisticPlayers: ServiceCreativeStatisticPlayer
 	) {

@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { FullJwtTokens, JwtPayload } from '../type/jwt-token.interface';
 import { ConfigService } from '@nestjs/config';
 import { Backend, Frontend } from 'src/module.config/config/configuration';
@@ -7,6 +6,7 @@ import { Response } from 'express';
 import { ServiceUserFind } from 'src/module.api/user/service/userFind.service';
 import { EntityUser } from 'src/common/entity/public.scheme/user.entity';
 import { isDevMode } from 'src/common/util/development/methods/isDevMode';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class TokenService {
@@ -37,11 +37,11 @@ export class TokenService {
 		const payload: JwtPayload = { uuid, login };
 
 		const accessToken = this.serviceJwt.sign(payload, {
-			expiresIn: this.JWT_ACCESS_TOKEN_TTL || '1h',
+			expiresIn: this.JWT_ACCESS_TOKEN_TTL || '1 Hours',
 		});
 
 		const refreshToken = this.serviceJwt.sign(payload, {
-			expiresIn: '7d', //|| this.JWT_REFRESH_TOKEN_TTL,
+			expiresIn: this.JWT_REFRESH_TOKEN_TTL || '7 Days',
 		});
 
 		return {

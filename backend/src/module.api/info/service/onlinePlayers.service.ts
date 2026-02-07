@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class ServiceOnlinePlayers {
@@ -14,13 +13,16 @@ export class ServiceOnlinePlayers {
 		this.activePlayers.delete(playerId);
 	}
 
-	@Cron(CronExpression.EVERY_5_MINUTES)
 	updateOnlinePlayerCount() {
 		this.onlinePlayerCount = this.activePlayers.size;
 		console.log(`Обновленное количество онлайн-игроков: ${this.onlinePlayerCount}`);
 	}
 
 	getOnlinePlayerCount(): number {
+		if (this.onlinePlayerCount == 0) {
+			this.updateOnlinePlayerCount();
+		}
+		
 		return this.onlinePlayerCount;
 	}
 }

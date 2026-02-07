@@ -4,8 +4,10 @@ import { runCallback } from "@app-common/script/utils/callback/method/runCallbac
 import { LOG_SESSION_QUEUE } from "@app-core/data/list-log/sessionQueue";
 import { EnumEnemy } from "@app-layouts/Battle/types/battle.enum";
 import { IntrOnWebsocket } from "@app-network/ws/types/onWebsocket.interface";
-import { IntrOnMyShot, IntrEventMyShot, IntrOnShotByEnemy, IntrEventShotAtMe, IntrOnShotAtMe } from "../types/gameShot.interface";
+import { IntrOnMyShot, IntrEventMyShot, IntrOnShotByEnemy, IntrEventShotAtMe, IntrOnShotAtMe, IntrOnUpdateTime } from "../types/gameShot.interface";
 import { IntrEventGameStart } from "../types/gameStart.interface";
+import { IntrEventUpdateTime } from "../types/gameTime";
+import { IntrEventWinner, IntrOnWinner } from "../types/gameWinner.interface";
 
 export class ServiceProcces {
 	private readonly core: CoreOneVsOne;
@@ -46,9 +48,27 @@ export class ServiceProcces {
 		});	
 	}
 
-	onWinner(args: IntrOnMyShot) {
-		this.core._onSubscribe('shotAtMe', (event: IntrEventMyShot) => {
-			runCallback<void, any[]>(args.callback, event.resultShot);
+	onUpdateTime(args: IntrOnUpdateTime) {
+		this.core._onSubscribe('updateTime', (event: IntrEventUpdateTime) => {
+			runCallback<void, any[]>(args.callback, event);
+		});
+	}
+
+	onEndTime(args: IntrOnWebsocket) {
+		this.core._onSubscribe('endTime', () => {
+			runCallback<void, any[]>(args.callback);
+		});
+	}
+
+	onEnemyLeft(args: IntrOnWebsocket) {
+		this.core._onceSubscribe('enemyLeft', (event: IntrEventWinner) => {
+			runCallback<void, any[]>(args.callback);
+		});
+	}
+
+	onceWinner(args: IntrOnWinner) {
+		this.core._onceSubscribe('winner', (event: IntrEventWinner) => {
+			runCallback<void, any[]>(args.callback, event);
 		});
 	}
 

@@ -1,4 +1,5 @@
 .status {
+	position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -17,6 +18,13 @@
 
 .status__user.--reverse {
     flex-direction: row-reverse;
+}
+
+.status__timer {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 [data-aspect-ratio="16:9"] {

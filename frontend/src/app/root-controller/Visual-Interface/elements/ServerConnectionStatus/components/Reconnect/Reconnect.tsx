@@ -18,8 +18,8 @@ export default function Reconnect({ cls = '', useState }: PropsReconnect): JSX.E
 				Повторить попытку?
 			</div>
 			<div className={cn(styles['reconnect__action'])}>
-				<Button cls={styles['reconnect__btn']} versionBtn={'button-action'} onClick={reconnectServer}>ДА</Button>
-				<Button cls={styles['reconnect__btn']} versionBtn={'button-action'} onClick={() => useState(false)}>НЕТ</Button>
+				<Button cls={styles['reconnect__btn']} visual={'button-action'} onClick={reconnectServer}>ДА</Button>
+				<Button cls={styles['reconnect__btn']} visual={'button-action'} onClick={() => useState(false)}>НЕТ</Button>
 			</div>
 		</div>
 	)

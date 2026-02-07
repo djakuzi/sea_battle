@@ -10,8 +10,6 @@ export interface IntrMapStrategyFindStatisticPlayer {
 	[EnumNameStrategy.ONE]: IntrSchemaStrategyOne;
 }
 
-export const LIST_FIND_STRATEGIES = [StrategyOne];
-
 @Injectable()
 export class ServiceFindStatisticPlayer {
 	static strategyName = EnumNameStrategy;

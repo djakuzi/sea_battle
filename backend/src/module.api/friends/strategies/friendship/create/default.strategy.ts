@@ -4,7 +4,7 @@ import {
 	IntrStandartSchemaStrategy,
 	IntrStandartStrategy,
 } from 'src/common/types/strategy/standartStrategy.interface';
-import { FriendShipRepository } from 'src/module.api/friends/repositories/friendship.repository';
+import { RepoFriendShip } from 'src/module.api/friends/repositories/friendship.repo';
 import { ServiceCreateFriendship } from 'src/module.api/friends/services/friendship/createFriendShip.service';
 import { EntityManager } from 'typeorm';
 
@@ -27,7 +27,7 @@ export class StrategyDefault
 	implements IntrStandartStrategy<typeof ServiceCreateFriendship.strategyName.DEFAULT> {
 	readonly name = ServiceCreateFriendship.strategyName.DEFAULT;
 
-	constructor(private readonly repoFriendship: FriendShipRepository) { }
+	constructor(private readonly repoFriendship: RepoFriendShip) { }
 
 	async execute(
 		args: IntrSchemaStrategyDefault['args']

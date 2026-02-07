@@ -1,14 +1,10 @@
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { EntityFriendRequest } from 'src/common/entity/game.scheme/friendRequest.entity';
-import { EntityFriendship } from 'src/common/entity/game.scheme/friendShip.entity';
-import { EntityPlayer } from 'src/common/entity/game.scheme/player.entity';
-import { EntityStatisticPlayers } from 'src/common/entity/game.scheme/statistic-players.entity';
-import { EntityRolesUsers } from 'src/common/entity/links.scheme/roles_users.entity';
-import { EntityUser } from 'src/common/entity/public.scheme/user.entity';
-import { EntityVerificationsUsers } from 'src/common/entity/public.scheme/verifications_users.entity';
-import { EntityRole } from 'src/common/entity/reference.scheme/role.entity';
-import { EntityVerifications } from 'src/common/entity/reference.scheme/verifications.entity';
+import { SCHEME_ENTITY_BATTLES } from 'src/common/entity/battles.sheme/scheme';
+import { SCHEME_ENTITY_GAME } from 'src/common/entity/game.scheme/scheme';
+import { SCHEME_ENTITY_LINK } from 'src/common/entity/links.scheme/scheme';
+import { SCHEME_ENTITY_PUBLIC } from 'src/common/entity/public.scheme/scheme';
+import { SCHEME_ENTITY_REFERENCE } from 'src/common/entity/reference.scheme/scheme';
 import { Database } from 'src/module.config/config/configuration';
 
 export async function getDatabaseConfig(
@@ -29,15 +25,11 @@ export async function getDatabaseConfig(
 		password: dbConfig?.password,
 		database: dbConfig?.name,
 		entities: [
-			EntityRole,
-			EntityUser,
-			EntityRolesUsers,
-			EntityVerificationsUsers,
-			EntityVerifications,
-			EntityPlayer,
-			EntityStatisticPlayers,
-			EntityFriendRequest,
-			EntityFriendship,
+			...SCHEME_ENTITY_BATTLES,
+			...SCHEME_ENTITY_GAME,
+			...SCHEME_ENTITY_LINK,
+			...SCHEME_ENTITY_PUBLIC,
+			...SCHEME_ENTITY_REFERENCE,
 		],
 		retryAttempts: 10,
 		retryDelay: 1000,

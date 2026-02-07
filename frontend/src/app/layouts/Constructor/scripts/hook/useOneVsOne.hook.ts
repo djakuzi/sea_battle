@@ -1,8 +1,10 @@
-import { transformationToFullCoordShips } from "@app-common/script/modules/ship.module";
+
+import { transformationToFullCoordShips } from "@app-common/script/modules/Ship/methods/transformationToFullCoordShips";
 import { IntrCoordPuttingShip } from "@app-common/types/Ship.interface";
 import { EnumVariantPlayType } from "@app-core/data/list-component/interfaces/variantsPlay.interface";
 import { EnumParticipant } from "@app-layouts/Battle/types/battle.enum";
 import { WsOneVsOne } from "@app-network/ws/modules/BattleOneVsOne/OneVsOne.module";
+import { WsServerStatus } from "@app-network/ws/modules/ServerConnectionStatus/ServerStatus.module";
 import { actionsBattle } from "@app-redux/slice/battle/battle.slice";
 import { actionsConstructor } from "@app-redux/slice/constructor/constructor.slice";
 import { AppDispatch } from "@app-redux/store";
@@ -60,6 +62,7 @@ export function useOneVsOne() {
 				typePlayers: EnumParticipant.PLAYER,
 				coordPuttingShips: coord,
 			}));
+
 			navigate('/battle');	
 		}
 	}

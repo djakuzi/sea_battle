@@ -11,3 +11,11 @@ export interface IntrDataShot {
 	coord: IntrShipCoord;
 	dataShip: IntrFullInfoShip | false;
 }
+
+
+export interface IntrResultDataShot {
+	status?: EnumStatusShot;
+	coord?: IntrShipCoord;
+	dataShip?: IntrFullInfoShip | false;
+	isShotedCoord?: boolean;
+}

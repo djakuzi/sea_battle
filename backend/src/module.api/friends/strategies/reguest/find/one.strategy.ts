@@ -5,7 +5,7 @@ import {
 } from 'src/common/types/strategy/standartStrategy.interface';
 import { EntityManager } from 'typeorm';
 import { ServiceFindReguestFriend } from 'src/module.api/friends/services/reguest/findFriendRequest.service';
-import { FriendRequestRepository } from 'src/module.api/friends/repositories/friendReguest.repository';
+import { RepoFriendRequest } from 'src/module.api/friends/repositories/friendReguest.repo';
 import { EntityFriendRequest } from 'src/common/entity/game.scheme/friendRequest.entity';
 
 export interface IntrArgsStrategyOne {
@@ -26,7 +26,7 @@ export class StrategyOne
 	implements IntrStandartStrategy<typeof ServiceFindReguestFriend.strategyName.ONE> {
 	readonly name = ServiceFindReguestFriend.strategyName.ONE;
 
-	constructor(private readonly repoFriendRequest: FriendRequestRepository) { }
+	constructor(private readonly repoFriendRequest: RepoFriendRequest) { }
 
 	async execute(args: IntrSchemaStrategyOne['args']): Promise<IntrSchemaStrategyOne['return']> {
 		const result = await this.repoFriendRequest.findOneRequest(args.data, args.manager);

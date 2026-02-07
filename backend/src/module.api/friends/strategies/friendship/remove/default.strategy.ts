@@ -5,7 +5,7 @@ import {
 	IntrStandartSchemaStrategy,
 	IntrStandartStrategy,
 } from 'src/common/types/strategy/standartStrategy.interface';
-import { FriendShipRepository } from 'src/module.api/friends/repositories/friendship.repository';
+import { RepoFriendShip } from 'src/module.api/friends/repositories/friendship.repo';
 import { ServiceRemoveFriendship } from 'src/module.api/friends/services/friendship/removeFriendship.service';
 import { EntityManager } from 'typeorm';
 
@@ -27,7 +27,7 @@ export class StrategyDefault
 	implements IntrStandartStrategy<typeof ServiceRemoveFriendship.strategyName.DEFAULT> {
 	readonly name = ServiceRemoveFriendship.strategyName.DEFAULT;
 
-	constructor(private readonly repoFriendship: FriendShipRepository) { }
+	constructor(private readonly repoFriendship: RepoFriendShip) { }
 
 	async execute(
 		args: IntrSchemaStrategyDefault['args']
@@ -37,6 +37,7 @@ export class StrategyDefault
 			player1Id: args.data.player1Id,
 			player2Id: args.data.player2Id,
 		};
+
 
 		const res = await this.repoFriendship.deleteFriendship(resDataDelete, args.manager);
 		if (!res) {

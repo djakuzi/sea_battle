@@ -4,7 +4,7 @@ import { JSX } from "react";
 import Ship from '../../../../common/components/Ship/Ship';
 import { PropsShip } from './PortShip.props';
 import { IntrWidthShip } from '../../../../common/types/Ship.interface';
-import { getWidthShip } from '../../../../common/script/modules/ship.module';
+import { getWidthShip } from '@app-common/script/modules/Ship/methods/getWidthShip';
 
 export default function PortShip({ widthRect, cls }: PropsShip): JSX.Element {
     const objWidthRect: IntrWidthShip = getWidthShip(widthRect);
